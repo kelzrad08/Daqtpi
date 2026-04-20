@@ -13,6 +13,7 @@
     --red: #e8331a;
     --red-dark: #b82a14;
     --gold: #f0c040;
+    --green: #27ae60;
     --gray: #1e1e1e;
     --gray-mid: #2e2e2e;
     --gray-light: #666;
@@ -27,40 +28,40 @@
   .nav-links { display: flex; gap: 1.5rem; align-items: center; }
   .nav-links a { font-size: 13px; color: rgba(245,240,232,0.5); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--white); }
-  .nav-badge { background: var(--red); color: var(--white); font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 2px; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; }
+  .nav-cta { background: var(--red); color: var(--white); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 2px; letter-spacing: 1px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--red-dark); }
 
+  /* HERO */
   .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 1.5rem 4rem; position: relative; z-index: 1; }
   .gavel-icon { font-size: 56px; margin-bottom: 1.5rem; display: block; animation: gavel 3s ease-in-out infinite; }
   @keyframes gavel { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
   .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 1.25rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
   .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(68px, 14vw, 140px); line-height: 0.9; letter-spacing: 2px; color: var(--white); opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s; }
   .hero h1 .red { color: var(--red); }
-  .hero-sub { font-size: clamp(16px, 2.5vw, 20px); color: rgba(245,240,232,0.6); max-width: 480px; line-height: 1.6; margin: 1.75rem auto 2.5rem; font-weight: 300; opacity: 0; animation: fadeUp 0.7s ease forwards 0.6s; }
+  .hero-sub { font-size: clamp(16px, 2.5vw, 20px); color: rgba(245,240,232,0.6); max-width: 500px; line-height: 1.6; margin: 1.75rem auto 2.5rem; font-weight: 300; opacity: 0; animation: fadeUp 0.7s ease forwards 0.6s; }
 
-  .waitlist-form { display: flex; gap: 0; max-width: 440px; width: 100%; margin: 0 auto; opacity: 0; animation: fadeUp 0.7s ease forwards 0.8s; }
-  .waitlist-form input[type="email"] { flex: 1; padding: 14px 18px; background: var(--gray); border: 1px solid var(--gray-mid); border-right: none; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; border-radius: 3px 0 0 3px; transition: border-color 0.2s; }
-  .waitlist-form input[type="email"]::placeholder { color: var(--gray-light); }
-  .waitlist-form input[type="email"]:focus { border-color: var(--red); }
-  .waitlist-form button { padding: 14px 24px; background: var(--red); color: var(--white); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; cursor: pointer; border-radius: 0 3px 3px 0; transition: background 0.2s; white-space: nowrap; }
-  .waitlist-form button:hover { background: var(--red-dark); }
+  /* PRICE BADGE */
+  .price-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(240,192,64,0.1); border: 1px solid rgba(240,192,64,0.3); border-radius: 3px; padding: 10px 20px; font-size: 15px; color: var(--gold); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.7s; }
+  .price-badge strong { font-size: 22px; font-weight: 500; }
 
-  .signup-count { font-size: 13px; color: rgba(245,240,232,0.4); margin-top: 1rem; opacity: 0; animation: fadeUp 0.7s ease forwards 1s; }
-  .signup-count span { color: var(--gold); font-weight: 500; }
+  /* BIG CTA BUTTON */
+  .cta-btn { display: inline-block; background: var(--red); color: var(--white); font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; padding: 18px 48px; border-radius: 3px; text-decoration: none; transition: background 0.2s, transform 0.1s; opacity: 0; animation: fadeUp 0.7s ease forwards 0.8s; border: none; cursor: pointer; }
+  .cta-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .cta-sub { font-size: 13px; color: rgba(245,240,232,0.35); margin-top: 0.75rem; opacity: 0; animation: fadeUp 0.7s ease forwards 1s; }
 
-  .success-msg { display: none; text-align: center; padding: 1rem; background: rgba(240,192,64,0.1); border: 1px solid rgba(240,192,64,0.3); border-radius: 3px; color: var(--gold); font-size: 15px; max-width: 440px; margin: 0 auto; }
-
+  /* HOW IT WORKS */
   .section { padding: 5rem 1.5rem; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
   .section-label { font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--red); text-align: center; margin-bottom: 1rem; }
   .section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 7vw, 72px); text-align: center; letter-spacing: 2px; margin-bottom: 3.5rem; }
-
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5px; background: var(--gray-mid); border: 1.5px solid var(--gray-mid); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5px; background: var(--gray-mid); border: 1.5px solid var(--gray-mid); }
   .step { background: var(--black); padding: 2.5rem 2rem; }
   .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--red); line-height: 1; margin-bottom: 1rem; opacity: 0.8; }
   .step h3 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; margin-bottom: 0.75rem; color: var(--white); }
   .step p { font-size: 14px; color: rgba(245,240,232,0.5); line-height: 1.7; }
 
+  /* VERDICT PREVIEW */
   .verdict-preview { background: var(--gray); border: 1px solid var(--gray-mid); border-radius: 4px; overflow: hidden; max-width: 560px; margin: 0 auto; }
-  .verdict-header { background: var(--red); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
+  .verdict-header { background: var(--red); padding: 1rem 1.5rem; }
   .verdict-header span { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; }
   .verdict-body { padding: 1.5rem; }
   .verdict-summary { font-size: 15px; color: rgba(245,240,232,0.7); margin-bottom: 1.25rem; line-height: 1.6; font-style: italic; }
@@ -72,13 +73,39 @@
   .score-box .fill { height: 100%; border-radius: 2px; }
   .verdict-advice { background: rgba(240,192,64,0.08); border-left: 3px solid var(--gold); padding: 10px 14px; font-size: 13px; color: rgba(245,240,232,0.6); line-height: 1.6; margin-top: 1rem; }
 
-  /* SUBMIT YOUR ARGUMENT SECTION */
+  /* SUBMIT SECTION */
   .submit-section { background: var(--gray); border-top: 1px solid var(--gray-mid); border-bottom: 1px solid var(--gray-mid); padding: 5rem 1.5rem; position: relative; z-index: 1; }
-  .submit-inner { max-width: 700px; margin: 0 auto; }
-  .submit-inner .section-label { text-align: center; }
+  .submit-inner { max-width: 680px; margin: 0 auto; }
   .submit-inner h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 6vw, 64px); text-align: center; letter-spacing: 2px; margin-bottom: 0.75rem; }
   .submit-inner .sub { text-align: center; font-size: 15px; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; line-height: 1.6; }
 
+  /* STEP INDICATOR */
+  .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 2.5rem; }
+  .step-dot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .step-dot .dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 16px; }
+  .step-dot .dot.active { background: var(--red); color: white; }
+  .step-dot .dot.inactive { background: var(--gray-mid); color: var(--gray-light); }
+  .step-dot .dot.done { background: var(--green); color: white; }
+  .step-dot span { font-size: 11px; color: var(--gray-light); letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+  .step-line { width: 60px; height: 1px; background: var(--gray-mid); margin: 0 8px; margin-bottom: 20px; }
+
+  /* PAYMENT PANEL */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .paypal-box { background: var(--black); border: 1px solid var(--gray-mid); border-radius: 3px; padding: 2rem; text-align: center; }
+  .paypal-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .paypal-box p { font-size: 14px; color: rgba(245,240,232,0.5); margin-bottom: 1.5rem; line-height: 1.6; }
+  .paypal-price { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+  .paypal-price-sub { font-size: 13px; color: rgba(245,240,232,0.4); margin-bottom: 1.75rem; }
+  .paypal-btn { display: inline-flex; align-items: center; gap: 10px; background: #0070BA; color: white; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; padding: 16px 40px; border-radius: 3px; text-decoration: none; transition: background 0.2s; margin-bottom: 1rem; }
+  .paypal-btn:hover { background: #005ea6; }
+  .paypal-btn svg { width: 24px; height: 24px; }
+  .paid-confirm { margin-top: 1.25rem; }
+  .paid-confirm button { background: transparent; border: 1px solid rgba(245,240,232,0.2); color: rgba(245,240,232,0.5); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 10px 20px; border-radius: 3px; cursor: pointer; transition: all 0.2s; }
+  .paid-confirm button:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ARGUMENT FORM */
   .arg-form { display: flex; flex-direction: column; gap: 16px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-field { display: flex; flex-direction: column; gap: 6px; }
@@ -86,47 +113,37 @@
   .form-field input, .form-field textarea, .form-field select { background: var(--black); border: 1px solid var(--gray-mid); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 12px 14px; border-radius: 3px; outline: none; transition: border-color 0.2s; width: 100%; }
   .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--red); }
   .form-field input::placeholder, .form-field textarea::placeholder { color: var(--gray-light); }
-  .form-field textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
+  .form-field textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
   .form-field select { appearance: none; cursor: pointer; }
   .form-field select option { background: var(--black); }
 
-  /* CONSENT BOX */
   .consent-box { background: rgba(232,51,26,0.06); border: 1px solid rgba(232,51,26,0.2); border-radius: 3px; padding: 1.25rem; }
-  .consent-box h4 { font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+  .consent-box h4 { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
   .consent-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
   .consent-item:last-child { margin-bottom: 0; }
   .consent-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
   .consent-item label { font-size: 13px; color: rgba(245,240,232,0.6); line-height: 1.6; cursor: pointer; }
-  .consent-item label a { color: var(--red); text-decoration: none; }
-  .consent-item label a:hover { text-decoration: underline; }
 
   .submit-btn { padding: 16px; background: var(--red); color: var(--white); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; cursor: pointer; border-radius: 3px; transition: background 0.2s; width: 100%; }
   .submit-btn:hover { background: var(--red-dark); }
-  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
   .form-disclaimer { font-size: 12px; color: rgba(245,240,232,0.25); text-align: center; line-height: 1.6; margin-top: 0.5rem; }
 
-  .submit-success { display: none; text-align: center; padding: 2rem; background: rgba(240,192,64,0.08); border: 1px solid rgba(240,192,64,0.2); border-radius: 3px; }
-  .submit-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .submit-success { display: none; text-align: center; padding: 2.5rem 2rem; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.2); border-radius: 3px; }
+  .submit-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--green); letter-spacing: 2px; margin-bottom: 0.75rem; }
   .submit-success p { font-size: 14px; color: rgba(245,240,232,0.5); line-height: 1.7; }
 
-  /* YOUTUBE SECTION */
+  /* YOUTUBE */
   .yt-section { padding: 5rem 1.5rem; max-width: 700px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
   .yt-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 6vw, 64px); letter-spacing: 2px; margin-bottom: 1rem; }
   .yt-section p { font-size: 15px; color: rgba(245,240,232,0.5); line-height: 1.7; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
-  .yt-btn { display: inline-flex; align-items: center; gap: 10px; background: #FF0000; color: white; padding: 14px 28px; border-radius: 3px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; transition: opacity 0.2s; margin-bottom: 2rem; }
+  .yt-btn { display: inline-flex; align-items: center; gap: 10px; background: #FF0000; color: white; padding: 14px 28px; border-radius: 3px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; transition: opacity 0.2s; }
   .yt-btn:hover { opacity: 0.85; }
-  .yt-icon { width: 24px; height: 24px; }
 
-  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 3rem; }
+  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 3rem; }
   .quote { background: var(--gray); border: 1px solid var(--gray-mid); padding: 1.5rem; border-radius: 3px; }
   .quote p { font-size: 14px; color: rgba(245,240,232,0.65); line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
   .quote .author { font-size: 12px; color: var(--gray-light); }
   .quote .stars { color: var(--gold); font-size: 13px; margin-bottom: 8px; }
-
-  .cta-section { text-align: center; padding: 6rem 1.5rem; position: relative; z-index: 1; border-top: 1px solid var(--gray-mid); }
-  .cta-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 8vw, 80px); letter-spacing: 2px; margin-bottom: 1rem; line-height: 1; }
-  .cta-section .sub { color: rgba(245,240,232,0.5); font-size: 16px; margin-bottom: 2.5rem; }
 
   footer { text-align: center; padding: 2rem; font-size: 12px; color: rgba(245,240,232,0.2); border-top: 1px solid var(--gray-mid); position: relative; z-index: 1; line-height: 2; }
   footer a { color: rgba(245,240,232,0.3); text-decoration: none; }
@@ -135,11 +152,9 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   @media (max-width: 600px) {
-    .waitlist-form { flex-direction: column; }
-    .waitlist-form input[type="email"] { border-right: 1px solid var(--gray-mid); border-bottom: none; border-radius: 3px 3px 0 0; }
-    .waitlist-form button { border-radius: 0 0 3px 3px; padding: 14px; }
     .form-row { grid-template-columns: 1fr; }
     .nav-links { display: none; }
+    .step-line { width: 30px; }
   }
 </style>
 </head>
@@ -148,10 +163,11 @@
 <nav>
   <div class="nav-logo">Relationship <span>Referee</span></div>
   <div class="nav-links">
-    <a href="#submit">Submit an Argument</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#submit">Get My Verdict</a>
     <a href="#youtube">Watch on YouTube</a>
-    <a href="#waitlist" class="nav-badge">Join Waitlist</a>
   </div>
+  <a href="#submit" class="nav-cta">Get Verdict — $5</a>
 </nav>
 
 <!-- HERO -->
@@ -159,41 +175,43 @@
   <span class="gavel-icon">⚖️</span>
   <p class="eyebrow">AI-Powered Argument Analysis</p>
   <h1>Who's <span class="red">Really</span><br>Right?</h1>
-  <p class="hero-sub">Paste your argument, upload a screenshot, and get an unbiased AI verdict in seconds. No more "agree to disagree."</p>
-  <form class="waitlist-form" id="form-wrap" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSignup(event)">
-    <input type="hidden" name="form-name" value="waitlist" />
-    <input type="hidden" name="bot-field" style="display:none" />
-    <input type="email" name="email" id="email-input" placeholder="your@email.com" required />
-    <button type="submit">Join Waitlist</button>
-  </form>
-  <div class="success-msg" id="success-msg"></div>
-  <p class="signup-count">Join <span id="counter">247</span> people already on the waitlist</p>
+  <p class="hero-sub">Submit your argument and get a full unbiased AI verdict — with scores, analysis, and advice. No more going in circles.</p>
+  <div class="price-badge">
+    <strong>$5</strong> per verdict · Results within 24 hours
+  </div>
+  <a href="#submit" class="cta-btn">Get My Verdict</a>
+  <p class="cta-sub">Pay securely via PayPal · No account needed</p>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section">
+<section class="section" id="how-it-works">
   <p class="section-label">How it works</p>
-  <h2>Three Steps.<br>One Verdict.</h2>
+  <h2>Simple.<br>Fast. Fair.</h2>
   <div class="steps">
     <div class="step">
       <div class="step-num">01</div>
-      <h3>Submit your argument</h3>
-      <p>Paste a text conversation or type out what happened. Both sides get heard equally.</p>
+      <h3>Pay $5</h3>
+      <p>Secure payment via PayPal. One payment, one full verdict. No subscriptions, no hidden fees.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
-      <h3>AI analyzes it</h3>
-      <p>Our unbiased AI reads every word and weighs both sides fairly — no favoritism, no judgment.</p>
+      <h3>Submit your argument</h3>
+      <p>Paste your conversation or describe what happened. Both sides get heard equally.</p>
     </div>
     <div class="step">
       <div class="step-num">03</div>
       <h3>Get the verdict</h3>
-      <p>Receive a full breakdown with scores, analysis, and actionable advice to actually move forward.</p>
+      <p>Receive a full breakdown with scores for each person, honest analysis, and real advice.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Finally win</h3>
+      <p>Share your verdict. Show it to them. Frame it on the wall. You've earned it.</p>
     </div>
   </div>
 </section>
 
-<!-- VERDICT PREVIEW -->
+<!-- SAMPLE VERDICT -->
 <section class="section" style="padding-top:0;">
   <p class="section-label">Sample verdict</p>
   <h2>See It In Action</h2>
@@ -218,125 +236,123 @@
   </div>
 </section>
 
-<!-- SUBMIT YOUR ARGUMENT -->
+<!-- GET YOUR VERDICT / SUBMIT -->
 <div id="submit" class="submit-section">
   <div class="submit-inner">
-    <p class="section-label">Want to be featured?</p>
-    <h2>Submit Your Argument</h2>
-    <p class="sub">Send us your real argument and it could be featured anonymously on our YouTube channel. The AI will give a full verdict — and you'll finally know who was right.</p>
+    <p class="section-label">Ready for your verdict?</p>
+    <h2>Get My Verdict</h2>
+    <p class="sub">Pay $5 via PayPal, then submit your argument. You'll get a full honest verdict within 24 hours.</p>
 
-    <form class="arg-form" id="arg-form" name="argument-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleArgSubmit(event)">
-      <input type="hidden" name="form-name" value="argument-submission" />
-      <input type="hidden" name="bot-field" style="display:none" />
-
-      <div class="form-row">
-        <div class="form-field">
-          <label>Your nickname (optional)</label>
-          <input type="text" name="nickname" id="nickname" placeholder="e.g. Anonymous, Sarah T..." />
-        </div>
-        <div class="form-field">
-          <label>Type of argument</label>
-          <select name="arg-type" id="arg-type">
-            <option value="">Select a category...</option>
-            <option>Relationship / Partner</option>
-            <option>Friends</option>
-            <option>Family</option>
-            <option>Roommates</option>
-            <option>Work / Coworkers</option>
-            <option>Other</option>
-          </select>
-        </div>
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator">
+      <div class="step-dot">
+        <div class="dot active" id="dot1">1</div>
+        <span>Pay</span>
       </div>
-
-      <div class="form-field">
-        <label>The argument (paste the conversation or describe what happened)</label>
-        <textarea name="argument" id="arg-text" placeholder="Include both sides as much as possible — the more context the better the verdict. Names will be changed before publishing." required></textarea>
+      <div class="step-line"></div>
+      <div class="step-dot">
+        <div class="dot inactive" id="dot2">2</div>
+        <span>Submit</span>
       </div>
-
-      <div class="form-field">
-        <label>Your email (so we can notify you when your verdict goes live)</label>
-        <input type="email" name="email" id="sub-email" placeholder="your@email.com" required />
+      <div class="step-line"></div>
+      <div class="step-dot">
+        <div class="dot inactive" id="dot3">3</div>
+        <span>Done</span>
       </div>
-
-      <!-- CONSENT -->
-      <div class="consent-box">
-        <h4>⚖️ Before you submit — please confirm:</h4>
-        <div class="consent-item">
-          <input type="checkbox" name="consent1" id="consent1" required />
-          <label for="consent1">I consent to having this argument featured anonymously on the Relationship Referee YouTube channel. I understand all names and identifying details will be changed or removed.</label>
-        </div>
-        <div class="consent-item">
-          <input type="checkbox" name="consent2" id="consent2" required />
-          <label for="consent2">I confirm this argument involves only myself and another person who I have not identified by their real name, and I am not sharing anyone's private information without their knowledge.</label>
-        </div>
-        <div class="consent-item">
-          <input type="checkbox" name="consent3" id="consent3" required />
-          <label for="consent3">I understand that by submitting I am granting Relationship Referee permission to use this content for entertainment and educational purposes, and that submission does not guarantee it will be featured.</label>
-        </div>
-      </div>
-
-      <button type="submit" class="submit-btn">Submit for a Verdict</button>
-      <p class="form-disclaimer">All submissions are anonymized before publishing. We never share your email or real name. By submitting you agree to our content use policy above.</p>
-    </form>
-
-    <div class="submit-success" id="submit-success">
-      <h3>Submission Received! ⚖️</h3>
-      <p>Thanks for sending in your argument! We'll analyze it and notify you at your email when your verdict episode goes live. In the meantime, <a href="#waitlist" style="color:var(--gold);">join the waitlist</a> to be first when the full app launches.</p>
     </div>
+
+    <!-- PANEL 1: PAYMENT -->
+    <div class="panel active" id="panel-pay">
+      <div class="paypal-box">
+        <h3>Step 1 — Pay Securely</h3>
+        <p>Click the button below to send $5 via PayPal. Once payment is complete, click "I've Paid" to submit your argument.</p>
+        <div class="paypal-price">$5</div>
+        <div class="paypal-price-sub">One verdict · Full analysis · Honest results</div>
+        <a class="paypal-btn" href="https://www.paypal.me/kradig">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.99l-.316 2.005a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.217-4.96z"/></svg>
+          Pay with PayPal
+        </a>
+        <div class="paid-confirm">
+          <button onclick="goToStep2()">✓ I've paid — submit my argument</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: ARGUMENT FORM -->
+    <div class="panel" id="panel-form">
+      <form class="arg-form" id="arg-form" name="argument-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleArgSubmit(event)">
+        <input type="hidden" name="form-name" value="argument-submission" />
+        <input type="hidden" name="bot-field" style="display:none" />
+        <input type="hidden" name="paid" value="yes" />
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Your nickname (optional)</label>
+            <input type="text" name="nickname" placeholder="e.g. Anonymous, Sarah T..." />
+          </div>
+          <div class="form-field">
+            <label>Type of argument</label>
+            <select name="arg-type">
+              <option value="">Select a category...</option>
+              <option>Relationship / Partner</option>
+              <option>Friends</option>
+              <option>Family</option>
+              <option>Roommates</option>
+              <option>Work / Coworkers</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>The argument</label>
+          <textarea name="argument" placeholder="Paste your conversation or describe what happened. Include both sides for the most accurate verdict. Names will be kept private." required></textarea>
+        </div>
+
+        <div class="form-field">
+          <label>Your email (so we can send you the verdict)</label>
+          <input type="email" name="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="consent-box">
+          <h4>⚖️ Quick confirmation:</h4>
+          <div class="consent-item">
+            <input type="checkbox" name="consent1" id="c1" required />
+            <label for="c1">I confirm I have paid $5 via PayPal and I consent to this argument being analyzed and potentially featured anonymously on the Relationship Referee YouTube channel.</label>
+          </div>
+          <div class="consent-item">
+            <input type="checkbox" name="consent2" id="c2" required />
+            <label for="c2">I understand all names and identifying details will be changed or removed before any public use, and I am not sharing anyone's private information without their knowledge.</label>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit My Argument ⚖️</button>
+        <p class="form-disclaimer">Your email is only used to send your verdict. We never share or sell your information.</p>
+      </form>
+
+      <div class="submit-success" id="submit-success">
+        <h3>Verdict Incoming! ⚖️</h3>
+        <p>Your argument has been received. We'll send your full verdict to your email within 24 hours. Get ready to finally be proven right. (Or wrong. We don't pick sides.)</p>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<!-- PRICING -->
-<section class="section" style="border-top: 1px solid #2e2e2e;">
-  <p class="section-label">Simple pricing</p>
-  <h2>Try It Free.<br>Keep It <span style="color:var(--red)">Cheap.</span></h2>
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5px; background: #2e2e2e; border: 1.5px solid #2e2e2e; max-width: 600px; margin: 0 auto;">
-
-    <div style="background:#0a0a0a; padding: 2.5rem 2rem;">
-      <div style="font-size:11px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#666; margin-bottom:1rem;">Free</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:56px; line-height:1; color:#f5f0e8; margin-bottom:0.5rem;">$0</div>
-      <div style="font-size:13px; color:#666; margin-bottom:1.5rem;">No credit card needed</div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> 1 free verdict — on us</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Full analysis & scores</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Referee's advice included</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.35); display:flex; gap:8px; align-items:flex-start;"><span style="flex-shrink:0;">✗</span> Unlimited verdicts</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.35); display:flex; gap:8px; align-items:flex-start;"><span style="flex-shrink:0;">✗</span> Screenshot upload</div>
-      </div>
-    </div>
-
-    <div style="background:#1a0a08; padding: 2.5rem 2rem; position:relative; border: 1.5px solid #e8331a;">
-      <div style="position:absolute; top:-1px; left:50%; transform:translateX(-50%); background:#e8331a; color:white; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; white-space:nowrap;">Most Popular</div>
-      <div style="font-size:11px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#e8331a; margin-bottom:1rem;">Unlimited</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:56px; line-height:1; color:#f5f0e8; margin-bottom:0.25rem;">$.99</div>
-      <div style="font-size:13px; color:#666; margin-bottom:1.5rem;">per month — cancel anytime</div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Unlimited verdicts</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Full analysis & scores</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Referee's advice included</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Screenshot upload</div>
-        <div style="font-size:14px; color:rgba(245,240,232,0.6); display:flex; gap:8px; align-items:flex-start;"><span style="color:#e8331a; flex-shrink:0;">✓</span> Priority verdict queue</div>
-      </div>
-    </div>
-
-  </div>
-  <p style="text-align:center; font-size:13px; color:#666; margin-top:1.5rem;">Less than a coffee. Way more satisfying than losing an argument. ☕</p>
-</section>
 
 <!-- YOUTUBE -->
 <section id="youtube" class="yt-section">
   <p class="section-label">Watch the verdicts</p>
   <h2>Real Arguments.<br>Real <span style="color:var(--red)">Verdicts.</span></h2>
-  <p>Every week we take real submitted arguments and let the AI referee decide. The comment sections are chaos — and that's the point.</p>
-  <a href="https://youtube.com" class="yt-btn" target="_blank">
-    <svg class="yt-icon" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.2s-.3-1.9-1.1-2.7c-1-.9-2.1-.9-2.6-1C17.1 2.3 12 2.3 12 2.3s-5.1 0-7.8.2c-.5.1-1.6.1-2.6 1C.8 4.3.5 6.2.5 6.2S.2 8.4.2 10.6v2.1c0 2.2.3 4.4.3 4.4s.3 1.9 1.1 2.7c1 .9 2.3.9 2.9 1C6.4 21 12 21 12 21s5.1 0 7.8-.2c.5-.1 1.6-.1 2.6-1 .8-.8 1.1-2.7 1.1-2.7s.3-2.2.3-4.4v-2.1C23.8 8.4 23.5 6.2 23.5 6.2zM9.7 15.5V8.4l7 3.6-7 3.5z"/></svg>
-    Subscribe on YouTube
+  <p>Watch real submitted arguments get refereed live on our YouTube channel. The comment sections are chaos — and that's the point.</p>
+  <a href="https://youtube.com/@YourChannelHere" class="yt-btn" target="_blank">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.2s-.3-1.9-1.1-2.7c-1-.9-2.1-.9-2.6-1C17.1 2.3 12 2.3 12 2.3s-5.1 0-7.8.2c-.5.1-1.6.1-2.6 1C.8 4.3.5 6.2.5 6.2S.2 8.4.2 10.6v2.1c0 2.2.3 4.4.3 4.4s.3 1.9 1.1 2.7c1 .9 2.3.9 2.9 1C6.4 21 12 21 12 21s5.1 0 7.8-.2c.5-.1 1.6-.1 2.6-1 .8-.8 1.1-2.7 1.1-2.7s.3-2.2.3-4.4v-2.1C23.8 8.4 23.5 6.2 23.5 6.2zM9.7 15.5V8.4l7 3.6-7 3.5z"/></svg>
+    Watch on YouTube
   </a>
 
   <div class="quotes">
     <div class="quote">
       <div class="stars">★★★★★</div>
-      <p>"I've been waiting for something like this my entire relationship."</p>
+      <p>"I've been waiting for something like this my entire relationship. TAKE MY MONEY."</p>
       <div class="author">— @morganK</div>
     </div>
     <div class="quote">
@@ -352,90 +368,39 @@
   </div>
 </section>
 
-<!-- WAITLIST CTA -->
-<section id="waitlist" class="cta-section">
-  <h2>Stop Arguing.<br>Start <span style="color:var(--red)">Winning.</span></h2>
-  <p class="sub">Be first to know when the full Relationship Referee app launches.</p>
-  <form class="waitlist-form" id="form-wrap-2" name="waitlist-bottom" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSignup2(event)" style="opacity:1;">
-    <input type="hidden" name="form-name" value="waitlist-bottom" />
-    <input type="hidden" name="bot-field" style="display:none" />
-    <input type="email" name="email" id="email-input-2" placeholder="your@email.com" required />
-    <button type="submit">Notify Me</button>
-  </form>
-  <div class="success-msg" id="success-msg-2" style="margin-top:1rem;"></div>
-</section>
-
 <footer>
   © 2025 Relationship Referee · Built with ❤️ and a lot of arguments<br>
   <a href="#">Privacy Policy</a> · <a href="#">Content Use Policy</a> · <a href="#">Contact</a><br>
-  <span style="font-size:11px; color: rgba(245,240,232,0.15);">All arguments featured on this channel are submitted voluntarily with full consent and are anonymized prior to publication. Relationship Referee is an entertainment platform and does not provide professional relationship advice.</span>
+  <span style="font-size:11px; color: rgba(245,240,232,0.15);">Relationship Referee is an entertainment platform and does not provide professional relationship or legal advice. All submitted arguments are handled confidentially. Public use requires explicit consent as confirmed during submission.</span>
 </footer>
 
 <script>
-  let count = 247;
-
-  function animateCounter() {
-    const el = document.getElementById('counter');
-    let current = count - 12;
-    const step = () => { if (current < count) { current++; el.textContent = current; setTimeout(step, 80); } };
-    setTimeout(step, 1200);
-  }
-  animateCounter();
-
-  function encode(data) {
-    return Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
-  }
-
-  function handleSignup(e) {
-    e.preventDefault();
-    const email = document.getElementById('email-input').value.trim();
-    if (!email || !email.includes('@')) { document.getElementById('email-input').style.borderColor = '#e8331a'; return; }
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: encode({ 'form-name': 'waitlist', email }) });
-    count++;
-    document.getElementById('counter').textContent = count;
-    document.getElementById('form-wrap').style.display = 'none';
-    const msg = document.getElementById('success-msg');
-    msg.style.display = 'block';
-    msg.textContent = "🎉 You're on the list! We'll let you know when we launch.";
-  }
-
-  function handleSignup2(e) {
-    e.preventDefault();
-    const email = document.getElementById('email-input-2').value.trim();
-    if (!email || !email.includes('@')) { document.getElementById('email-input-2').style.borderColor = '#e8331a'; return; }
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: encode({ 'form-name': 'waitlist-bottom', email }) });
-    count++;
-    document.getElementById('counter').textContent = count;
-    document.getElementById('form-wrap-2').style.display = 'none';
-    const msg = document.getElementById('success-msg-2');
-    msg.style.display = 'block';
-    msg.textContent = "🎉 You're on the list! We'll let you know when we launch.";
+  function goToStep2() {
+    document.getElementById('panel-pay').style.display = 'none';
+    document.getElementById('panel-form').classList.add('active');
+    document.getElementById('dot1').className = 'dot done';
+    document.getElementById('dot1').textContent = '✓';
+    document.getElementById('dot2').className = 'dot active';
+    document.getElementById('submit').scrollIntoView({ behavior: 'smooth' });
   }
 
   function handleArgSubmit(e) {
     e.preventDefault();
-    const text = document.getElementById('arg-text').value.trim();
-    const email = document.getElementById('sub-email').value.trim();
-    const c1 = document.getElementById('consent1').checked;
-    const c2 = document.getElementById('consent2').checked;
-    const c3 = document.getElementById('consent3').checked;
-    if (!text) { alert('Please paste or describe your argument first!'); return; }
-    if (!email || !email.includes('@')) { alert('Please enter a valid email so we can notify you.'); return; }
-    if (!c1 || !c2 || !c3) { alert('Please check all three consent boxes before submitting — this protects both you and us!'); return; }
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'argument-submission',
-        nickname: document.getElementById('nickname').value,
-        'arg-type': document.getElementById('arg-type').value,
-        argument: text,
-        email,
-        consent1: 'yes', consent2: 'yes', consent3: 'yes'
+    const form = document.getElementById('arg-form');
+    const data = new FormData(form);
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
+      .then(() => {
+        form.style.display = 'none';
+        document.getElementById('submit-success').style.display = 'block';
+        document.getElementById('dot2').className = 'dot done';
+        document.getElementById('dot2').textContent = '✓';
+        document.getElementById('dot3').className = 'dot done';
+        document.getElementById('dot3').textContent = '✓';
       })
-    });
-    document.getElementById('arg-form').style.display = 'none';
-    document.getElementById('submit-success').style.display = 'block';
+      .catch(() => {
+        form.style.display = 'none';
+        document.getElementById('submit-success').style.display = 'block';
+      });
   }
 </script>
 </body>
