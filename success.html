@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Your Argument — Relationship Referee</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --red: #e8331a;
+    --red-dark: #b82a14;
+    --gold: #f0c040;
+    --green: #27ae60;
+    --gray: #1e1e1e;
+    --gray-mid: #2e2e2e;
+    --gray-light: #666;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+
+  nav { padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(10,10,10,0.9); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--red); }
+
+  .page { max-width: 680px; margin: 0 auto; padding: 4rem 1.5rem; position: relative; z-index: 1; }
+
+  .paid-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.3); border-radius: 3px; padding: 8px 16px; font-size: 13px; color: var(--green); margin-bottom: 1.5rem; }
+
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 8vw, 80px); letter-spacing: 2px; line-height: 1; margin-bottom: 0.75rem; }
+  h1 span { color: var(--red); }
+  .sub { font-size: 15px; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; line-height: 1.6; }
+
+  .arg-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .form-field input, .form-field textarea, .form-field select { background: var(--gray); border: 1px solid var(--gray-mid); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 12px 14px; border-radius: 3px; outline: none; transition: border-color 0.2s; width: 100%; }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--red); }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: var(--gray-light); }
+  .form-field textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
+  .form-field select { appearance: none; cursor: pointer; }
+  .form-field select option { background: var(--black); }
+
+  .consent-box { background: rgba(232,51,26,0.06); border: 1px solid rgba(232,51,26,0.2); border-radius: 3px; padding: 1.25rem; }
+  .consent-box h4 { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+  .consent-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .consent-item:last-child { margin-bottom: 0; }
+  .consent-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
+  .consent-item label { font-size: 13px; color: rgba(245,240,232,0.6); line-height: 1.6; cursor: pointer; }
+
+  .submit-btn { padding: 16px; background: var(--red); color: var(--white); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; cursor: pointer; border-radius: 3px; transition: background 0.2s; width: 100%; }
+  .submit-btn:hover { background: var(--red-dark); }
+  .form-disclaimer { font-size: 12px; color: rgba(245,240,232,0.25); text-align: center; line-height: 1.6; }
+
+  .submit-success { display: none; text-align: center; padding: 3rem 2rem; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.2); border-radius: 3px; }
+  .submit-success .icon { font-size: 48px; margin-bottom: 1rem; }
+  .submit-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--green); letter-spacing: 2px; margin-bottom: 0.75rem; }
+  .submit-success p { font-size: 15px; color: rgba(245,240,232,0.55); line-height: 1.7; max-width: 420px; margin: 0 auto; }
+
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://daqtpi.com" class="nav-logo">Relationship <span>Referee</span></a>
+</nav>
+
+<div class="page">
+  <div class="paid-badge">✓ Payment confirmed — you're good to go!</div>
+  <h1>Submit Your <span>Argument</span></h1>
+  <p class="sub">Payment received — thank you! Fill in your argument below and we'll send your full verdict to your email within 24 hours.</p>
+
+  <form class="arg-form" id="arg-form" action="https://formspree.io/f/mnjlbvjr" method="POST" onsubmit="handleSubmit(event)">
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>Your nickname (optional)</label>
+        <input type="text" name="nickname" placeholder="e.g. Anonymous, Sarah T..." />
+      </div>
+      <div class="form-field">
+        <label>Type of argument</label>
+        <select name="arg-type">
+          <option value="">Select a category...</option>
+          <option>Relationship / Partner</option>
+          <option>Friends</option>
+          <option>Family</option>
+          <option>Roommates</option>
+          <option>Work / Coworkers</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>The argument</label>
+      <textarea name="argument" placeholder="Paste your conversation or describe what happened. Include both sides for the most accurate verdict. Names will be kept private." required></textarea>
+    </div>
+
+    <div class="form-field">
+      <label>Your email (so we can send you the verdict)</label>
+      <input type="email" name="email" placeholder="your@email.com" required />
+    </div>
+
+    <div class="consent-box">
+      <h4>⚖️ Quick confirmation:</h4>
+      <div class="consent-item">
+        <input type="checkbox" name="consent1" id="c1" required />
+        <label for="c1">I consent to this argument being analyzed and potentially featured anonymously on the Relationship Referee YouTube channel. All names and identifying details will be changed or removed.</label>
+      </div>
+      <div class="consent-item">
+        <input type="checkbox" name="consent2" id="c2" required />
+        <label for="c2">I understand I am not sharing anyone's private information without their knowledge, and submission does not guarantee the argument will be featured publicly.</label>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit My Argument ⚖️</button>
+    <p class="form-disclaimer">Your email is only used to send your verdict. We never share or sell your information.</p>
+  </form>
+
+  <div class="submit-success" id="submit-success">
+    <div class="icon">⚖️</div>
+    <h3>Verdict Incoming!</h3>
+    <p>Your argument has been received. We'll send your full honest verdict to your email within 24 hours. Get ready to finally find out who was right.</p>
+  </div>
+</div>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('arg-form');
+    const data = new FormData(form);
+    fetch('https://formspree.io/f/mnjlbvjr', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(() => {
+      form.style.display = 'none';
+      document.getElementById('submit-success').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }).catch(() => {
+      form.style.display = 'none';
+      document.getElementById('submit-success').style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
