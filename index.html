@@ -93,14 +93,13 @@
   .panel { display: none; }
   .panel.active { display: block; }
 
-  .paypal-box { background: var(--black); border: 1px solid var(--gray-mid); border-radius: 3px; padding: 2rem; text-align: center; }
-  .paypal-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 0.5rem; }
-  .paypal-box p { font-size: 14px; color: rgba(245,240,232,0.5); margin-bottom: 1.5rem; line-height: 1.6; }
-  .paypal-price { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
-  .paypal-price-sub { font-size: 13px; color: rgba(245,240,232,0.4); margin-bottom: 1.75rem; }
-  .paypal-btn { display: inline-flex; align-items: center; gap: 10px; background: #0070BA; color: white; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; padding: 16px 40px; border-radius: 3px; text-decoration: none; transition: background 0.2s; margin-bottom: 1rem; }
-  .paypal-btn:hover { background: #005ea6; }
-  .paypal-btn svg { width: 24px; height: 24px; }
+  .payment-box { background: var(--black); border: 1px solid var(--gray-mid); border-radius: 3px; padding: 2rem; text-align: center; }
+  .payment-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .payment-box p { font-size: 14px; color: rgba(245,240,232,0.5); margin-bottom: 1.5rem; line-height: 1.6; }
+  .payment-price { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+  .payment-price-sub { font-size: 13px; color: rgba(245,240,232,0.4); margin-bottom: 1.75rem; }
+  .payment-btn { display: inline-flex; align-items: center; gap: 10px; background: #FFDD00; color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; padding: 16px 40px; border-radius: 3px; text-decoration: none; transition: opacity 0.2s; margin-bottom: 1rem; }
+  .payment-btn:hover { opacity: 0.88; }
   .paid-confirm { margin-top: 1.25rem; }
   .paid-confirm button { background: transparent; border: 1px solid rgba(245,240,232,0.2); color: rgba(245,240,232,0.5); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 10px 20px; border-radius: 3px; cursor: pointer; transition: all 0.2s; }
   .paid-confirm button:hover { border-color: var(--gold); color: var(--gold); }
@@ -180,7 +179,7 @@
     <strong>$5</strong> per verdict · Results within 24 hours
   </div>
   <a href="#submit" class="cta-btn">Get My Verdict</a>
-  <p class="cta-sub">Pay securely via PayPal · No account needed</p>
+  <p class="cta-sub">Pay securely via Buy Me a Coffee · No account needed</p>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -191,7 +190,7 @@
     <div class="step">
       <div class="step-num">01</div>
       <h3>Pay $5</h3>
-      <p>Secure payment via PayPal. One payment, one full verdict. No subscriptions, no hidden fees.</p>
+      <p>Secure payment via Buy Me a Coffee. One payment, one full verdict. No subscriptions, no hidden fees.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
@@ -241,7 +240,7 @@
   <div class="submit-inner">
     <p class="section-label">Ready for your verdict?</p>
     <h2>Get My Verdict</h2>
-    <p class="sub">Pay $5 via PayPal, then submit your argument. You'll get a full honest verdict within 24 hours.</p>
+    <p class="sub">Pay $5 via Buy Me a Coffee, then submit your argument. You'll get a full honest verdict within 24 hours.</p>
 
     <!-- STEP INDICATOR -->
     <div class="step-indicator">
@@ -263,12 +262,12 @@
 
     <!-- PANEL 1: PAYMENT -->
     <div class="panel active" id="panel-pay">
-      <div class="paypal-box">
+      <div class="payment-box">
         <h3>Step 1 — Pay Securely</h3>
-        <p>Click the button below to send $5 via PayPal. Once payment is complete, click "I've Paid" to submit your argument.</p>
-        <div class="paypal-price">$5</div>
-        <div class="paypal-price-sub">One verdict · Full analysis · Honest results</div>
-        <a class="paypal-btn" href="https://buymeacoffee.com/RelationshipReferee" target="_blank" style="background:#FFDD00; color:#000;">
+        <p>Click the button below to send $5 via Buy Me a Coffee. Once payment is complete, click "I've Paid" to submit your argument.</p>
+        <div class="payment-price">$5</div>
+        <div class="payment-price-sub">One verdict · Full analysis · Honest results</div>
+        <a class="payment-btn" href="https://buymeacoffee.com/RelationshipReferee" target="_blank">
           ☕ Pay $5 — Buy Me a Coffee
         </a>
         <div class="paid-confirm">
@@ -315,7 +314,7 @@
           <h4>⚖️ Quick confirmation:</h4>
           <div class="consent-item">
             <input type="checkbox" name="consent1" id="c1" required />
-            <label for="c1">I confirm I have paid $5 via PayPal and I consent to this argument being analyzed and potentially featured anonymously on the Relationship Referee YouTube channel.</label>
+            <label for="c1">I confirm I have paid $5 via Buy Me a Coffee and I consent to this argument being analyzed and potentially featured anonymously on the Relationship Referee YouTube channel.</label>
           </div>
           <div class="consent-item">
             <input type="checkbox" name="consent2" id="c2" required />
@@ -341,7 +340,7 @@
   <p class="section-label">Watch the verdicts</p>
   <h2>Real Arguments.<br>Real <span style="color:var(--red)">Verdicts.</span></h2>
   <p>Watch real submitted arguments get refereed live on our YouTube channel. The comment sections are chaos — and that's the point.</p>
-  <a href="https://youtube.com/@Daqtpi" class="yt-btn" target="_blank">
+  <a href="https://youtube.com/@YourChannelHere" class="yt-btn" target="_blank">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.2s-.3-1.9-1.1-2.7c-1-.9-2.1-.9-2.6-1C17.1 2.3 12 2.3 12 2.3s-5.1 0-7.8.2c-.5.1-1.6.1-2.6 1C.8 4.3.5 6.2.5 6.2S.2 8.4.2 10.6v2.1c0 2.2.3 4.4.3 4.4s.3 1.9 1.1 2.7c1 .9 2.3.9 2.9 1C6.4 21 12 21 12 21s5.1 0 7.8-.2c.5-.1 1.6-.1 2.6-1 .8-.8 1.1-2.7 1.1-2.7s.3-2.2.3-4.4v-2.1C23.8 8.4 23.5 6.2 23.5 6.2zM9.7 15.5V8.4l7 3.6-7 3.5z"/></svg>
     Watch on YouTube
   </a>
