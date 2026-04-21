@@ -268,9 +268,8 @@
         <p>Click the button below to send $5 via PayPal. Once payment is complete, click "I've Paid" to submit your argument.</p>
         <div class="paypal-price">$5</div>
         <div class="paypal-price-sub">One verdict · Full analysis · Honest results</div>
-        <a class="paypal-btn" href="https://paypal.me/kradig">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.99l-.316 2.005a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.217-4.96z"/></svg>
-          Pay with PayPal
+        <a class="paypal-btn" href="https://buymeacoffee.com/RelationshipReferee" target="_blank" style="background:#FFDD00; color:#000;">
+          ☕ Pay $5 — Buy Me a Coffee
         </a>
         <div class="paid-confirm">
           <button onclick="goToStep2()">✓ I've paid — submit my argument</button>
@@ -280,9 +279,7 @@
 
     <!-- PANEL 2: ARGUMENT FORM -->
     <div class="panel" id="panel-form">
-      <form class="arg-form" id="arg-form" name="argument-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleArgSubmit(event)">
-        <input type="hidden" name="form-name" value="argument-submission" />
-        <input type="hidden" name="bot-field" style="display:none" />
+      <form class="arg-form" id="arg-form" action="https://formspree.io/f/mnjlbvjr" method="POST" onsubmit="handleArgSubmit(event)">
         <input type="hidden" name="paid" value="yes" />
 
         <div class="form-row">
@@ -344,7 +341,7 @@
   <p class="section-label">Watch the verdicts</p>
   <h2>Real Arguments.<br>Real <span style="color:var(--red)">Verdicts.</span></h2>
   <p>Watch real submitted arguments get refereed live on our YouTube channel. The comment sections are chaos — and that's the point.</p>
-  <a href="https://youtube.com/@Daqtpi" class="yt-btn" target="_blank">
+  <a href="https://youtube.com/@YourChannelHere" class="yt-btn" target="_blank">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.2s-.3-1.9-1.1-2.7c-1-.9-2.1-.9-2.6-1C17.1 2.3 12 2.3 12 2.3s-5.1 0-7.8.2c-.5.1-1.6.1-2.6 1C.8 4.3.5 6.2.5 6.2S.2 8.4.2 10.6v2.1c0 2.2.3 4.4.3 4.4s.3 1.9 1.1 2.7c1 .9 2.3.9 2.9 1C6.4 21 12 21 12 21s5.1 0 7.8-.2c.5-.1 1.6-.1 2.6-1 .8-.8 1.1-2.7 1.1-2.7s.3-2.2.3-4.4v-2.1C23.8 8.4 23.5 6.2 23.5 6.2zM9.7 15.5V8.4l7 3.6-7 3.5z"/></svg>
     Watch on YouTube
   </a>
@@ -352,7 +349,7 @@
   <div class="quotes">
     <div class="quote">
       <div class="stars">★★★★★</div>
-      <p>"I've been waiting for something like this my entire relationship."</p>
+      <p>"I've been waiting for something like this my entire relationship. TAKE MY MONEY."</p>
       <div class="author">— @morganK</div>
     </div>
     <div class="quote">
@@ -388,8 +385,8 @@
     e.preventDefault();
     const form = document.getElementById('arg-form');
     const data = new FormData(form);
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
-      .then(() => {
+    fetch('https://formspree.io/f/mnjlbvjr', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+      .then(res => {
         form.style.display = 'none';
         document.getElementById('submit-success').style.display = 'block';
         document.getElementById('dot2').className = 'dot done';
