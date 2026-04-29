@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.daqtpi",
+      "sha256_cert_fingerprints": [
+        "6C:6C:0E:AD:10:4D:A9:D6:E3:D5:46:EA:9D:74:78:80:C7:DA:61:76:7E:7F:58:69:34:37:85:A2:F2:1C:63:E5"
+      ]
+    }
+  }
+]
