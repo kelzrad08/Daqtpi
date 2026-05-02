@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdSense Template</title>
+
+    
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3209473338250523~9510579617"
+    crossorigin="anonymous">
+  </script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f5f5f5;
+      color: #222;
+    }
+    h2 { margin-top: 40px; color: #444; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    .ad-label { font-size: 11px; color: #999; text-align: center; margin-bottom: 2px; }
+    .ad-slot { background: #e8e8e8; border: 1px dashed #aaa; margin: 10px 0 30px; }
+
+    
+    #reward-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 14px 32px;
+      font-size: 16px;
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #reward-btn:hover { background: #1558b0; }
+    #reward-btn:disabled { background: #aaa; cursor: not-allowed; }
+    #reward-status { text-align: center; margin-top: 12px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+
+  <p><!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KENO</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --gold-dim: #6b5520;
+  --bg: #0a0e14;
+  --bg2: #111820;
+  --bg3: #192030;
+  --border: #1e2d3e;
+  --text: #d4dde8;
+  --text-dim: #4a6070;
+  --green: #2ecc71;
+  --red: #e74c3c;
+  --blue: #3498db;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  padding: 1rem;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(52,152,219,0.04) 0%, transparent 60%);
+}
+
+h1.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 8vw, 72px);
+  letter-spacing: 12px;
+  color: var(--gold);
+  text-align: center;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  margin-bottom: 2px;
+}
+
+.tagline {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.game-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-val.green { color: var(--green); }
+.stat-val.red { color: var(--red); }
+
+/* Board */
+.board-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.board-title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.pick-count {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 1.8vw, 14px);
+  font-weight: 600;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.12s;
+  user-select: none;
+}
+
+.cell:hover:not(.locked) {
+  border-color: var(--gold-dim);
+  color: var(--text);
+  background: #1e2d3e;
+}
+
+.cell.picked {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.cell.hit {
+  background: #1a3a1a;
+  border-color: var(--green);
+  color: var(--green);
+  animation: hit-flash 0.4s ease;
+}
+
+.cell.drawn-miss {
+  background: #2a1a1a;
+  border-color: #3a2222;
+  color: #5a3333;
+}
+
+.cell.locked { cursor: default; }
+
+@keyframes hit-flash {
+  0%   { transform: scale(0.8); background: #2ecc71; color: #fff; }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Controls */
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.bet-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.bet-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.bet-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bet-btn {
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-dim);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Barlow', sans-serif;
+}
+
+.bet-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+.bet-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); }
+
+.action-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.play-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #b8860b, #c9a84c, #b8860b);
+  border: none;
+  border-radius: 8px;
+  color: #0a0e14;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  padding: 12px;
+  transition: all 0.15s;
+  box-shadow: 0 2px 12px rgba(201,168,76,0.2);
+}
+
+.play-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+  transform: translateY(-1px);
+}
+
+.play-btn:active:not(:disabled) { transform: scale(0.98); }
+.play-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.12s;
+}
+
+.clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* Drawn numbers */
+.drawn-bar {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  min-height: 72px;
+}
+
+.drawn-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.drawn-balls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dball {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-dim);
+  transition: all 0.3s;
+}
+
+.dball.hit-ball {
+  background: #1a3a1a;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.dball.miss-ball {
+  background: var(--bg3);
+  border-color: #2a3540;
+  color: #3a5060;
+}
+
+/* Result overlay */
+.result-banner {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.result-banner.show { display: flex; }
+
+.result-left .result-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.result-left .result-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.result-payout {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 2px;
+  text-align: right;
+}
+
+.win-color { color: var(--green); }
+.lose-color { color: var(--red); }
+.push-color { color: var(--gold); }
+
+/* Payout table */
+.payout-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.payout-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.payout-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.payout-table th {
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.payout-table td {
+  padding: 4px 8px;
+  color: var(--text-dim);
+}
+
+.payout-table tr.active-row td { color: var(--gold); font-weight: 600; }
+.payout-table tr.hit-row td { color: var(--green); font-weight: 600; }
+
+/* Speed row */
+.speed-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+.speed-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  min-width: 38px;
+}
+.speed-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* No credits banner */
+.no-credits-banner {
+  background: #1a1008;
+  border: 1px solid var(--gold-dim);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+.nc-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.watch-ad-btn {
+  background: linear-gradient(135deg, #b8860b, #c9a84c, #b8860b);
+  border: none;
+  border-radius: 8px;
+  color: #0a0e14;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 10px 20px;
+  white-space: nowrap;
+  transition: all 0.15s;
+  box-shadow: 0 2px 12px rgba(201,168,76,0.2);
+}
+.watch-ad-btn:hover { box-shadow: 0 4px 20px rgba(201,168,76,0.4); transform: translateY(-1px); }
+.watch-ad-btn:active { transform: scale(0.98); }
+
+/* Ad modal */
+.ad-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  animation: modal-in 0.2s ease;
+}
+.ad-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.ad-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 1.25rem; }
+.ad-placeholder {
+  background: #0a0e14;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--text-dim);
+  font-size: 12px;
+  letter-spacing: 1px;
+  gap: 8px;
+}
+.ad-placeholder .ad-slot-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #2a3a4a;
+}
+.ad-timer {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.ad-skip-btn {
+  background: linear-gradient(135deg, #b8860b, #c9a84c, #b8860b);
+  border: none;
+  border-radius: 8px;
+  color: #0a0e14;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 10px 28px;
+  transition: all 0.15s;
+  width: 100%;
+}
+.ad-skip-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.ad-skip-btn:not(:disabled):hover { box-shadow: 0 4px 16px rgba(201,168,76,0.4); }
+
+/* Sound toggle */
+.sound-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.12s;
+}
+.sound-toggle:hover { border-color: var(--blue); color: var(--blue); }
+.sound-toggle.muted { opacity: 0.45; }
+
+/* Lucky Pick */
+.lucky-btn {
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  border-radius: 8px;
+  color: var(--gold);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.12s;
+  letter-spacing: 1px;
+}
+.lucky-btn:hover { background: var(--gold-dim); color: var(--gold-light); }
+
+/* Modal overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  width: 90%;
+  max-width: 380px;
+  animation: modal-in 0.2s ease;
+}
+@keyframes modal-in { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 1.25rem;
+}
+.spot-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.spot-btn {
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-dim);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+}
+.spot-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+.spot-btn.sel { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); }
+.modal-actions { display: flex; gap: 8px; }
+.modal-go {
+  flex: 1;
+  background: linear-gradient(135deg, #b8860b, #c9a84c, #b8860b);
+  border: none;
+  border-radius: 8px;
+  color: #0a0e14;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.15s;
+}
+.modal-go:hover { box-shadow: 0 4px 16px rgba(201,168,76,0.4); }
+.modal-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: all 0.12s;
+}
+.modal-cancel:hover { border-color: var(--red); color: var(--red); }
+
+/* Responsive */
+@media(max-width: 520px) {
+  .controls { grid-template-columns: 1fr; }
+  .result-banner { flex-direction: column; align-items: flex-start; }
+  .result-payout { text-align: left; }
+}
+google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
+</style>
+</head>
+<body>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3209473338250523~9510579617" crossorigin="anonymous"></script>
+<!-- Homepage Leaderboard -->
+<ins class="adsbygoogle"
+style="display:inline-block;width:728px;height:90px"
+data-ad-client="ca-app-pub-3209473338250523~9510579617"
+data-ad-slot="ca-app-pub-3209473338250523/5104430749"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<div class="game-wrap">
+  <h1 class="logo">KENO</h1>
+  <p class="tagline">Pick your numbers &mdash; test your luck</p>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Credits</div>
+      <div class="stat-val" id="credits">1000</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Last Win</div>
+      <div class="stat-val" id="last-win">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Won</div>
+      <div class="stat-val" id="total-won">0</div>
+    </div>
+  </div>
+
+  <div class="board-wrap">
+    <div class="board-header">
+      <span class="board-title">Select 1–10 numbers</span>
+      <span class="pick-count" id="pick-count">0 / 10 picked</span>
+    </div>
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="controls">
+    <div class="bet-panel">
+      <div class="bet-label">Bet per game</div>
+      <div class="bet-row" id="bet-row"></div>
+    </div>
+    <div class="action-panel">
+      <button class="play-btn" id="play-btn" onclick="playGame()" disabled>DRAW</button>
+      <button class="lucky-btn" onclick="openLuckyModal()">🍀 LUCKY PICK</button>
+      <div class="speed-row">
+        <span class="speed-label">Speed</span>
+        <input type="range" id="speed-slider" min="1" max="3" step="1" value="2" oninput="setSpeed(this.value)" />
+        <span class="speed-val" id="speed-val">Normal</span>
+      </div>
+      <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()" title="Toggle sound">🔊 SOUND ON</button>
+      <button class="clear-btn" onclick="clearPicks()">Clear picks</button>
+    </div>
+  </div>
+
+  <!-- Lucky Pick Modal -->
+  <div class="modal-overlay" id="lucky-modal">
+    <div class="modal">
+      <div class="modal-title">Lucky Pick</div>
+      <div class="modal-sub">How many numbers should I pick for you?</div>
+      <div class="spot-grid" id="spot-grid"></div>
+      <div class="modal-actions">
+        <button class="modal-go" onclick="doLuckyPick()">PICK FOR ME</button>
+        <button class="modal-cancel" onclick="closeLuckyModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawn-bar">
+    <div class="drawn-title">Drawn numbers (20 of 80)</div>
+    <div class="drawn-balls" id="drawn-balls"></div>
+  </div>
+
+  <div class="result-banner" id="result-banner">
+    <div class="result-left">
+      <div class="result-title" id="result-title">—</div>
+      <div class="result-sub" id="result-sub">—</div>
+    </div>
+    <div class="result-payout" id="result-payout">—</div>
+  </div>
+
+  <!-- No Credits Banner -->
+  <div class="no-credits-banner" id="no-credits-banner" style="display:none;">
+    <div class="nc-left">
+      <div class="nc-title">Out of credits!</div>
+      <div class="nc-sub">Watch a short ad to earn 500 free credits</div>
+    </div>
+    <button class="watch-ad-btn" onclick="watchAd()">▶ WATCH AD</button>
+  </div>
+
+  <div class="payout-wrap">
+    <div class="payout-title">Payout table <span id="payout-for" style="color:var(--gold);margin-left:4px;"></span></div>
+    <table class="payout-table">
+      <thead><tr><th>Matches</th><th>Multiplier</th><th>Pays (on 10 bet)</th></tr></thead>
+      <tbody id="payout-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+
+const PAYOUTS = {
+  1:  {1:2},
+  2:  {2:5, 1:0},
+  3:  {3:20, 2:2, 1:0},
+  4:  {4:60, 3:5, 2:1, 1:0},
+  5:  {5:400, 4:15, 3:2, 2:0, 1:0},
+  6:  {6:1500, 5:50, 4:8, 3:1, 2:0, 1:0},
+  7:  {7:5000, 6:100, 5:18, 4:3, 3:1, 2:0, 1:0},
+  8:  {8:15000, 7:500, 6:50, 5:10, 4:2, 3:0, 2:0, 1:0},
+  9:  {9:25000, 8:2500, 7:100, 6:20, 5:4, 4:1, 3:0, 2:0, 1:0},
+  10: {10:100000, 9:5000, 8:500, 7:50, 6:10, 5:2, 4:0, 3:0, 2:0, 1:0, 0:5}
+};
+
+let credits = 1000;
+let totalWon = 0;
+let picks = new Set();
+let currentBet = 10;
+let isPlaying = false;
+let lastWinAmount = null;
+let drawDelay = 90; 
+
+const BET_OPTIONS = [1, 5, 10, 25, 50, 100];
+
+
+function initBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  for (let i = 1; i <= 80; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.id = 'c' + i;
+    cell.textContent = i;
+    cell.onclick = () => togglePick(i);
+    board.appendChild(cell);
+  }
+}
+
+
+function initBets() {
+  const row = document.getElementById('bet-row');
+  BET_OPTIONS.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'bet-btn' + (b === currentBet ? ' active' : '');
+    btn.textContent = b;
+    btn.onclick = () => {
+      currentBet = b;
+      document.querySelectorAll('.bet-btn').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    row.appendChild(btn);
+  });
+}
+
+
+function togglePick(n) {
+  if (isPlaying) return;
+  if (picks.has(n)) {
+    picks.delete(n);
+    document.getElementById('c' + n).classList.remove('picked');
+  } else {
+    if (picks.size >= 10) return;
+    picks.add(n);
+    document.getElementById('c' + n).classList.add('picked');
+    sfxPick();
+  }
+  updatePickCount();
+  updatePayoutTable();
+}
+
+function clearPicks() {
+  if (isPlaying) return;
+  picks.forEach(n => document.getElementById('c' + n).classList.remove('picked'));
+  picks.clear();
+  updatePickCount();
+  updatePayoutTable();
+  document.getElementById('result-banner').classList.remove('show');
+  document.getElementById('drawn-balls').innerHTML = '';
+  // reset board cells
+  for (let i = 1; i <= 80; i++) {
+    const c = document.getElementById('c' + i);
+    c.classList.remove('hit', 'drawn-miss', 'locked', 'picked');
+  }
+}
+
+function updatePickCount() {
+  const n = picks.size;
+  document.getElementById('pick-count').textContent = n + ' / 10 picked';
+  const playBtn = document.getElementById('play-btn');
+  playBtn.disabled = n === 0 || credits < currentBet || isPlaying;
+}
+
+
+function updatePayoutTable(hitCount = null) {
+  const n = picks.size;
+  const tbody = document.getElementById('payout-body');
+  tbody.innerHTML = '';
+  document.getElementById('payout-for').textContent = n > 0 ? '— ' + n + '-spot' : '';
+
+  if (n === 0) return;
+  const table = PAYOUTS[n] || {};
+
+  Object.entries(table).sort((a,b) => b[0]-a[0]).forEach(([match, mult]) => {
+    const m = parseInt(match);
+    const tr = document.createElement('tr');
+    const pays = mult * currentBet;
+    if (hitCount !== null && hitCount === m && mult > 0) tr.classList.add('hit-row');
+    else if (hitCount === null && m === n) tr.classList.add('active-row');
+    tr.innerHTML = `<td>${m} of ${n}</td><td>${mult}x</td><td>${pays > 0 ? pays : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+
+async function drawNumbers() {
+  const pool = Array.from({length:80}, (_,i) => i+1);
+  const drawn = [];
+  while (drawn.length < 20) {
+    const idx = Math.floor(Math.random() * pool.length);
+    drawn.push(pool.splice(idx,1)[0]);
+  }
+  return drawn;
+}
+
+async function animateDraw(drawn, picked) {
+  const ballsDiv = document.getElementById('drawn-balls');
+  ballsDiv.innerHTML = '';
+
+  for (let i = 0; i < drawn.length; i++) {
+    await new Promise(r => setTimeout(r, drawDelay));
+    const n = drawn[i];
+    const isHit = picked.has(n);
+
+
+    const dball = document.createElement('div');
+    dball.className = 'dball ' + (isHit ? 'hit-ball' : 'miss-ball');
+    dball.textContent = n;
+    ballsDiv.appendChild(dball);
+
+    // board cell
+    const cell = document.getElementById('c' + n);
+    if (isHit) {
+      cell.classList.remove('picked');
+      cell.classList.add('hit', 'locked');
+      sfxBallHit();
+    } else {
+      cell.classList.add('drawn-miss', 'locked');
+      sfxBallMiss();
+    }
+  }
+}
+
+
+async function playGame() {
+  if (picks.size === 0 || credits < currentBet || isPlaying) return;
+  isPlaying = true;
+  sfxDrawStart();
+  document.getElementById('play-btn').disabled = true;
+  document.getElementById('result-banner').classList.remove('show');
+
+  // reset board then re-apply picks and lock non-picks
+  for (let i = 1; i <= 80; i++) {
+    const c = document.getElementById('c' + i);
+    c.classList.remove('hit', 'drawn-miss', 'locked', 'picked');
+    if (picks.has(i)) c.classList.add('picked');
+  }
+  
+  await new Promise(r => setTimeout(r, 300));
+  for (let i = 1; i <= 80; i++) {
+    if (!picks.has(i)) document.getElementById('c' + i).classList.add('locked');
+  }
+
+  credits -= currentBet;
+  updateStats();
+
+  const drawn = await drawNumbers();
+  await animateDraw(drawn, picks);
+
+  // count hits
+  const drawnSet = new Set(drawn);
+  let hits = 0;
+  picks.forEach(n => { if (drawnSet.has(n)) hits++; });
+
+  // payout
+  const n = picks.size;
+  const table = PAYOUTS[n] || {};
+  const mult = table[hits] ?? 0;
+  const winAmount = mult * currentBet;
+
+  credits += winAmount;
+  if (winAmount > 0) totalWon += winAmount;
+  lastWinAmount = winAmount;
+
+  updateStats(winAmount, hits, n);
+  updatePayoutTable(hits);
+  showResult(hits, n, winAmount, mult);
+
+  isPlaying = false;
+  updatePickCount();
+  checkCredits();
+}
+
+function showResult(hits, n, winAmount, mult) {
+  const banner = document.getElementById('result-banner');
+  const title = document.getElementById('result-title');
+  const sub = document.getElementById('result-sub');
+  const payout = document.getElementById('result-payout');
+
+  let cls, titleText, subText, payText;
+
+  if (winAmount > currentBet * 10) {
+    cls = 'win-color'; titleText = 'BIG WIN!';
+    setTimeout(sfxBigWin, 100);
+  } else if (winAmount > 0) {
+    cls = 'win-color'; titleText = 'WINNER!';
+    setTimeout(sfxWin, 100);
+  } else {
+    cls = 'lose-color'; titleText = 'NO MATCH';
+    setTimeout(sfxLose, 100);
+  }
+
+  subText = hits + ' of ' + n + ' matched · ' + mult + 'x multiplier';
+  payText = (winAmount > 0 ? '+' : '') + winAmount + ' credits';
+
+  title.textContent = titleText;
+  title.className = 'result-title ' + cls;
+  sub.textContent = subText;
+  payout.textContent = payText;
+  payout.className = 'result-payout ' + cls;
+  banner.classList.add('show');
+}
+
+function updateStats(winAmount, hits, n) {
+  document.getElementById('credits').textContent = credits.toLocaleString();
+
+  const lwEl = document.getElementById('last-win');
+  if (winAmount !== undefined) {
+    lwEl.textContent = winAmount > 0 ? '+' + winAmount : '0';
+    lwEl.className = 'stat-val ' + (winAmount > 0 ? 'green' : 'red');
+  }
+
+  document.getElementById('total-won').textContent = totalWon.toLocaleString();
+}
+
+
+let audioCtx = null;
+let soundEnabled = true;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('sound-toggle');
+  btn.textContent = soundEnabled ? '🔊 SOUND ON' : '🔇 SOUND OFF';
+  btn.classList.toggle('muted', !soundEnabled);
+}
+
+// Generic tone helper
+function playTone(freq, type, gainVal, duration, when=0, fadeOut=true) {
+  if (!soundEnabled) return;
+  const ctx = getCtx();
+  const t = ctx.currentTime + when;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+  gain.gain.setValueAtTime(gainVal, t);
+  if (fadeOut) gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + duration + 0.01);
+}
+
+// Click / pick a number
+function sfxPick() {
+  playTone(880, 'sine', 0.18, 0.07);
+  playTone(1100, 'sine', 0.08, 0.05, 0.02);
+}
+
+// Ball drawn – miss
+function sfxBallMiss() {
+  playTone(300, 'triangle', 0.10, 0.08);
+}
+
+// Ball drawn – hit!
+function sfxBallHit() {
+  playTone(660, 'sine', 0.22, 0.12);
+  playTone(880, 'sine', 0.15, 0.10, 0.05);
+  playTone(1100, 'sine', 0.10, 0.09, 0.09);
+}
+
+// Draw button press
+function sfxDrawStart() {
+  if (!soundEnabled) return;
+  const ctx = getCtx();
+  // Rising sweep
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(120, ctx.currentTime);
+  osc.frequency.linearRampToValueAtTime(320, ctx.currentTime + 0.25);
+  gain.gain.setValueAtTime(0.12, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.30);
+}
+
+// Small win jingle
+function sfxWin() {
+  if (!soundEnabled) return;
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((f, i) => playTone(f, 'sine', 0.20, 0.18, i * 0.10));
+}
+
+// Big win fanfare
+function sfxBigWin() {
+  if (!soundEnabled) return;
+  const melody = [523,659,784,1047,1319,1047,1319,1568];
+  melody.forEach((f, i) => {
+    playTone(f, 'sine', 0.22, 0.22, i * 0.10);
+    playTone(f * 0.5, 'triangle', 0.10, 0.22, i * 0.10);
+  });
+  // Coin shower noise burst at the end
+  setTimeout(() => sfxCoins(), 850);
+}
+
+// Coin shower
+function sfxCoins() {
+  if (!soundEnabled) return;
+  const ctx = getCtx();
+  for (let i = 0; i < 12; i++) {
+    const delay = i * 0.055 + Math.random() * 0.03;
+    const freq = 900 + Math.random() * 600;
+    playTone(freq, 'sine', 0.12, 0.09, delay);
+  }
+}
+
+// No win / lose
+function sfxLose() {
+  if (!soundEnabled) return;
+  playTone(220, 'sawtooth', 0.14, 0.20);
+  playTone(180, 'sawtooth', 0.10, 0.25, 0.15);
+}
+
+// Lucky pick
+function sfxLuckyPick() {
+  if (!soundEnabled) return;
+  const sparkle = [1047, 1319, 1568, 2093];
+  sparkle.forEach((f, i) => playTone(f, 'sine', 0.12, 0.12, i * 0.06));
+}
+
+
+const SPEED_MAP = {1: 180, 2: 90, 3: 30};
+const SPEED_LABELS = {1: 'Slow', 2: 'Normal', 3: 'Fast'};
+function setSpeed(val) {
+  drawDelay = SPEED_MAP[val];
+  document.getElementById('speed-val').textContent = SPEED_LABELS[val];
+}
+
+
+function checkCredits() {
+  const banner = document.getElementById('no-credits-banner');
+  if (credits < Math.min(...[1,5,10,25,50,100])) {
+    banner.style.display = 'flex';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+
+
+let adTimerInterval = null;
+
+function watchAd() {
+  document.getElementById('lucky-modal').classList.remove('open');
+  // Open ad modal
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay open';
+  overlay.id = 'ad-overlay';
+  overlay.innerHTML = `
+    <div class="ad-modal">
+      <div class="ad-title">Watch & Earn</div>
+      <div class="ad-sub">Watch the full ad to receive 500 credits</div>
+      <div class="ca-app-pub-3209473338250523/5104430749" id="ad-slot">
+        	AW-11191528704
+        <!-- Example for Google AdSense rewarded:      -->
+        <!-- <ins class="adsbygoogle" ...></ins>        -->
+        <!-- Or call your ad SDK here                  -->
+        <span style="font-size:28px;">📺</span>
+        <span class="ad-slot-label">Ad plays here</span>
+        <span style="font-size:11px;color:#2a3a4a;">Replace this div with your ad tag</span>
+      </div>
+      <div class="ad-timer" id="ad-timer">5</div>
+      <button class="ad-skip-btn" id="ad-skip-btn" onclick="closeAd()" disabled>COLLECT 500 CREDITS</button>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  
+  let t = 5;
+  adTimerInterval = setInterval(() => {
+    t--;
+    const timerEl = document.getElementById('ad-timer');
+    const skipBtn = document.getElementById('ad-skip-btn');
+    if (timerEl) timerEl.textContent = t;
+    if (t <= 0) {
+      clearInterval(adTimerInterval);
+      
+      onAdRewardEarned();
+    }
+  }, 1000);
+}
+
+function closeAd() {
+  clearInterval(adTimerInterval);
+  const overlay = document.getElementById('ad-overlay');
+  if (overlay) overlay.remove();
+}
+
+
+function onAdRewardEarned() {
+  const skipBtn = document.getElementById('ad-skip-btn');
+  if (skipBtn) skipBtn.disabled = false;
+  credits += 500;
+  updateStats();
+  checkCredits();
+  sfxBigWin();
+  
+  setTimeout(() => {
+    closeAd();
+  }, 400);
+}
+
+
+let luckySpot = 8;
+
+function openLuckyModal() {
+  if (isPlaying) return;
+  const grid = document.getElementById('spot-grid');
+  grid.innerHTML = '';
+  [4,5,6,7,8,9,10].forEach(n => {
+    const btn = document.createElement('button');
+    btn.className = 'spot-btn' + (n === luckySpot ? ' sel' : '');
+    btn.textContent = n;
+    btn.onclick = () => {
+      luckySpot = n;
+      grid.querySelectorAll('.spot-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+    };
+    grid.appendChild(btn);
+  });
+  document.getElementById('lucky-modal').classList.add('open');
+}
+
+function closeLuckyModal() {
+  document.getElementById('lucky-modal').classList.remove('open');
+}
+
+function doLuckyPick() {
+  closeLuckyModal();
+  sfxLuckyPick();
+  picks.forEach(n => document.getElementById('c' + n).classList.remove('picked'));
+  picks.clear();
+  for (let i = 1; i <= 80; i++) {
+    document.getElementById('c' + i).classList.remove('hit','drawn-miss','locked','picked');
+  }
+  document.getElementById('result-banner').classList.remove('show');
+  document.getElementById('drawn-balls').innerHTML = '';
+  const pool = Array.from({length:80}, (_,i) => i+1);
+  const chosen = [];
+  while (chosen.length < luckySpot) {
+    const idx = Math.floor(Math.random() * pool.length);
+    chosen.push(pool.splice(idx,1)[0]);
+  }
+  chosen.forEach((n, i) => {
+    setTimeout(() => {
+      picks.add(n);
+      document.getElementById('c' + n).classList.add('picked');
+      updatePickCount();
+      updatePayoutTable();
+    }, i * 80);
+  });
+}
+
+
+initBoard();
+initBets();
+updatePayoutTable();
+</script>
+</body>
+</html>
+</p>
+
+
+  
+
+  
+
+
+</body>
+</html>
