@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "myyttv.com",
+      "sha256_cert_fingerprints": [
+        "82:56:11:9F:49:33:35:BD:C0:FC:2D:5A:12:65:8B:D9:16:B4:D1:D1:A5:C4:11:1F:6E:30:01:15:7C:1B:F1:F8"
+      ]
+    }
+  }
+]
