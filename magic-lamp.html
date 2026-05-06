@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Magic Lamp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Lato:wght@300;400&display=swap');
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+     crossorigin="anonymous"></script>
+
+  :root {
+    --gold: #f0c040;
+    --deep-gold: #c8901a;
+    --glow: #ffe066;
+    --smoke: rgba(180,120,255,0.18);
+    --bg1: #0a0518;
+    --bg2: #12083a;
+    --teal: #00e5cc;
+    --purple: #a855f7;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: radial-gradient(ellipse at center, var(--bg2) 0%, var(--bg1) 100%);
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+  }
+
+  /* Stars */
+  .stars { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .star {
+    position:absolute; border-radius:50%; background:#fff;
+    animation: twinkle var(--d) infinite alternate;
+  }
+  @keyframes twinkle { from{opacity:.1;} to{opacity:1;} }
+
+  h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+    color: var(--gold);
+    text-shadow: 0 0 30px var(--glow), 0 0 60px var(--deep-gold);
+    letter-spacing: .12em;
+    z-index:1;
+    margin-bottom: 8px;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes titleGlow {
+    from { text-shadow: 0 0 20px var(--gold), 0 0 40px var(--deep-gold); }
+    to   { text-shadow: 0 0 40px var(--glow), 0 0 80px var(--gold), 0 2px 2px #000; }
+  }
+
+  /* Wish counter */
+  .wish-counter {
+    z-index:10; font-size:.85rem; color: var(--glow);
+    font-family:'Cinzel Decorative', cursive;
+    letter-spacing:.08em;
+    margin-bottom:24px;
+    background: rgba(0,0,0,.4);
+    border:1px solid var(--deep-gold);
+    padding:6px 20px; border-radius:30px;
+  }
+  .wish-counter span { color:#fff; font-weight:700; font-size:1rem; }
+
+  /* Scene container */
+  .scene {
+    position: relative;
+    z-index:2;
+    display:flex; flex-direction:column; align-items:center;
+  }
+
+  /* Lamp */
+  .lamp-wrap {
+    cursor: pointer;
+    user-select:none;
+    transition: transform .15s;
+    position:relative;
+    width:220px; height:160px;
+    margin-bottom: 30px;
+  }
+  .lamp-wrap:hover { transform:scale(1.04) rotate(-2deg); }
+  .lamp-wrap:active { transform:scale(.97) rotate(2deg); }
+
+  .lamp-svg { width:100%; height:100%; drop-shadow: filter; filter:drop-shadow(0 0 18px var(--deep-gold)) drop-shadow(0 0 6px var(--gold)); }
+
+  .rub-hint {
+    position:absolute; bottom:-22px; left:50%; transform:translateX(-50%);
+    font-size:.75rem; letter-spacing:.2em; color: var(--gold); opacity:.7;
+    white-space:nowrap; font-family:'Cinzel Decorative', cursive;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:.4} 50%{opacity:.9} }
+
+  /* Rub effect */
+  .lamp-wrap.rubbing .lamp-svg { animation: shake .15s infinite; }
+  @keyframes shake {
+    0%{transform:rotate(-3deg) scale(1.03)}
+    50%{transform:rotate(3deg) scale(1.05)}
+    100%{transform:rotate(-3deg) scale(1.03)}
+  }
+
+  /* Genie */
+  .genie-wrap {
+    position:relative; display:flex; flex-direction:column; align-items:center;
+    opacity:0; transform:translateY(60px) scale(.7);
+    transition: opacity .6s cubic-bezier(.2,1.4,.4,1), transform .6s cubic-bezier(.2,1.4,.4,1);
+    pointer-events:none;
+    margin-bottom:10px;
+  }
+  .genie-wrap.visible {
+    opacity:1; transform:translateY(0) scale(1); pointer-events:auto;
+  }
+
+  .genie-svg { width:140px; height:auto; animation: float 3s ease-in-out infinite; }
+  @keyframes float {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)}
+  }
+
+  .speech-bubble {
+    background: rgba(10,5,30,.9);
+    border: 2px solid var(--gold);
+    border-radius:18px;
+    padding:12px 22px;
+    font-family:'Cinzel Decorative', cursive;
+    font-size:.95rem;
+    color:var(--glow);
+    text-align:center;
+    box-shadow:0 0 24px rgba(240,192,64,.3);
+    position:relative;
+    margin-bottom:20px;
+    animation: bubblePop .4s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .speech-bubble::after {
+    content:'';
+    position:absolute; bottom:-14px; left:50%; transform:translateX(-50%);
+    border:7px solid transparent;
+    border-top-color:var(--gold);
+  }
+  @keyframes bubblePop { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+  /* Wish box */
+  .wish-form {
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    opacity:0; transform:scale(.8);
+    transition: opacity .4s .2s, transform .4s .2s cubic-bezier(.2,1.4,.4,1);
+    pointer-events:none;
+  }
+  .wish-form.visible { opacity:1; transform:scale(1); pointer-events:auto; }
+
+  .wish-input {
+    width:320px; max-width:90vw;
+    background:rgba(0,0,0,.6);
+    border:2px solid var(--gold);
+    border-radius:12px;
+    padding:14px 18px;
+    color:#fff;
+    font-size:1rem;
+    font-family:'Lato',sans-serif;
+    outline:none;
+    text-align:center;
+    box-shadow: 0 0 16px rgba(240,192,64,.2);
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .wish-input::placeholder { color:rgba(255,255,255,.4); }
+  .wish-input:focus { border-color:var(--glow); box-shadow:0 0 30px rgba(255,224,102,.35); }
+
+  .wish-btn {
+    background: linear-gradient(135deg, var(--deep-gold), var(--gold));
+    border:none; border-radius:30px;
+    padding:12px 36px;
+    font-family:'Cinzel Decorative', cursive;
+    font-size:.9rem;
+    color:#1a0a00;
+    cursor:pointer;
+    letter-spacing:.08em;
+    box-shadow:0 4px 24px rgba(240,192,64,.4);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .wish-btn:hover { transform:scale(1.05); box-shadow:0 6px 32px rgba(240,192,64,.6); }
+  .wish-btn:active { transform:scale(.97); }
+
+  /* Sparkle canvas */
+  #sparkleCanvas {
+    position:fixed; top:0;left:0;width:100%;height:100%;
+    pointer-events:none; z-index:50;
+  }
+
+  /* Command overlay */
+  .command-overlay {
+    position:fixed; top:0;left:0;width:100%;height:100%;
+    display:flex; align-items:center; justify-content:center;
+    z-index:60;
+    opacity:0; pointer-events:none;
+    transition:opacity .4s;
+  }
+  .command-overlay.visible { opacity:1; }
+  .command-text {
+    font-family:'Cinzel Decorative', cursive;
+    font-size:clamp(1.8rem,5vw,3.5rem);
+    color:var(--gold);
+    text-shadow:0 0 40px var(--glow),0 0 80px var(--deep-gold);
+    text-align:center;
+    animation: commandPulse 1s ease-out;
+  }
+  @keyframes commandPulse {
+    0%{transform:scale(.4);opacity:0}
+    60%{transform:scale(1.1);opacity:1}
+    100%{transform:scale(1);opacity:1}
+  }
+
+  /* Ad modal */
+  .modal-bg {
+    position:fixed; top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,.8); z-index:80;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity .3s;
+  }
+  .modal-bg.visible { opacity:1; pointer-events:auto; }
+  .modal {
+    background:linear-gradient(160deg,#1a0535,#0d1a3a);
+    border:2px solid var(--purple);
+    border-radius:20px;
+    padding:40px 36px;
+    max-width:360px; width:90%;
+    text-align:center;
+    box-shadow:0 0 60px rgba(168,85,247,.3);
+  }
+  .modal h2 {
+    font-family:'Cinzel Decorative',cursive;
+    color:var(--gold); font-size:1.3rem; margin-bottom:12px;
+  }
+  .modal p { color:rgba(255,255,255,.8); margin-bottom:24px; line-height:1.6; }
+  .ad-btn {
+    background:linear-gradient(135deg,var(--purple),#6366f1);
+    border:none; border-radius:30px;
+    padding:12px 32px; color:#fff;
+    font-family:'Cinzel Decorative',cursive;
+    font-size:.85rem; cursor:pointer; margin:6px;
+    box-shadow:0 4px 20px rgba(168,85,247,.4);
+    transition:transform .15s;
+  }
+  .ad-btn:hover { transform:scale(1.05); }
+  .skip-btn {
+    background:transparent; border:1px solid rgba(255,255,255,.3);
+    border-radius:30px; padding:10px 24px; color:rgba(255,255,255,.5);
+    font-size:.8rem; cursor:pointer; margin:6px; transition:all .2s;
+  }
+  .skip-btn:hover { border-color:#fff; color:#fff; }
+
+  /* Smoke puff behind lamp */
+  .smoke-puffs { position:absolute; bottom:80px; left:50%; transform:translateX(-50%); pointer-events:none; }
+  .puff {
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(180,120,255,.6), transparent 70%);
+    animation: puffUp 2s ease-out forwards;
+    opacity:0;
+  }
+  @keyframes puffUp {
+    0%{transform:translateY(0) scale(.2);opacity:.8}
+    100%{transform:translateY(-120px) scale(2.5);opacity:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Sparkle canvas -->
+<canvas id="sparkleCanvas"></canvas>
+
+<!-- Command overlay -->
+<div class="command-overlay" id="commandOverlay">
+  <div class="command-text">✨ Your wish is my command! ✨</div>
+</div>
+
+<!-- Ad Modal -->
+<div class="modal-bg" id="adModal">
+  <div class="modal">
+    <h2>🌟 More Wishes!</h2>
+    <p>Your free wish has been used.<br>Watch a short ad to earn more wishes from the genie!</p>
+    <button class="ad-btn" id="watchAdBtn">▶ Watch Ad (+3 Wishes)</button><br>
+    <button class="skip-btn" id="skipBtn">Maybe Later</button>
+  </div>
+</div>
+
+<h1>✦ The Magic Lamp ✦</h1>
+<div class="wish-counter">Wishes Remaining: <span id="wishCount">1</span></div>
+
+<div class="scene">
+  <!-- Genie -->
+  <div class="genie-wrap" id="genieWrap">
+    <div class="speech-bubble" id="speechBubble">What is your wish, Master? ✨</div>
+    <!-- Genie SVG -->
+    <svg class="genie-svg" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+      <!-- Smoke tail -->
+      <ellipse cx="60" cy="148" rx="18" ry="10" fill="rgba(168,85,247,.4)"/>
+      <path d="M42 140 Q30 120 40 100 Q50 80 42 60 Q54 70 60 90 Q66 70 78 60 Q70 80 80 100 Q90 120 78 140 Z"
+            fill="url(#smokeGrad)" opacity=".7"/>
+      <!-- Body -->
+      <ellipse cx="60" cy="95" rx="28" ry="35" fill="url(#bodyGrad)"/>
+      <!-- Belt -->
+      <rect x="33" y="106" width="54" height="9" rx="4" fill="#c8901a"/>
+      <circle cx="60" cy="110.5" r="5" fill="#f0c040"/>
+      <!-- Arms -->
+      <ellipse cx="32" cy="90" rx="9" ry="22" fill="#00ccaa" transform="rotate(-15 32 90)"/>
+      <ellipse cx="88" cy="90" rx="9" ry="22" fill="#00ccaa" transform="rotate(15 88 90)"/>
+      <!-- Hands -->
+      <circle cx="25" cy="76" r="8" fill="#ffcc88"/>
+      <circle cx="95" cy="76" r="8" fill="#ffcc88"/>
+      <!-- Head -->
+      <ellipse cx="60" cy="52" rx="22" ry="24" fill="#ffcc88"/>
+      <!-- Turban -->
+      <ellipse cx="60" cy="35" rx="24" ry="10" fill="#5b21b6"/>
+      <path d="M36 35 Q60 20 84 35 Q60 26 36 35Z" fill="#7c3aed"/>
+      <circle cx="60" cy="28" r="6" fill="#f0c040"/>
+      <path d="M57 28 L53 18 L60 22 L67 18 L63 28Z" fill="#f0c040"/>
+      <!-- Eyes -->
+      <ellipse cx="53" cy="51" rx="4" ry="5" fill="#fff"/>
+      <ellipse cx="67" cy="51" rx="4" ry="5" fill="#fff"/>
+      <circle cx="54" cy="52" r="2.5" fill="#2d1b69"/>
+      <circle cx="68" cy="52" r="2.5" fill="#2d1b69"/>
+      <circle cx="55" cy="51" r="1" fill="#fff"/>
+      <circle cx="69" cy="51" r="1" fill="#fff"/>
+      <!-- Smile -->
+      <path d="M52 62 Q60 70 68 62" stroke="#c8901a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Eyebrows -->
+      <path d="M49 46 Q53 43 57 46" stroke="#5b21b6" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M63 46 Q67 43 71 46" stroke="#5b21b6" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Earring -->
+      <circle cx="38" cy="54" r="3" fill="#f0c040" opacity=".9"/>
+      <defs>
+        <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00e5cc"/>
+          <stop offset="100%" style="stop-color:#0077aa"/>
+        </linearGradient>
+        <linearGradient id="smokeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:.6"/>
+          <stop offset="100%" style="stop-color:#a855f7;stop-opacity:.1"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <!-- Wish form -->
+    <div class="wish-form" id="wishForm">
+      <input class="wish-input" id="wishInput" type="text" placeholder="Type your wish here..." maxlength="120"/>
+      <button class="wish-btn" id="grantBtn">🌟 Grant My Wish</button>
+    </div>
+  </div>
+
+  <!-- Lamp -->
+  <div class="lamp-wrap" id="lampWrap">
+    <div class="smoke-puffs" id="smokePuffs"></div>
+    <svg class="lamp-svg" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lampBody" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#ffe066"/>
+          <stop offset="40%" style="stop-color:#f0c040"/>
+          <stop offset="100%" style="stop-color:#a0600a"/>
+        </radialGradient>
+        <radialGradient id="lampShine" cx="35%" cy="30%" r="50%">
+          <stop offset="0%" style="stop-color:rgba(255,255,255,.5)"/>
+          <stop offset="100%" style="stop-color:transparent"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Shadow -->
+      <ellipse cx="110" cy="154" rx="55" ry="8" fill="rgba(0,0,0,.4)"/>
+      <!-- Spout -->
+      <path d="M20 90 Q10 70 30 60 Q50 50 60 70" fill="url(#lampBody)" stroke="#a0600a" stroke-width="1.5"/>
+      <!-- Body -->
+      <path d="M55 110 Q40 95 45 70 Q50 45 90 38 Q130 32 150 50 Q175 65 170 90 Q165 112 145 120 Q120 132 90 128 Q65 126 55 110Z" fill="url(#lampBody)"/>
+      <!-- Shine overlay -->
+      <path d="M55 110 Q40 95 45 70 Q50 45 90 38 Q130 32 150 50 Q175 65 170 90 Q165 112 145 120 Q120 132 90 128 Q65 126 55 110Z" fill="url(#lampShine)"/>
+      <!-- Handle -->
+      <path d="M148 60 Q185 40 190 75 Q193 100 160 105" fill="none" stroke="url(#lampBody)" stroke-width="14" stroke-linecap="round"/>
+      <path d="M148 60 Q185 40 190 75 Q193 100 160 105" fill="none" stroke="#f0c040" stroke-width="8" stroke-linecap="round"/>
+      <!-- Base/foot -->
+      <path d="M70 128 Q90 145 130 140 Q145 138 145 120" fill="url(#lampBody)" stroke="#a0600a" stroke-width="1.5"/>
+      <!-- Decorative lines -->
+      <path d="M75 85 Q110 78 145 88" fill="none" stroke="rgba(160,96,10,.5)" stroke-width="2"/>
+      <path d="M68 100 Q105 95 148 105" fill="none" stroke="rgba(160,96,10,.4)" stroke-width="1.5"/>
+      <!-- Flame/glow at spout -->
+      <ellipse cx="27" cy="57" rx="8" ry="5" fill="#ffe066" opacity=".85" filter="url(#glow)"/>
+      <ellipse cx="27" cy="55" rx="5" ry="7" fill="#fff" opacity=".6"/>
+    </svg>
+    <div class="rub-hint">✦ RUB THE LAMP ✦</div>
+  </div>
+</div>
+
+<script>
+// Stars
+const starsEl = document.getElementById('stars');
+for(let i=0;i<120;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const size=Math.random()*2.5+.5;
+  s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+1).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;
+  starsEl.appendChild(s);
+}
+
+// State
+let wishes = 1;
+let genieVisible = false;
+let rubCount = 0;
+let rubTimer = null;
+
+const lampWrap = document.getElementById('lampWrap');
+const genieWrap = document.getElementById('genieWrap');
+const wishForm = document.getElementById('wishForm');
+const wishInput = document.getElementById('wishInput');
+const grantBtn = document.getElementById('grantBtn');
+const speechBubble = document.getElementById('speechBubble');
+const commandOverlay = document.getElementById('commandOverlay');
+const adModal = document.getElementById('adModal');
+const wishCountEl = document.getElementById('wishCount');
+
+function updateCount(){ wishCountEl.textContent = wishes; }
+
+// Smoke puffs
+function spawnPuffs(){
+  const puffsEl = document.getElementById('smokePuffs');
+  puffsEl.innerHTML='';
+  for(let i=0;i<6;i++){
+    const p=document.createElement('div');
+    p.className='puff';
+    const sz=30+Math.random()*40;
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${-sz/2+Math.random()*30-15}px;animation-delay:${i*.18}s;animation-duration:${1.5+Math.random()}s`;
+    puffsEl.appendChild(p);
+  }
+  setTimeout(()=>puffsEl.innerHTML='',3000);
+}
+
+// Rub lamp
+let rubInterval=null;
+lampWrap.addEventListener('mousedown', startRub);
+lampWrap.addEventListener('touchstart', startRub, {passive:true});
+document.addEventListener('mouseup', stopRub);
+document.addEventListener('touchend', stopRub);
+
+function startRub(e){
+  if(genieVisible) return;
+  lampWrap.classList.add('rubbing');
+  rubCount=0;
+  rubInterval=setInterval(()=>{
+    rubCount++;
+    if(rubCount>=3){ stopRub(); summonGenie(); }
+  },200);
+}
+function stopRub(){
+  lampWrap.classList.remove('rubbing');
+  clearInterval(rubInterval);
+}
+
+function summonGenie(){
+  spawnPuffs();
+  playChime(0.3, [523,659,784,1047]);
+  setTimeout(()=>{
+    genieVisible=true;
+    genieWrap.classList.add('visible');
+    speechBubble.textContent='What is your wish, Master? ✨';
+    setTimeout(()=>wishForm.classList.add('visible'),400);
+  },400);
+}
+
+// Grant wish
+grantBtn.addEventListener('click', grantWish);
+wishInput.addEventListener('keydown', e=>{ if(e.key==='Enter') grantWish(); });
+
+function grantWish(){
+  const wish = wishInput.value.trim();
+  if(!wish) return wishInput.focus();
+  if(wishes<=0){
+    showAdModal(); return;
+  }
+  wishes--;
+  updateCount();
+  // Say command
+  wishForm.classList.remove('visible');
+  speechBubble.textContent='Your wish is my command! 🌟';
+  // Magic!
+  setTimeout(()=>{
+    commandOverlay.classList.add('visible');
+    launchSparkles();
+    playMagicChimes();
+    setTimeout(()=>commandOverlay.classList.remove('visible'),3000);
+  },600);
+  // Reset after
+  setTimeout(()=>{
+    genieWrap.classList.remove('visible');
+    genieVisible=false;
+    wishInput.value='';
+    wishForm.classList.remove('visible');
+    if(wishes===0) setTimeout(showAdModal,1200);
+  },4000);
+}
+
+// Sparkle canvas
+const canvas = document.getElementById('sparkleCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+let particles=[];
+let animating=false;
+
+function launchSparkles(){
+  particles=[];
+  for(let i=0;i<200;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=2+Math.random()*8;
+    particles.push({
+      x:window.innerWidth/2, y:window.innerHeight/2,
+      vx:Math.cos(angle)*speed*(0.5+Math.random()),
+      vy:Math.sin(angle)*speed*(0.5+Math.random())-3,
+      size:2+Math.random()*5,
+      color:`hsl(${40+Math.random()*40},100%,${60+Math.random()*30}%)`,
+      alpha:1, life:1, decay:.01+Math.random()*.025,
+      type: Math.random()<.5?'star':'circle',
+      spin:Math.random()*0.2-0.1,
+      sparkle:Math.random()<.4,
+    });
+  }
+  // Also smoke particles
+  for(let i=0;i<80;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=1+Math.random()*4;
+    particles.push({
+      x:window.innerWidth/2+Math.random()*200-100,
+      y:window.innerHeight/2+Math.random()*100,
+      vx:Math.cos(angle)*speed*.6,
+      vy:Math.sin(angle)*speed*.6-2,
+      size:15+Math.random()*40,
+      color:`hsla(${270+Math.random()*60},70%,60%,`,
+      alpha:.5, life:1, decay:.008+Math.random()*.015,
+      type:'smoke', smoke:true,
+    });
+  }
+  if(!animating){ animating=true; animateSparkles(); }
+}
+
+function animateSparkles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles=particles.filter(p=>p.alpha>0);
+  for(const p of particles){
+    p.x+=p.vx; p.y+=p.vy;
+    if(!p.smoke){ p.vy+=0.15; } else { p.vy-=0.05; p.size*=1.008; }
+    p.life-=p.decay;
+    p.alpha=Math.max(0,p.life);
+    ctx.save();
+    ctx.globalAlpha=p.alpha;
+    if(p.smoke){
+      ctx.fillStyle=p.color+p.alpha+')';
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fill();
+    } else if(p.type==='star'){
+      ctx.fillStyle=p.color;
+      ctx.translate(p.x,p.y);
+      if(p.spin) ctx.rotate(p.life*10*p.spin);
+      drawStar(ctx,0,0,p.size/2,p.size,5);
+      ctx.fill();
+    } else {
+      ctx.fillStyle=p.color;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size/2,0,Math.PI*2);
+      ctx.fill();
+    }
+    // Sparkle cross
+    if(p.sparkle && !p.smoke){
+      ctx.fillStyle='rgba(255,255,255,.8)';
+      ctx.fillRect(p.x-1,p.y-p.size,2,p.size*2);
+      ctx.fillRect(p.x-p.size,p.y-1,p.size*2,2);
+    }
+    ctx.restore();
+  }
+  if(particles.length>0) requestAnimationFrame(animateSparkles);
+  else { animating=false; ctx.clearRect(0,0,canvas.width,canvas.height); }
+}
+
+function drawStar(ctx,cx,cy,ir,or,pts){
+  ctx.beginPath();
+  for(let i=0;i<pts*2;i++){
+    const r=i%2===0?or:ir;
+    const a=(i*Math.PI)/pts - Math.PI/2;
+    ctx[i===0?'moveTo':'lineTo'](cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+  }
+  ctx.closePath();
+}
+
+// Audio
+function playChime(vol=.3, freqs=[523,659,784,1047]){
+  try{
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    freqs.forEach((f,i)=>{
+      setTimeout(()=>{
+        const o=ac.createOscillator(), g=ac.createGain();
+        o.type='sine'; o.frequency.value=f;
+        g.gain.setValueAtTime(0,ac.currentTime);
+        g.gain.linearRampToValueAtTime(vol,ac.currentTime+.05);
+        g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+1.2);
+        o.connect(g); g.connect(ac.destination);
+        o.start(); o.stop(ac.currentTime+1.2);
+      },i*160);
+    });
+  }catch(e){}
+}
+
+function playMagicChimes(){
+  try{
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    const scale=[523,587,659,698,784,880,988,1047,1175,1319];
+    for(let i=0;i<20;i++){
+      setTimeout(()=>{
+        const f=scale[Math.floor(Math.random()*scale.length)]*(Math.random()<.3?2:1);
+        const o=ac.createOscillator(), g=ac.createGain();
+        o.type=Math.random()<.5?'sine':'triangle';
+        o.frequency.value=f;
+        g.gain.setValueAtTime(0,ac.currentTime);
+        g.gain.linearRampToValueAtTime(.15,ac.currentTime+.03);
+        g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+1.5);
+        o.connect(g); g.connect(ac.destination);
+        o.start(); o.stop(ac.currentTime+1.5);
+      },i*120+Math.random()*100);
+    }
+  }catch(e){}
+}
+
+// Ad modal
+function showAdModal(){
+  adModal.classList.add('visible');
+}
+document.getElementById('watchAdBtn').addEventListener('click',()=>{
+  // Simulate ad
+  const btn=document.getElementById('watchAdBtn');
+  btn.textContent='⏳ Watching ad...';
+  btn.disabled=true;
+  let t=5;
+  const iv=setInterval(()=>{
+    t--;
+    btn.textContent=`⏳ Ad ends in ${t}s...`;
+    if(t<=0){
+      clearInterval(iv);
+      wishes+=3; updateCount();
+      adModal.classList.remove('visible');
+      btn.textContent='▶ Watch Ad (+3 Wishes)';
+      btn.disabled=false;
+      playChime(.2,[523,784,1047]);
+    }
+  },1000);
+});
+document.getElementById('skipBtn').addEventListener('click',()=>{
+  adModal.classList.remove('visible');
+});
+</script>
+</body>
+</html>

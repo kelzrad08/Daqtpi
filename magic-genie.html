@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Genie Wish ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #f0c060;
+      --gold-glow: #ffdd88;
+      --cyan: #00e5ff;
+      --purple: #7c3aed;
+      --deep: #050010;
+      --smoke: rgba(255,255,255,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--deep);
+      color: white;
+      font-family: 'Raleway', sans-serif;
+      height: 100dvh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Stars background ── */
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(1px 1px at 20% 15%, white 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 30%, white 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, white 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 50% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 85%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    }
+
+    /* ── Lamp on summon screen ── */
+    #lampIcon {
+      font-size: clamp(60px, 15vw, 100px);
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px var(--gold));
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s;
+    }
+    #lampIcon:active { transform: scale(0.92) rotate(-10deg); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* ── Smoke particles ── */
+    .smoke-particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: smokeDrift 4s ease-out forwards;
+      z-index: 1;
+    }
+    @keyframes smokeDrift {
+      0%   { opacity: 0.7; transform: translateY(0) scale(0.5); }
+      100% { opacity: 0;   transform: translateY(-200px) scale(3); }
+    }
+
+    /* ── Flash ── */
+    #flash {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at center, var(--cyan), var(--gold), transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 0.3s;
+    }
+
+    /* ── Screen base ── */
+    .screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 24px;
+      z-index: 5;
+      padding: 24px;
+      transition: opacity 0.8s ease;
+    }
+    .screen.hidden { opacity: 0; pointer-events: none; }
+
+    /* ── Summon screen ── */
+    #summonScreen h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(28px, 7vw, 52px);
+      background: linear-gradient(135deg, var(--gold), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      letter-spacing: 2px;
+      text-align: center;
+      line-height: 1.3;
+    }
+    #summonScreen p {
+      color: rgba(255,255,255,0.5);
+      font-size: clamp(13px, 3vw, 16px);
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── Genie container ── */
+    #genieContainer {
+      position: fixed;
+      bottom: -80vh;
+      left: 50%;
+      transform: translateX(-50%);
+      height: clamp(280px, 55vh, 500px);
+      opacity: 0;
+      transition: bottom 2s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.5s ease;
+      z-index: 4;
+      pointer-events: none;
+    }
+    #genieContainer.risen {
+      bottom: -10px;
+      opacity: 1;
+    }
+    #genieVideo {
+      height: 100%;
+      filter: drop-shadow(0 0 40px var(--cyan)) drop-shadow(0 0 80px rgba(0,229,255,0.3));
+    }
+
+    /* ── Wish screen ── */
+    #wishScreen { justify-content: flex-start; padding-top: clamp(20px, 6vh, 60px); }
+
+    #wishScreen h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(18px, 4.5vw, 28px);
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold-glow);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .wish-box {
+      background: var(--smoke);
+      border: 1px solid rgba(240, 192, 96, 0.3);
+      border-radius: 20px;
+      padding: clamp(16px, 4vw, 28px);
+      width: min(480px, 92vw);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(0,229,255,0.05), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    #wishInput {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(240,192,96,0.4);
+      background: rgba(0,0,0,0.4);
+      color: white;
+      font-size: clamp(15px, 3.5vw, 18px);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      resize: none;
+    }
+    #wishInput::placeholder { color: rgba(255,255,255,0.3); }
+    #wishInput:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0,229,255,0.2);
+    }
+
+    /* ── Response bubble ── */
+    #genieResponse {
+      margin-top: 12px;
+      min-height: 48px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(0,229,255,0.1));
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: clamp(13px, 3vw, 15px);
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 0.5s;
+      display: none;
+    }
+    #genieResponse.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      padding: clamp(12px, 3vw, 16px) clamp(24px, 6vw, 40px);
+      border-radius: 50px;
+      border: none;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(13px, 3vw, 16px);
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: transform 0.15s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:active { transform: scale(0.96); }
+
+    .btn-summon {
+      background: linear-gradient(135deg, #7c3aed, #00e5ff);
+      color: white;
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    }
+    .btn-summon:hover { box-shadow: 0 0 50px rgba(0,229,255,0.5); }
+
+    .btn-grant {
+      background: linear-gradient(135deg, var(--gold), #e07b00);
+      color: #1a0a00;
+      font-weight: 700;
+      box-shadow: 0 0 30px rgba(240,192,96,0.4);
+      width: 100%;
+      margin-top: 8px;
+    }
+    .btn-grant:hover { box-shadow: 0 0 50px rgba(240,192,96,0.6); }
+    .btn-grant:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-again {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.6);
+      font-family: 'Raleway', sans-serif;
+      font-size: 13px;
+      padding: 8px 20px;
+      margin-top: 4px;
+      width: 100%;
+    }
+    .btn-again:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── Speaking indicator ── */
+    #speakingDots {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    #speakingDots.active { display: flex; }
+    #speakingDots span {
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: bounce 0.8s ease-in-out infinite;
+    }
+    #speakingDots span:nth-child(2) { animation-delay: 0.15s; }
+    #speakingDots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50%       { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* ── Mystical orbiting particles ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      animation: orbit linear infinite;
+    }
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="flash"></div>
+
+<!-- Orbiting orbs -->
+<div class="orb" style="width:8px;height:8px;background:var(--cyan);opacity:0.5;top:50%;left:50%;--r:40vw;animation-duration:18s;"></div>
+<div class="orb" style="width:5px;height:5px;background:var(--gold);opacity:0.4;top:50%;left:50%;--r:35vw;animation-duration:12s;animation-direction:reverse;"></div>
+<div class="orb" style="width:4px;height:4px;background:white;opacity:0.3;top:50%;left:50%;--r:45vw;animation-duration:25s;"></div>
+
+<!-- SUMMON SCREEN -->
+<div class="screen" id="summonScreen">
+  <div id="lampIcon" onclick="summonGenie()" role="button" aria-label="Tap to summon the genie">🪔</div>
+  <h1>Genie Wish</h1>
+  <p>Tap the lamp to begin</p>
+  <button class="btn btn-summon" onclick="summonGenie()" aria-label="Summon Genie">✨ Summon Genie</button>
+</div>
+
+<!-- GENIE VIDEO -->
+<div id="genieContainer" aria-hidden="true">
+  <video id="genieVideo" autoplay muted loop playsinline src="Genie.mp4"></video>
+</div>
+
+<!-- WISH SCREEN -->
+<div class="screen hidden" id="wishScreen">
+  <h2>What is your wish?</h2>
+  <div class="wish-box">
+    <textarea
+      id="wishInput"
+      rows="2"
+      placeholder="Speak your heart's desire..."
+      aria-label="Type your wish"
+      maxlength="200"
+    ></textarea>
+
+    <div id="genieResponse" role="status" aria-live="polite"></div>
+
+    <div id="speakingDots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <button class="btn btn-grant" id="grantBtn" onclick="grantWish()" aria-label="Grant my wish">
+      🌟 Grant My Wish
+    </button>
+    <button class="btn btn-again" onclick="makeAnotherWish()" aria-label="Make another wish">
+      Make another wish
+    </button>
+  </div>
+</div>
+
+<audio id="genieAudio" src="Genie.mp3"></audio>
+
+<script>
+  let summoned = false;
+  let godVoice = null;
+
+  // ── Voice loading ──
+  function loadVoice() {
+    const voices = speechSynthesis.getVoices();
+    godVoice =
+      voices.find(v => v.name.toLowerCase().includes("samantha")) ||
+      voices.find(v => v.name.toLowerCase().includes("google uk english female")) ||
+      voices.find(v => v.lang === "en-GB" && v.name.toLowerCase().includes("female")) ||
+      voices.find(v => v.lang.startsWith("en"));
+  }
+  speechSynthesis.onvoiceschanged = loadVoice;
+  loadVoice();
+
+  // ── Smoke particles ──
+  function spawnSmoke(x, y, count = 12) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("div");
+      el.className = "smoke-particle";
+      const size = 20 + Math.random() * 40;
+      const hue = Math.random() > 0.5 ? "rgba(0,229,255,0.4)" : "rgba(124,58,237,0.4)";
+      el.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${hue};
+        left:${x + (Math.random()-0.5)*80}px;
+        top:${y + (Math.random()-0.5)*40}px;
+        animation-delay:${Math.random()*0.5}s;
+        filter:blur(${8+Math.random()*12}px);
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4500);
+    }
+  }
+
+  // ── Flash ──
+  function flashMagic() {
+    const f = document.getElementById("flash");
+    f.style.opacity = "0.6";
+    setTimeout(() => { f.style.opacity = "0"; }, 500);
+  }
+
+  // ── Speak ──
+  function speakGod(text, onDone) {
+    const dots = document.getElementById("speakingDots");
+    const speech = new SpeechSynthesisUtterance(text);
+    if (godVoice) speech.voice = godVoice;
+    speech.pitch = 1.1;
+    speech.rate  = 0.88;
+    speech.volume = 1;
+
+    dots.classList.add("active");
+    speech.onend = () => {
+      dots.classList.remove("active");
+      if (onDone) onDone();
+    };
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(speech);
+  }
+
+  // ── Genie responses ──
+  const genieResponses = [
+    "Your wish has been heard across the cosmos. May it manifest in ways beyond your imagination.",
+    "As you wish, so it shall be. The stars themselves bend to your desire.",
+    "I have woven your wish into the fabric of the universe. Watch for signs of its arrival.",
+    "Granted! Though the greatest magic always comes from within.",
+    "Your wish echoes through time and space. Trust the journey ahead.",
+  ];
+
+  function getResponse(wish) {
+    // Pick a response — could be connected to an AI API for personalized replies!
+    return genieResponses[Math.floor(Math.random() * genieResponses.length)];
+  }
+
+  // ── Summon ──
+  function summonGenie() {
+    if (summoned) return;
+    summoned = true;
+
+    const lamp = document.getElementById("lampIcon");
+    const lampRect = lamp.getBoundingClientRect();
+    spawnSmoke(lampRect.left + lampRect.width/2, lampRect.top, 18);
+
+    document.getElementById("summonScreen").classList.add("hidden");
+
+    setTimeout(() => {
+      const genie = document.getElementById("genieContainer");
+      genie.classList.add("risen");
+
+      document.getElementById("wishScreen").classList.remove("hidden");
+
+      const audio = document.getElementById("genieAudio");
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+
+      document.getElementById("genieVideo").muted = false;
+
+      flashMagic();
+      spawnSmoke(window.innerWidth/2, window.innerHeight*0.6, 20);
+
+      speakGod("Your lamp has summoned me. I am yours. Speak your wish.");
+    }, 300);
+  }
+
+  // ── Grant wish ──
+  function grantWish() {
+    const wish = document.getElementById("wishInput").value.trim();
+    if (!wish) {
+      document.getElementById("wishInput").focus();
+      return;
+    }
+
+    const btn = document.getElementById("grantBtn");
+    btn.disabled = true;
+
+    flashMagic();
+    spawnSmoke(window.innerWidth/2, window.innerHeight*0.5, 25);
+
+    const response = getResponse(wish);
+    const responseEl = document.getElementById("genieResponse");
+    responseEl.textContent = `"${response}"`;
+    responseEl.classList.add("visible");
+
+    speakGod(response, () => { btn.disabled = false; });
+  }
+
+  // ── Another wish ──
+  function makeAnotherWish() {
+    document.getElementById("wishInput").value = "";
+    const responseEl = document.getElementById("genieResponse");
+    responseEl.classList.remove("visible");
+    responseEl.textContent = "";
+    document.getElementById("grantBtn").disabled = false;
+    document.getElementById("wishInput").focus();
+    spawnSmoke(window.innerWidth/2, window.innerHeight*0.5, 10);
+    speakGod("Your next wish awaits. What do you desire?");
+  }
+
+  // ── Enter key shortcut ──
+  document.getElementById("wishInput")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      grantWish();
+    }
+  });
+</script>
+</body>
+</html>

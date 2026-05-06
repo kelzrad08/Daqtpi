@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+
+    
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3209473338250523~9510579617"
+    crossorigin="anonymous">
+  </script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f5f5f5;
+      color: #222;
+    }
+    h2 { margin-top: 40px; color: #444; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+    .ad-label { font-size: 11px; color: #999; text-align: center; margin-bottom: 2px; }
+    .ad-slot { background: #e8e8e8; border: 1px dashed #aaa; margin: 10px 0 30px; }
+
+    
+    #reward-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 14px 32px;
+      font-size: 16px;
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #reward-btn:hover { background: #1558b0; }
+    #reward-btn:disabled { background: #aaa; cursor: not-allowed; }
+    #reward-status { text-align: center; margin-top: 12px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+
+  <p>  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keno Number Generator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f1923;
+      color: #e8eaf0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #19242f;
+      border: 1px solid #2a3a4a;
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #e8eaf0;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #6b7d8e;
+      margin-bottom: 1.75rem;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6b7d8e;
+      margin-bottom: 10px;
+    }
+
+    .count-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .count-btn {
+      border: 1px solid #2a3a4a;
+      background: #222f3a;
+      color: #9ab0c4;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .count-btn:hover {
+      background: #2a3a4a;
+      color: #e8eaf0;
+    }
+
+    .count-btn.active {
+      background: #1565c0;
+      border-color: #1976d2;
+      color: #e3f2fd;
+    }
+
+    .drawn-label {
+      font-size: 12px;
+      color: #6b7d8e;
+      margin-bottom: 12px;
+      min-height: 16px;
+    }
+
+    .balls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.75rem;
+      min-height: 64px;
+    }
+
+    .ball {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid #2a3a4a;
+      background: #222f3a;
+      color: #4a5a6a;
+      transition: all 0.3s;
+    }
+
+    .ball.drawn {
+      background: #1565c0;
+      border-color: #1976d2;
+      color: #e3f2fd;
+      box-shadow: 0 0 12px rgba(21, 101, 192, 0.4);
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.4); opacity: 0; }
+      60%  { transform: scale(1.18); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .ball.pop { animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+    .gen-btn {
+      width: 100%;
+      border: 1px solid #2a3a4a;
+      background: #222f3a;
+      color: #e8eaf0;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .gen-btn:hover { background: #2a3a4a; }
+    .gen-btn:active { transform: scale(0.98); }
+
+    .history {
+      margin-top: 1.75rem;
+      border-top: 1px solid #2a3a4a;
+      padding-top: 1.25rem;
+    }
+
+    .hist-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      color: #6b7d8e;
+      padding: 6px 0;
+      border-bottom: 1px solid #1e2d3a;
+    }
+
+    .hist-row:last-child { border-bottom: none; }
+
+    .hist-label {
+      min-width: 24px;
+      font-weight: 500;
+      color: #4a5a6a;
+    }
+
+    .hist-nums {
+      color: #9ab0c4;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Keno Generator</h1>
+    <p class="subtitle">Pick your spot count, then draw your numbers.</p>
+
+    <div class="label">How many numbers?</div>
+    <div class="count-row" id="count-row"></div>
+
+    <div class="drawn-label" id="drawn-label"></div>
+    <div class="balls-grid" id="balls-grid"></div>
+
+    <button class="gen-btn" onclick="generate()">Draw numbers</button>
+
+    <div class="history" id="history" style="display:none;">
+      <div class="label" style="margin-bottom:8px;">Previous draws</div>
+      <div id="hist-list"></div>
+    </div>
+  </div>
+
+  <script>
+    let selected = 8;
+    let historyArr = [];
+    const counts = [4, 5, 6, 7, 8, 9, 10];
+    const row = document.getElementById('count-row');
+
+    counts.forEach(n => {
+      const b = document.createElement('button');
+      b.className = 'count-btn' + (n === selected ? ' active' : '');
+      b.textContent = n;
+      b.onclick = () => {
+        selected = n;
+        document.querySelectorAll('.count-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        document.getElementById('balls-grid').innerHTML = '';
+        document.getElementById('drawn-label').textContent = '';
+      };
+      row.appendChild(b);
+    });
+
+    function generate() {
+      const pool = Array.from({ length: 80 }, (_, i) => i + 1);
+      const nums = [];
+      while (nums.length < selected) {
+        const idx = Math.floor(Math.random() * pool.length);
+        nums.push(pool.splice(idx, 1)[0]);
+      }
+      nums.sort((a, b) => a - b);
+
+      const grid = document.getElementById('balls-grid');
+      grid.innerHTML = '';
+      document.getElementById('drawn-label').textContent = selected + ' numbers drawn from 1–80';
+
+      nums.forEach((n, i) => {
+        const ball = document.createElement('div');
+        ball.className = 'ball';
+        ball.textContent = n;
+        grid.appendChild(ball);
+        setTimeout(() => ball.classList.add('drawn', 'pop'), i * 80);
+      });
+
+      historyArr.unshift(nums);
+      if (historyArr.length > 5) historyArr.pop();
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const hist = document.getElementById('history');
+      const list = document.getElementById('hist-list');
+      if (historyArr.length === 0) { hist.style.display = 'none'; return; }
+      hist.style.display = 'block';
+      list.innerHTML = '';
+      historyArr.forEach((nums, i) => {
+        const r = document.createElement('div');
+        r.className = 'hist-row';
+        r.innerHTML = `<span class="hist-label">#${i + 1}</span><span class="hist-nums">${nums.join('  ·  ')}</span>`;
+        list.appendChild(r);
+      });
+    }
+  </script></p>
+
+
+  
+
+
+
+</body>
+</html>
