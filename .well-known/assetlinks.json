@@ -4,7 +4,7 @@
       "delegate_permission/common.handle_all_urls",
       "delegate_permission/common.get_login_creds"
     ],
-    "target": {https://daqtpi.com/youtube/.well-known/assetlinks.json
+    "target": "https://youtube.com/@Daqtpi"
       "namespace": "android_app",
       "package_name": "com.daqtpi",
       "sha256_cert_fingerprints": [
@@ -14,13 +14,3 @@
   }
 ]
 
-    <intent-filter android:autoVerify="true">
-      <action android:name="android.intent.action.VIEW" />
-      <category android:name="android.intent.category.DEFAULT" />
-      <category android:name="android.intent.category.BROWSABLE" />
-      <data android:scheme="https"
-          android:host="daqtpi.com"
-          android:path="/referee" />
-  
-    </intent-filter>
-  
