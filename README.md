@@ -6,3 +6,9 @@ https://daqtpi.com/referee
 https://daqtpi.com/referee2
 https://daqtpi.com/taser
 https://daqtpi.com/taser2
+https://daqtpi.com/apkeditor
+https://daqtpi.com/magic-genie
+https://daqtpi.com/magic-lamp
+https://daqtpi.com/keno-number-generator
+https://daqtpi.com/success
+
