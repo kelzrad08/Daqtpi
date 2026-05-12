@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11191528704"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11191528704');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Channel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --card: #161616;
+    --card-hover: #1e1e1e;
+    --border: #2a2a2a;
+    --red: #ff2d2d;
+    --red-dim: rgba(255,45,45,0.12);
+    --ink: #f0f0f0;
+    --muted: #888;
+    --sub: #555;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* Scanline texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.012) 2px,
+      rgba(255,255,255,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 22px;
+    background: var(--red);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon::after {
+    content: '';
+    border-left: 10px solid white;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 2px;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  .channel-name {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    border-left: 1px solid var(--border);
+    padding-left: 0.75rem;
+    margin-left: 0.15rem;
+  }
+
+  .search-wrap {
+    flex: 1;
+    max-width: 360px;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    padding: 0.5rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-wrap input::placeholder { color: var(--sub); }
+  .search-wrap input:focus { border-color: var(--red); }
+
+  .video-count {
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Main */
+  main {
+    padding: 2.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Section title */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .section-head h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+
+  .section-head .bar {
+    height: 2px;
+    flex: 1;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--red);
+    box-shadow: 0 8px 32px rgba(255,45,45,0.12);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .thumb-wrap {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .thumb-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .card:hover .thumb-wrap img {
+    transform: scale(1.04);
+  }
+
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s;
+  }
+
+  .card:hover .play-overlay {
+    background: rgba(0,0,0,0.35);
+  }
+
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+
+  .play-btn::after {
+    content: '';
+    border-left: 14px solid white;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 3px;
+  }
+
+  .card:hover .play-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .duration-badge {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    background: rgba(0,0,0,0.82);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 2px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.03em;
+  }
+
+  .card-body {
+    padding: 0.85rem 1rem 1rem;
+  }
+
+  .card-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.45rem;
+  }
+
+  .card-meta {
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .card-meta span::before {
+    content: '·';
+    margin-right: 0.6rem;
+  }
+
+  .card-meta span:first-child::before { content: none; }
+
+  /* Loading / Error */
+  .state {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--muted);
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border);
+    border-top-color: var(--red);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1.25rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .state p { font-size: 0.85rem; }
+
+  .error-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+
+  /* Empty search */
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* Load more */
+  .load-more-wrap {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  #loadMoreBtn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.7rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    display: none;
+  }
+
+  #loadMoreBtn:hover { border-color: var(--red); color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon"></div>
+    <span class="logo-text">My Channel</span>
+    <span class="channel-name" id="channelName">Loading…</span>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search videos…" oninput="filterVideos()">
+  </div>
+  <span class="video-count" id="videoCount"></span>
+</header>
+
+<main>
+  <div class="section-head">
+    <h2>Latest Videos</h2>
+    <div class="bar"></div>
+  </div>
+
+  <div id="state" class="state">
+    <div class="spinner"></div>
+    <p>Fetching your videos…</p>
+  </div>
+   
+    </div>
+
+    <script>
+        HTMLVideoElement.prototype.playBackwards = function () {
+            this.pause();
+
+            let video = this;
+            let fps = 7;
+            let intervalRewind = setInterval(function () {
+                if (video.currentTime <= 0) {
+                    clearInterval(intervalRewind);
+                    video.pause();
+                } else {
+                    video.currentTime -= 1 / fps;
+                }
+            }, 1000 / fps);
+        };
+
+        document.getElementById('playReverseButton')
+                  .addEventListener('click', function () {
+            let video = document.getElementById('video');
+            video.playBackwards();
+        });
+    </script>
+</body>
+
+</html>
+  <div class="grid" id="grid" style="display:none"></div>
+  <div class="load-more-wrap">
+    <button id="loadMoreBtn" onclick="loadMore()">Load more</button>
+  </div>
+</main>
+
+<script>
+  const API_KEY    = 'AIzaSyCYwDDG445WKYInKkxQuCCRrxPoLddtIC8';
+  const CHANNEL_ID = 'UCWeyePLy5Fzy3N0-cI9fnPA';
+  const PAGE_SIZE  = 24;
+
+  let allVideos = [];
+  let filtered  = [];
+  let shown     = 0;
+  let nextPageToken = '';
+
+  // Fetch channel name
+  async function fetchChannelName() {
+    try {
+      const r = await fetch(
+        `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${CHANNEL_ID}&key=${API_KEY}`
+      );
+      const d = await r.json();
+      const name = d.items?.[0]?.snippet?.title || 'My Channel';
+      document.getElementById('channelName').textContent = name;
+      document.title = name;
+      document.querySelector('.logo-text').textContent = name;
+    } catch(e) {}
+  }
+
+  // Fetch videos (search endpoint gives uploads in date order)
+  async function fetchVideos(pageToken = '') {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=50&order=date&type=video${pageToken ? '&pageToken=' + pageToken : ''}&key=${API_KEY}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    if (d.error) throw new Error(d.error.message);
+    return d;
+  }
+
+  // Fetch durations for a batch of video IDs
+  async function fetchDurations(ids) {
+    if (!ids.length) return {};
+    const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics&id=${ids.join(',')}&key=${API_KEY}`;
+    const r = await fetch(url);
+    const d = await r.json();
+    const map = {};
+    for (const item of (d.items || [])) {
+      map[item.id] = {
+        duration: parseDuration(item.contentDetails?.duration || ''),
+        views: formatViews(item.statistics?.viewCount)
+      };
+    }
+    return map;
+  }
+
+  function parseDuration(iso) {
+    const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+    if (!m) return '';
+    const h = parseInt(m[1] || 0);
+    const min = parseInt(m[2] || 0);
+    const s = parseInt(m[3] || 0);
+    if (h) return `${h}:${String(min).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    return `${min}:${String(s).padStart(2,'0')}`;
+  }
+
+  function formatViews(v) {
+    if (!v) return '';
+    const n = parseInt(v);
+    if (n >= 1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M views';
+    if (n >= 1000) return (n/1000).toFixed(1).replace(/\.0$/,'') + 'K views';
+    return n + ' views';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  async function init() {
+    fetchChannelName();
+    try {
+      const data = await fetchVideos();
+      nextPageToken = data.nextPageToken || '';
+      const items = data.items || [];
+
+      const ids = items.map(i => i.id.videoId).filter(Boolean);
+      const details = await fetchDurations(ids);
+
+      for (const item of items) {
+        const vid = item.id.videoId;
+        if (!vid) continue;
+        allVideos.push({
+          id: vid,
+          title: item.snippet.title,
+          thumb: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url,
+          date: item.snippet.publishedAt,
+          duration: details[vid]?.duration || '',
+          views: details[vid]?.views || ''
+        });
+      }
+
+      document.getElementById('state').style.display = 'none';
+      document.getElementById('grid').style.display = 'grid';
+      filtered = [...allVideos];
+      renderCards();
+      updateCount();
+    } catch(e) {
+      document.getElementById('state').innerHTML = `
+        <div class="error-icon">⚠️</div>
+        <p style="color:#ff6b6b;margin-bottom:.5rem">Failed to load videos</p>
+        <p style="font-size:.75rem">${e.message}</p>`;
+    }
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('grid');
+    const batch = filtered.slice(shown, shown + PAGE_SIZE);
+
+    if (shown === 0) grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="no-results">No videos match your search.</div>';
+      document.getElementById('loadMoreBtn').style.display = 'none';
+      return;
+    }
+
+    batch.forEach((v, i) => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = `https://www.youtube.com/watch?v=${v.id}`;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.style.animationDelay = `${(i % PAGE_SIZE) * 0.04}s`;
+      a.innerHTML = `
+        <div class="thumb-wrap">
+          <img src="${v.thumb}" alt="${escHtml(v.title)}" loading="lazy">
+          <div class="play-overlay"><div class="play-btn"></div></div>
+          ${v.duration ? `<span class="duration-badge">${v.duration}</span>` : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-title">${escHtml(v.title)}</div>
+          <div class="card-meta">
+            ${v.views ? `<span>${v.views}</span>` : ''}
+            ${v.date ? `<span>${formatDate(v.date)}</span>` : ''}
+          </div>
+        </div>`;
+      grid.appendChild(a);
+    });
+
+    shown += batch.length;
+    const hasMore = shown < filtered.length || nextPageToken;
+    document.getElementById('loadMoreBtn').style.display = hasMore ? 'inline-block' : 'none';
+  }
+
+  async function loadMore() {
+    if (shown < filtered.length) {
+      renderCards();
+      return;
+    }
+    if (!nextPageToken) return;
+    const btn = document.getElementById('loadMoreBtn');
+    btn.textContent = 'Loading…';
+    btn.disabled = true;
+
+    try {
+      const data = await fetchVideos(nextPageToken);
+      nextPageToken = data.nextPageToken || '';
+      const items = data.items || [];
+      const ids = items.map(i => i.id.videoId).filter(Boolean);
+      const details = await fetchDurations(ids);
+
+      for (const item of items) {
+        const vid = item.id.videoId;
+        if (!vid) continue;
+        allVideos.push({
+          id: vid,
+          title: item.snippet.title,
+          thumb: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url,
+          date: item.snippet.publishedAt,
+          duration: details[vid]?.duration || '',
+          views: details[vid]?.views || ''
+        });
+      }
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      filtered = q ? allVideos.filter(v => v.title.toLowerCase().includes(q)) : [...allVideos];
+      updateCount();
+      renderCards();
+    } catch(e) {
+      alert('Could not load more videos: ' + e.message);
+    }
+    btn.textContent = 'Load more';
+    btn.disabled = false;
+  }
+
+  function filterVideos() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    filtered = q ? allVideos.filter(v => v.title.toLowerCase().includes(q)) : [...allVideos];
+    shown = 0;
+    renderCards();
+    updateCount();
+  }
+
+  function updateCount() {
+    const el = document.getElementById('videoCount');
+    el.textContent = filtered.length === allVideos.length
+      ? `${allVideos.length} videos`
+      : `${filtered.length} of ${allVideos.length}`;
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  init();
+
+</script>
+</body>
+</html>
