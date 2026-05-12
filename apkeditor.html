@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK Editor — No Root Required</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  :root {
+    --purple-50: #EEEDFE; --purple-100: #CECBF6; --purple-200: #AFA9EC;
+    --purple-400: #7F77DD; --purple-600: #534AB7; --purple-800: #3C3489; --purple-900: #26215C;
+    --teal-50: #E1F5EE; --teal-100: #9FE1CB; --teal-400: #1D9E75; --teal-600: #0F6E56; --teal-800: #085041;
+    --coral-50: #FAECE7; --coral-400: #D85A30; --coral-600: #993C1D; --coral-800: #712B13;
+    --pink-50: #FBEAF0; --pink-600: #993556; --pink-800: #72243E;
+    --amber-50: #FAEEDA; --amber-200: #EF9F27; --amber-400: #BA7517; --amber-600: #854F0B; --amber-800: #633806;
+    --blue-50: #E6F1FB; --blue-400: #378ADD; --blue-600: #185FA5; --blue-800: #0C447C;
+    --green-50: #EAF3DE; --green-600: #3B6D11; --green-800: #27500A;
+    --red-400: #E24B4A; --red-600: #A32D2D;
+    --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-400: #888780; --gray-600: #5F5E5A;
+    --bg: #f7f6ff;
+    --surface: #ffffff;
+    --text: #1a1830;
+    --text-muted: #534AB7;
+    --text-faint: #888780;
+    --border: rgba(127,119,221,0.2);
+    --border-strong: rgba(127,119,221,0.4);
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  /* Header */
+  .app-header {
+    background: var(--purple-900);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    width: 32px; height: 32px;
+    background: var(--purple-400);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo svg { width: 18px; height: 18px; }
+  .app-header h1 { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .pill {
+    font-size: 11px; font-weight: 500; padding: 2px 10px;
+    border-radius: 20px; font-family: 'JetBrains Mono', monospace;
+  }
+  .pill-purple { background: var(--purple-600); color: var(--purple-100); }
+  .pill-teal { background: var(--teal-600); color: var(--teal-50); }
+  .header-spacer { flex: 1; }
+  .header-note { font-size: 11px; color: var(--purple-200); font-family: 'JetBrains Mono', monospace; }
+
+  /* Main layout */
+  .main { padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+  /* Drop zone */
+  .drop-zone {
+    border: 2px dashed var(--purple-400);
+    border-radius: var(--radius-lg);
+    padding: 4rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--purple-50);
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .drop-zone:hover, .drop-zone.over {
+    background: var(--purple-100);
+    border-color: var(--purple-600);
+  }
+  .drop-icon {
+    width: 64px; height: 64px;
+    background: var(--purple-400);
+    border-radius: 18px;
+    margin: 0 auto 1.25rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .drop-icon svg { width: 34px; height: 34px; }
+  .drop-zone h2 { font-size: 18px; font-weight: 600; color: var(--purple-900); margin-bottom: 6px; }
+  .drop-zone p { font-size: 13px; color: var(--purple-600); }
+  .drop-zone p span { font-family: 'JetBrains Mono', monospace; background: var(--purple-100); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+  #file-input { display: none; }
+
+  /* APK bar */
+  .apk-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--purple-900); border-radius: var(--radius);
+    padding: 10px 16px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .apk-bar-icon { width: 28px; height: 28px; background: var(--purple-400); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .apk-bar-icon svg { width: 16px; height: 16px; }
+  .apk-bar-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .apk-bar-meta { font-size: 12px; color: var(--purple-200); font-family: 'JetBrains Mono', monospace; }
+  .apk-bar-meta + .apk-bar-meta::before { content: '·'; margin-right: 8px; }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 230px 1fr; gap: 12px; min-height: 560px; }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-hdr {
+    padding: 10px 14px;
+    background: var(--purple-50);
+    border-bottom: 0.5px solid var(--border);
+    font-size: 11px; font-weight: 600; color: var(--purple-800);
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .search-wrap { padding: 8px; }
+  .search {
+    width: 100%; padding: 6px 10px;
+    font-size: 12px; border: 0.5px solid var(--border-strong);
+    border-radius: 7px; color: var(--text);
+    background: var(--bg); font-family: 'JetBrains Mono', monospace;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search:focus { outline: none; border-color: var(--purple-400); box-shadow: 0 0 0 3px var(--purple-50); }
+  .tree { overflow-y: auto; flex: 1; }
+  .ti {
+    padding: 5px 12px; font-size: 12px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    color: var(--gray-600); border-left: 2px solid transparent;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-family: 'JetBrains Mono', monospace;
+    transition: background 0.1s, color 0.1s;
+  }
+  .ti:hover { background: var(--purple-50); color: var(--purple-800); }
+  .ti.active { background: var(--purple-50); color: var(--purple-800); border-left-color: var(--purple-400); }
+  .ti.folder { font-family: 'Sora', sans-serif; color: var(--text); font-weight: 500; font-size: 12px; }
+
+  /* Content panel */
+  .content {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .tabs {
+    display: flex; background: var(--purple-50);
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 9px 16px; font-size: 12px; font-weight: 500;
+    cursor: pointer; color: var(--purple-600);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: all 0.1s; flex-shrink: 0;
+  }
+  .tab:hover { color: var(--purple-900); background: var(--purple-100); }
+  .tab.active { color: var(--purple-900); border-bottom-color: var(--purple-400); background: var(--surface); }
+  .pcontent { flex: 1; overflow: auto; padding: 1.25rem; }
+
+  /* Info cards */
+  .igrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+  .icard { border-radius: 9px; padding: 10px 13px; }
+  .icard-purple { background: var(--purple-50); }
+  .icard-teal { background: var(--teal-50); }
+  .icard-coral { background: var(--coral-50); }
+  .icard-blue { background: var(--blue-50); }
+  .icard-pink { background: var(--pink-50); }
+  .icard-amber { background: var(--amber-50); }
+  .icard-green { background: var(--green-50); }
+  .icard-lbl { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+  .lbl-purple { color: var(--purple-600); }
+  .lbl-teal { color: var(--teal-600); }
+  .lbl-coral { color: var(--coral-600); }
+  .lbl-blue { color: var(--blue-600); }
+  .lbl-pink { color: var(--pink-600); }
+  .lbl-amber { color: var(--amber-600); }
+  .lbl-green { color: var(--green-600); }
+  .icard-val { font-size: 13px; font-weight: 500; color: var(--text); word-break: break-all; font-family: 'JetBrains Mono', monospace; }
+
+  /* Sections */
+  .sec { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin: 1rem 0 .5rem; }
+  .sec.danger { color: var(--red-600); }
+
+  /* Permissions */
+  .perm { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--border); font-size: 12px; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  .perm:last-child { border-bottom: none; }
+  .pdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .pdot-blue { background: var(--blue-400); }
+  .pdot-red { background: var(--red-400); }
+
+  /* Code view */
+  .code {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    line-height: 1.7; color: var(--text);
+    white-space: pre; overflow: auto;
+    background: var(--purple-50); border-radius: 9px;
+    padding: 14px; border: 0.5px solid var(--border);
+    max-height: 480px;
+  }
+  .xt { color: var(--purple-600); }
+  .xa { color: var(--amber-600); }
+  .xv { color: var(--teal-600); }
+
+  /* Components */
+  .aitem {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; padding: 6px 0;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text); font-family: 'JetBrains Mono', monospace;
+  }
+  .aitem:last-child { border-bottom: none; }
+  .aitem span:first-child { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .abadge { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; font-family: 'Sora', sans-serif; flex-shrink: 0; }
+  .ab-launch { background: var(--teal-50); color: var(--teal-800); }
+  .ab-svc { background: var(--amber-50); color: var(--amber-800); }
+  .ab-rcv { background: var(--pink-50); color: var(--pink-800); }
+
+  /* Edit */
+  .er { margin-bottom: 12px; }
+  .el { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+  .ef {
+    width: 100%; background: var(--bg);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px; padding: 7px 11px;
+    font-size: 13px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .ef:focus { outline: none; border-color: var(--purple-400); box-shadow: 0 0 0 3px var(--purple-50); }
+  .btnrow { display: flex; gap: 8px; margin-top: 1rem; }
+  .btn {
+    padding: 8px 18px; font-size: 13px; font-weight: 500;
+    border-radius: 8px; cursor: pointer;
+    border: 0.5px solid var(--border-strong);
+    background: var(--purple-50); color: var(--purple-800);
+    font-family: 'Sora', sans-serif;
+    transition: all 0.1s;
+  }
+  .btn:hover { background: var(--purple-100); }
+  .btn.go { background: var(--purple-400); color: #fff; border-color: var(--purple-400); }
+  .btn.go:hover { background: var(--purple-600); }
+  .note {
+    font-size: 12px; color: var(--amber-800); line-height: 1.6;
+    margin-top: 10px; padding: 10px 12px;
+    background: var(--amber-50); border-radius: 8px;
+    border-left: 3px solid var(--amber-200);
+  }
+  .note code { font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 3px; }
+  #exst { margin-top: 10px; font-size: 12px; color: var(--purple-600); font-family: 'JetBrains Mono', monospace; }
+
+  /* Status bar */
+  .sbar {
+    padding: 7px 14px; border-top: 0.5px solid var(--border);
+    font-size: 11px; color: var(--purple-600);
+    display: flex; align-items: center; gap: 7px;
+    background: var(--purple-50); font-family: 'JetBrains Mono', monospace;
+  }
+  .sdot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-400); flex-shrink: 0; }
+
+  /* Empty */
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--gray-400); font-size: 13px; }
+  .empty .big { font-size: 40px; margin-bottom: 10px; }
+
+  /* Image preview */
+  .img-preview { max-width: 100%; max-height: 420px; border-radius: 10px; margin-top: 10px; display: block; }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--purple-200); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--purple-400); }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+    .main { padding: 1rem; }
+    .igrid { grid-template-columns: 1fr; }
+    .sidebar { max-height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo">
+    <svg viewBox="0 0 18 18" fill="none">
+      <rect x="2" y="2" width="14" height="14" rx="3" fill="white" opacity=".2"/>
+      <path d="M5 9h8M9 5v8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>APK Editor</h1>
+  <span class="pill pill-purple">no root</span>
+  <span class="pill pill-teal">browser-only</span>
+  <div class="header-spacer"></div>
+  <span class="header-note">v2.0</span>
+</header>
+
+<div class="main">
+
+  <div id="drop-area">
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('file-input').click()">
+      <div class="drop-icon">
+        <svg viewBox="0 0 34 34" fill="none">
+          <rect x="4" y="4" width="26" height="26" rx="5" fill="white" opacity=".2"/>
+          <path d="M17 8v12M11 14l6-6 6 6M8 24h18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Drop your APK here</h2>
+      <p>or click to browse &nbsp;·&nbsp; supports <span>.apk</span> files &nbsp;·&nbsp; nothing uploaded, runs 100% in your browser</p>
+    </div>
+    <input type="file" id="file-input" accept=".apk">
+  </div>
+
+  <div id="editor-area" style="display:none">
+    <div class="apk-bar">
+      <div class="apk-bar-icon">
+        <svg viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="1" width="12" height="14" rx="2" fill="white" opacity=".3"/>
+          <path d="M5 8h6M8 5v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="apk-bar-name" id="apk-fn"></span>
+      <span class="apk-bar-meta" id="apk-sz"></span>
+      <span class="apk-bar-meta" id="apk-fc"></span>
+    </div>
+
+    <div class="layout">
+      <div class="sidebar">
+        <div class="sidebar-hdr">File explorer</div>
+        <div class="search-wrap">
+          <input class="search" id="treeSearch" placeholder="filter files..." oninput="filterTree(this.value)">
+        </div>
+        <div class="tree" id="fileTree"></div>
+      </div>
+
+      <div class="content">
+        <div class="tabs">
+          <div class="tab active" data-tab="overview" onclick="sw('overview')">Overview</div>
+          <div class="tab" data-tab="manifest" onclick="sw('manifest')">Manifest</div>
+          <div class="tab" data-tab="permissions" onclick="sw('permissions')">Permissions</div>
+          <div class="tab" data-tab="activities" onclick="sw('activities')">Components</div>
+          <div class="tab" data-tab="edit" onclick="sw('edit')">Edit &amp; Export</div>
+        </div>
+        <div class="pcontent" id="pcontent"></div>
+        <div class="sbar"><span class="sdot"></span><span id="stxt">APK loaded</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let apk={filename:'',size:0,files:[],manifest:null,xml:'',zip:null};
+let treeItems=[];
+
+const dz=document.getElementById('dropZone');
+const fi=document.getElementById('file-input');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])});
+fi.addEventListener('change',e=>{if(e.target.files[0])load(e.target.files[0])});
+
+async function load(file){
+  document.getElementById('stxt').textContent='Loading…';
+  try{
+    const zip=await JSZip.loadAsync(file);
+    apk={filename:file.name,size:file.size,files:[],manifest:null,xml:'',zip};
+    zip.forEach((p,f)=>apk.files.push({path:p,isDir:f.dir,size:f._data?(f._data.uncompressedSize||0):0}));
+    apk.files.sort((a,b)=>a.path.localeCompare(b.path));
+    const mf=zip.file('AndroidManifest.xml');
+    if(mf){
+      const raw=await mf.async('uint8array');
+      apk.xml=parseAxml(raw);
+      apk.manifest=extractMeta(apk.xml);
+    } else {
+      apk.xml='<!-- AndroidManifest.xml not found -->';
+      apk.manifest={pkg:'unknown',vn:'unknown',vc:'unknown',min:'unknown',tgt:'unknown',perms:[],acts:[],svcs:[],rcvs:[]};
+    }
+    document.getElementById('apk-fn').textContent=file.name;
+    document.getElementById('apk-sz').textContent=fmtSz(file.size);
+    document.getElementById('apk-fc').textContent=apk.files.filter(f=>!f.isDir).length+' files';
+    document.getElementById('drop-area').style.display='none';
+    document.getElementById('editor-area').style.display='block';
+    buildTree();
+    sw('overview');
+    document.getElementById('stxt').textContent='Loaded — '+apk.files.filter(f=>!f.isDir).length+' files parsed';
+  }catch(e){document.getElementById('stxt').textContent='Error: '+e.message}
+}
+
+function fmtSz(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(2)+' MB'}
+
+function folderIcon(){return'<svg width="14" height="13" viewBox="0 0 14 13" fill="none" style="flex-shrink:0"><rect x="0" y="3.5" width="14" height="8.5" rx="2" fill="#EF9F27"/><path d="M0 5.5V4a2 2 0 012-2h3.5l1.5 2H0z" fill="#BA7517"/></svg>'}
+function fileIcon(p){const e=p.split('.').pop().toLowerCase();const m={dex:'#E24B4A',so:'#993C1D',xml:'#378ADD',png:'#1D9E75',jpg:'#1D9E75',gif:'#1D9E75',webp:'#1D9E75',rsa:'#854F0B',dsa:'#854F0B',arsc:'#7F77DD',json:'#BA7517'};const c=m[e]||'#888780';return`<svg width="11" height="14" viewBox="0 0 11 14" fill="none" style="flex-shrink:0"><rect width="11" height="14" rx="2" fill="${c}" opacity=".15"/><rect x="1" y="1" width="9" height="12" rx="1.5" fill="${c}" opacity=".45"/><rect x="2.5" y="4" width="6" height="1" rx=".5" fill="${c}"/><rect x="2.5" y="6.5" width="5" height="1" rx=".5" fill="${c}"/><rect x="2.5" y="9" width="4" height="1" rx=".5" fill="${c}"/></svg>`}
+
+function buildTree(){
+  const tree=document.getElementById('fileTree');
+  tree.innerHTML='';treeItems=[];
+  const groups={};
+  apk.files.forEach(f=>{const top=f.path.split('/')[0];if(!groups[top])groups[top]=[];if(!f.isDir)groups[top].push(f)});
+  Object.keys(groups).sort().forEach(folder=>{
+    const fe=document.createElement('div');
+    fe.className='ti folder';
+    fe.innerHTML=folderIcon()+'&nbsp;'+folder+'/';
+    tree.appendChild(fe);
+    treeItems.push({el:fe,text:folder.toLowerCase()});
+    groups[folder].forEach(f=>{
+      const el=document.createElement('div');
+      el.className='ti';el.style.paddingLeft='22px';
+      el.innerHTML=fileIcon(f.path)+'&nbsp;'+f.path.split('/').pop();
+      el.onclick=()=>viewFile(f,el);
+      tree.appendChild(el);
+      treeItems.push({el,text:f.path.toLowerCase()});
+    });
+  });
+}
+
+function filterTree(q){treeItems.forEach(i=>{i.el.style.display=(q===''||i.text.includes(q.toLowerCase()))?'':'none'})}
+
+async function viewFile(f,el){
+  document.querySelectorAll('.ti').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  const c=document.getElementById('pcontent');
+  const ext=f.path.split('.').pop().toLowerCase();
+  document.getElementById('stxt').textContent='Loading: '+f.path;
+  try{
+    if(['png','jpg','jpeg','gif','webp'].includes(ext)){
+      const blob=await apk.zip.file(f.path).async('blob');
+      const url=URL.createObjectURL(blob);
+      c.innerHTML=`<p class="sec">${esc(f.path)}</p><img class="img-preview" src="${url}">`;
+    } else if(['xml','txt','mf','sf','properties','cfg','json','smali'].includes(ext)||f.path==='AndroidManifest.xml'){
+      let txt=f.path==='AndroidManifest.xml'?apk.xml:await apk.zip.file(f.path).async('string').catch(()=>'(binary file — cannot display)');
+      c.innerHTML=`<p class="sec">${esc(f.path)} &nbsp;·&nbsp; ${fmtSz(f.size)}</p><div class="code">${hl(esc(txt))}</div>`;
+    } else {
+      c.innerHTML=`<div class="empty"><div class="big">📄</div><p style="font-weight:500">${esc(f.path.split('/').pop())}</p><p style="margin-top:5px">${fmtSz(f.size)} &nbsp;·&nbsp; .${ext} file</p><p style="margin-top:8px;font-size:11px">Binary file — no preview available</p></div>`;
+    }
+    document.getElementById('stxt').textContent=f.path+' · '+fmtSz(f.size);
+  }catch(e){c.innerHTML=`<p style="color:#E24B4A;padding:1rem">Error: ${e.message}</p>`}
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function hl(s){return s.replace(/(&lt;\/?[\w:.]+)/g,'<span class="xt">$1</span>').replace(/ ([\w:]+)=/g,' <span class="xa">$1</span>=').replace(/=&quot;([^&]*)&quot;/g,'=&quot;<span class="xv">$1</span>&quot;')}
+
+function sw(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  const c=document.getElementById('pcontent');
+  if(tab==='overview')renderOverview(c);
+  else if(tab==='manifest')c.innerHTML=`<p class="sec">AndroidManifest.xml — decoded binary XML</p><div class="code">${hl(esc(apk.xml))}</div>`;
+  else if(tab==='permissions')renderPerms(c);
+  else if(tab==='activities')renderActs(c);
+  else if(tab==='edit')renderEdit(c);
+}
+
+function renderOverview(c){
+  const m=apk.manifest;
+  const tot=apk.files.filter(f=>!f.isDir).length;
+  const img=apk.files.filter(f=>/\.(png|jpg|jpeg|gif|webp)$/i.test(f.path)).length;
+  const xmlc=apk.files.filter(f=>/\.xml$/i.test(f.path)).length;
+  const dex=apk.files.filter(f=>/\.dex$/i.test(f.path)).length;
+  c.innerHTML=`
+    <p class="sec">App identity</p>
+    <div class="igrid">
+      <div class="icard icard-purple"><div class="icard-lbl lbl-purple">Package name</div><div class="icard-val">${esc(m.pkg||'—')}</div></div>
+      <div class="icard icard-teal"><div class="icard-lbl lbl-teal">Version name</div><div class="icard-val">${esc(m.vn||'—')}</div></div>
+      <div class="icard icard-coral"><div class="icard-lbl lbl-coral">Version code</div><div class="icard-val">${esc(m.vc||'—')}</div></div>
+      <div class="icard icard-amber"><div class="icard-lbl lbl-amber">APK size</div><div class="icard-val">${fmtSz(apk.size)}</div></div>
+    </div>
+    <p class="sec">SDK targets</p>
+    <div class="igrid">
+      <div class="icard icard-blue"><div class="icard-lbl lbl-blue">Min SDK</div><div class="icard-val">${esc(m.min||'—')} <span style="font-size:11px;color:#888">${sdkLbl(m.min)}</span></div></div>
+      <div class="icard icard-green"><div class="icard-lbl lbl-green">Target SDK</div><div class="icard-val">${esc(m.tgt||'—')} <span style="font-size:11px;color:#888">${sdkLbl(m.tgt)}</span></div></div>
+    </div>
+    <p class="sec">Contents</p>
+    <div class="igrid">
+      <div class="icard icard-purple"><div class="icard-lbl lbl-purple">Total files</div><div class="icard-val">${tot}</div></div>
+      <div class="icard icard-teal"><div class="icard-lbl lbl-teal">Images</div><div class="icard-val">${img}</div></div>
+      <div class="icard icard-blue"><div class="icard-lbl lbl-blue">XML resources</div><div class="icard-val">${xmlc}</div></div>
+      <div class="icard icard-coral"><div class="icard-lbl lbl-coral">DEX files</div><div class="icard-val">${dex}</div></div>
+    </div>
+    <p class="sec">Components</p>
+    <div class="igrid">
+      <div class="icard icard-purple"><div class="icard-lbl lbl-purple">Activities</div><div class="icard-val">${m.acts.length}</div></div>
+      <div class="icard icard-amber"><div class="icard-lbl lbl-amber">Services</div><div class="icard-val">${m.svcs.length}</div></div>
+      <div class="icard icard-pink"><div class="icard-lbl lbl-pink">Receivers</div><div class="icard-val">${m.rcvs.length}</div></div>
+      <div class="icard icard-teal"><div class="icard-lbl lbl-teal">Permissions</div><div class="icard-val">${m.perms.length}</div></div>
+    </div>`;
+}
+
+function sdkLbl(v){const m={14:'ICS',16:'JB',19:'KitKat',21:'Lollipop',23:'Marshmallow',24:'Nougat',26:'Oreo',28:'Pie',29:'Q/10',30:'R/11',31:'S/12',33:'T/13',34:'U/14',35:'V/15'};return m[parseInt(v)]?`(${m[parseInt(v)]})`:''}
+
+function renderPerms(c){
+  const m=apk.manifest;
+  const DANGER=['READ_CONTACTS','WRITE_CONTACTS','CAMERA','RECORD_AUDIO','ACCESS_FINE_LOCATION','ACCESS_COARSE_LOCATION','READ_CALL_LOG','WRITE_CALL_LOG','READ_SMS','RECEIVE_SMS','SEND_SMS','READ_PHONE_STATE','CALL_PHONE','READ_EXTERNAL_STORAGE','WRITE_EXTERNAL_STORAGE','GET_ACCOUNTS','USE_BIOMETRIC','MANAGE_EXTERNAL_STORAGE','BODY_SENSORS'];
+  if(!m.perms.length){c.innerHTML='<div class="empty"><div class="big">✅</div><p>No permissions declared</p></div>';return}
+  const bad=m.perms.filter(p=>DANGER.some(d=>p.includes(d)));
+  const ok=m.perms.filter(p=>!DANGER.some(d=>p.includes(d)));
+  let h='';
+  if(bad.length){
+    h+=`<p class="sec danger">Sensitive permissions (${bad.length})</p>`;
+    h+=bad.map(p=>`<div class="perm"><div class="pdot pdot-red"></div>${esc(p.replace('android.permission.',''))}</div>`).join('');
+  }
+  if(ok.length){
+    h+=`<p class="sec">Normal permissions (${ok.length})</p>`;
+    h+=ok.map(p=>`<div class="perm"><div class="pdot pdot-blue"></div>${esc(p.replace('android.permission.',''))}</div>`).join('');
+  }
+  c.innerHTML=h;
+}
+
+function renderActs(c){
+  const m=apk.manifest;
+  let h='';
+  if(m.acts.length) h+=`<p class="sec">Activities (${m.acts.length})</p>`+m.acts.map(a=>`<div class="aitem"><span>${esc(a.name)}</span>${a.launcher?'<span class="abadge ab-launch">launcher</span>':''}</div>`).join('');
+  if(m.svcs.length) h+=`<p class="sec">Services (${m.svcs.length})</p>`+m.svcs.map(s=>`<div class="aitem"><span>${esc(s)}</span><span class="abadge ab-svc">service</span></div>`).join('');
+  if(m.rcvs.length) h+=`<p class="sec">Receivers (${m.rcvs.length})</p>`+m.rcvs.map(r=>`<div class="aitem"><span>${esc(r)}</span><span class="abadge ab-rcv">receiver</span></div>`).join('');
+  if(!h) h='<div class="empty"><div class="big">📦</div><p>No components found in manifest</p></div>';
+  c.innerHTML=h;
+}
+
+function renderEdit(c){
+  const m=apk.manifest;
+  c.innerHTML=`
+    <p class="sec">Edit manifest fields</p>
+    <div class="er"><div class="el">Version name</div><input class="ef" id="e-vn" value="${esc(m.vn||'')}"></div>
+    <div class="er"><div class="el">Version code</div><input class="ef" id="e-vc" value="${esc(m.vc||'')}"></div>
+    <div class="er"><div class="el">Package name</div><input class="ef" id="e-pkg" value="${esc(m.pkg||'')}"></div>
+    <div class="er"><div class="el">Min SDK version</div><input class="ef" id="e-min" value="${esc(m.min||'')}"></div>
+    <div class="er"><div class="el">Target SDK version</div><input class="ef" id="e-tgt" value="${esc(m.tgt||'')}"></div>
+    <div class="note">The exported APK will need re-signing with <code>apksigner</code> or <code>jarsigner</code> before Android will install it — this is a platform security requirement, not a limitation of this tool.</div>
+    <div class="btnrow">
+      <button class="btn go" onclick="exportApk()">Export modified APK ↓</button>
+      <button class="btn" onclick="resetEdits()">Reset fields</button>
+    </div>
+    <div id="exst"></div>`;
+}
+
+async function exportApk(){
+  const st=document.getElementById('exst');
+  st.textContent='Building modified APK…';
+  try{
+    const nz=new JSZip();
+    let nm=apk.xml;
+    nm=nm.replace(/android:versionName="[^"]*"/,`android:versionName="${document.getElementById('e-vn').value}"`);
+    nm=nm.replace(/android:versionCode="[^"]*"/,`android:versionCode="${document.getElementById('e-vc').value}"`);
+    nm=nm.replace(/package="[^"]*"/,`package="${document.getElementById('e-pkg').value}"`);
+    nm=nm.replace(/android:minSdkVersion="[^"]*"/,`android:minSdkVersion="${document.getElementById('e-min').value}"`);
+    nm=nm.replace(/android:targetSdkVersion="[^"]*"/,`android:targetSdkVersion="${document.getElementById('e-tgt').value}"`);
+    for(const f of apk.files){
+      if(f.isDir)continue;
+      if(f.path==='AndroidManifest.xml'){nz.file(f.path,nm);continue}
+      const d=await apk.zip.file(f.path).async('arraybuffer');
+      nz.file(f.path,d);
+    }
+    const blob=await nz.generateAsync({type:'blob',compression:'DEFLATE'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=apk.filename.replace('.apk','_modified.apk');
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    st.textContent='✓ Exported! Remember to re-sign before installing.';
+    st.style.color='#0F6E56';
+  }catch(e){st.textContent='Error: '+e.message;st.style.color='#E24B4A'}
+}
+
+function resetEdits(){
+  const m=apk.manifest;
+  document.getElementById('e-vn').value=m.vn||'';
+  document.getElementById('e-vc').value=m.vc||'';
+  document.getElementById('e-pkg').value=m.pkg||'';
+  document.getElementById('e-min').value=m.min||'';
+  document.getElementById('e-tgt').value=m.tgt||'';
+}
+
+function extractMeta(xml){
+  const a=(tag,attr)=>{const m=new RegExp(`<${tag}[^>]*${attr}="([^"]*)"`,'i').exec(xml);return m?m[1]:''};
+  const all=(tag,attr)=>{const re=new RegExp(`<${tag}[^>]*${attr}="([^"]*)"`,'gi');const r=[];let m;while((m=re.exec(xml))!==null)r.push(m[1]);return r};
+  const launchers=new Set();
+  const lr=/<activity[^>]*android:name="([^"]*)"[\s\S]*?<action[^>]*android\.intent\.action\.MAIN/g;
+  let lm;while((lm=lr.exec(xml))!==null)launchers.add(lm[1]);
+  return{
+    pkg:a('manifest','package'),vn:a('manifest','android:versionName'),
+    vc:a('manifest','android:versionCode'),min:a('uses-sdk','android:minSdkVersion'),
+    tgt:a('uses-sdk','android:targetSdkVersion'),perms:all('uses-permission','android:name'),
+    acts:all('activity','android:name').map(n=>({name:n,launcher:launchers.has(n)})),
+    svcs:all('service','android:name'),rcvs:all('receiver','android:name')
+  }
+}
+
+function parseAxml(bytes){
+  if(bytes.length<8)return'<!-- file too small -->';
+  const dv=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+  const magic=dv.getUint32(0,true);
+  if(magic!==0x00080003){
+    try{return new TextDecoder('utf-8').decode(bytes)}catch(e){return'<!-- not binary XML -->'}
+  }
+  const fileSize=dv.getUint32(4,true);
+  let strings=[];
+  let pos=8;
+  while(pos<fileSize-8){
+    if(pos+8>fileSize)break;
+    const ct=dv.getUint16(pos,true);
+    const cs=dv.getUint32(pos+4,true);
+    if(cs<8||pos+cs>fileSize)break;
+    if(ct===0x0001){strings=readStrings(dv,bytes,pos,cs);break}
+    pos+=cs;
+  }
+  let out='<?xml version="1.0" encoding="utf-8"?>\n';
+  let indent=0;pos=8;
+  while(pos<fileSize-8){
+    if(pos+8>fileSize)break;
+    const ct=dv.getUint16(pos,true);
+    const cs=dv.getUint32(pos+4,true);
+    if(cs<8||pos+cs>fileSize)break;
+    if(ct===0x0001||ct===0x0100||ct===0x0101||ct===0x0180){pos+=cs;continue}
+    if(ct===0x0102){
+      if(pos+36>fileSize){pos+=cs;continue}
+      const nameIdx=dv.getUint32(pos+20,true);
+      const attrCount=dv.getUint16(pos+28,true);
+      const attrSz=dv.getUint16(pos+26,true)||20;
+      const name=str(strings,nameIdx);
+      let attrs='';
+      for(let i=0;i<attrCount;i++){
+        const ab=pos+36+(attrSz*i);
+        if(ab+20>fileSize)break;
+        const nsIdx=dv.getInt32(ab,true);
+        const anIdx=dv.getUint32(ab+4,true);
+        const avIdx=dv.getInt32(ab+8,true);
+        const dtype=dv.getUint8(ab+15);
+        const dval=dv.getInt32(ab+16,true);
+        const ns=nsIdx>=0&&nsIdx<strings.length&&strings[nsIdx].includes('android')?'android:':'';
+        const an=str(strings,anIdx);
+        let av='';
+        if(avIdx>=0&&avIdx<strings.length)av=strings[avIdx];
+        else if(dtype===0x10)av=String(dval);
+        else if(dtype===0x12)av=dval?'true':'false';
+        else if(dtype===0x01)av='#'+(dval>>>0).toString(16).padStart(8,'0');
+        else if(dtype===0x11)av='@0x'+(dval>>>0).toString(16);
+        else av=String(dval);
+        attrs+=` ${ns}${an}="${av}"`;
+      }
+      out+='  '.repeat(indent)+`<${name}${attrs}>\n`;
+      indent++;
+    } else if(ct===0x0103){
+      if(pos+24>fileSize){pos+=cs;continue}
+      const nameIdx=dv.getUint32(pos+20,true);
+      indent=Math.max(0,indent-1);
+      out+='  '.repeat(indent)+`</${str(strings,nameIdx)}>\n`;
+    }
+    pos+=cs;
+  }
+  return out||'<!-- parse produced no output -->';
+}
+
+function str(strings,idx){return(idx>=0&&idx<strings.length)?strings[idx]:''}
+
+function readStrings(dv,bytes,base,chunkSize){
+  if(base+28>dv.byteLength)return[];
+  const strCnt=dv.getUint32(base+8,true);
+  const flags=dv.getUint32(base+16,true);
+  const strStart=dv.getUint32(base+20,true);
+  const isUtf8=(flags&(1<<8))!==0;
+  const offsets=[];
+  for(let i=0;i<strCnt;i++){const ob=base+28+i*4;if(ob+4>dv.byteLength)break;offsets.push(dv.getUint32(ob,true))}
+  const poolBase=base+strStart;
+  const result=[];
+  for(let i=0;i<strCnt;i++){
+    if(i>=offsets.length){result.push('');continue}
+    const off=poolBase+offsets[i];
+    if(off>=dv.byteLength){result.push('');continue}
+    try{result.push(isUtf8?readUtf8Str(dv,bytes,off):readUtf16Str(dv,off))}
+    catch(e){result.push('')}
+  }
+  return result;
+}
+
+function readUtf8Str(dv,bytes,pos){
+  if(pos>=dv.byteLength)return'';
+  let p=pos;
+  let b=dv.getUint8(p++);if(b&0x80)p++;
+  if(p>=dv.byteLength)return'';
+  b=dv.getUint8(p++);
+  const byteLen=b&0x7f;
+  const extra=(b&0x80)?dv.getUint8(p++):0;
+  const totalBytes=byteLen|(extra<<7);
+  if(p+totalBytes>dv.byteLength)return'';
+  const slice=bytes.slice(p,p+totalBytes);
+  try{return new TextDecoder('utf-8').decode(slice)}catch(e){return''}
+}
+
+function readUtf16Str(dv,pos){
+  if(pos+2>dv.byteLength)return'';
+  let p=pos;
+  let len=dv.getUint16(p,true);p+=2;
+  if(len&0x8000){if(p+2>dv.byteLength)return'';len=((len&0x7fff)<<16)|dv.getUint16(p,true);p+=2}
+  let s='';
+  for(let i=0;i<len&&p+2<=dv.byteLength;i++){const cp=dv.getUint16(p,true);p+=2;if(cp===0)break;s+=String.fromCharCode(cp)}
+  return s;
+}
+</script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDjrRPOfu8bs2_uQswFmJ4OLN54NgHFrPE",
+    authDomain: "apk-editor-64aae.firebaseapp.com",
+    projectId: "apk-editor-64aae",
+    storageBucket: "apk-editor-64aae.firebasestorage.app",
+    messagingSenderId: "202820403953",
+    appId: "1:202820403953:web:acea8562f64594ff721f50",
+    measurementId: "G-716GB2DM7W"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>
