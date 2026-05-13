@@ -11,4 +11,4 @@ https://daqtpi.com/magic-genie
 https://daqtpi.com/magic-lamp
 https://daqtpi.com/keno-number-generator
 https://daqtpi.com/success
-
+https://daqtpi.com/all I had was you-site
