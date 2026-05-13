@@ -25,4 +25,18 @@
       ]
     }
   }
+],
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "taser.aoav",
+      "sha256_cert_fingerprints": [
+        "F5:86:41:2F:0E:78:AC:E0:DE:9D:2B:26:8F:BD:2A:8A:A7:4C:9D:76:7F:DD:AC:84:5C:A9:26:4F:97:CA:1B:8A"
+      ]
+    }
+  }
 ]
