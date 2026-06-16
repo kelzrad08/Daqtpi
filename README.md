@@ -15,3 +15,4 @@ https://daqtpi.com/Ads.txt
 https://youtube.com/Ads.txt
 https://www.youtube.com/@daqtpi/ads.txt
 https://www.youtube.com/@Daqtpi/featured
+google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
