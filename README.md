@@ -1,3 +1,8 @@
 https://daqtpi.com/
 https://youtube.com/channel/UCWeyePLy5Fzy3N0-cI9fnPA
 https://daqtpi.com/referee
+https://www.youtube.com/@Daqtpi
+https://daqtpi.com/@Daqtpi/videos
+https://www.youtube.com/channel/UCWeyePLy5Fzy3N0-cI9fnPA?sub_confirmation=1
+https://www.youtube.com/playlist?list=PLrpXBs5TV7oVWDHnn3TAfRemflFrs2X39
+https://www.youtube.com/playlist?list=PLrpXBs5TV7oWfsakuPPrsJQsLOOlT2BC1
