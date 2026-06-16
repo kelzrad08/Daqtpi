@@ -14,3 +14,4 @@ com.google.android.apps.automotive.youtube
 https://daqtpi.com/Ads.txt
 https://youtube.com/Ads.txt
 https://www.youtube.com/@daqtpi/ads.txt
+https://www.youtube.com/@Daqtpi/featured
