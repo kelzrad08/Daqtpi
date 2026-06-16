@@ -13,3 +13,4 @@ https://www.appcreator24.com/app4084569-7pmojs
 com.google.android.apps.automotive.youtube
 https://daqtpi.com/Ads.txt
 https://youtube.com/Ads.txt
+https://www.youtube.com/@daqtpi/ads.txt
