@@ -6,3 +6,6 @@ https://daqtpi.com/@Daqtpi/videos
 https://www.youtube.com/channel/UCWeyePLy5Fzy3N0-cI9fnPA?sub_confirmation=1
 https://www.youtube.com/playlist?list=PLrpXBs5TV7oVWDHnn3TAfRemflFrs2X39
 https://www.youtube.com/playlist?list=PLrpXBs5TV7oWfsakuPPrsJQsLOOlT2BC1
+https://m.youtube.com/shorts/kkzhIE1ZtYg
+https://m.youtube.com/shorts/W_3Tv6XlJTk
+https://daqtpi.com/@Daqtpi/videos
