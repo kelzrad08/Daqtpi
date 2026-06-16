@@ -9,3 +9,6 @@ https://www.youtube.com/playlist?list=PLrpXBs5TV7oWfsakuPPrsJQsLOOlT2BC1
 https://m.youtube.com/shorts/kkzhIE1ZtYg
 https://m.youtube.com/shorts/W_3Tv6XlJTk
 https://daqtpi.com/@Daqtpi/videos
+https://www.appcreator24.com/app4084569-7pmojs
+com.google.android.apps.automotive.youtube
+https://daqtpi.com/Ads.txt
