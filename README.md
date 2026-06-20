@@ -16,3 +16,7 @@ https://youtube.com/Ads.txt
 https://www.youtube.com/@daqtpi/ads.txt
 https://www.youtube.com/@Daqtpi/featured
 google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
+https://daqtpi.com/liedetector
+https://daqtpi.com/kenonumbergenerator
+https://daqtpi.com/success
+https://daqtpi.com/myyoutube
