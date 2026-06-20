@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Lie Detector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:         #0d0e12;
+    --surface:    #16181f;
+    --surface2:   #1e2029;
+    --border:     rgba(255,255,255,0.08);
+    --border2:    rgba(255,255,255,0.14);
+    --text:       #e8e9ef;
+    --muted:      #7a7d8e;
+    --accent:     #00e5a0;
+    --accent-dim: rgba(0,229,160,0.12);
+    --red:        #ff4e4e;
+    --red-dim:    rgba(255,78,78,0.12);
+    --amber:      #ffb84d;
+    --amber-dim:  rgba(255,184,77,0.12);
+    --mono:       'Space Mono', monospace;
+    --sans:       'Space Grotesk', sans-serif;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem 4rem;
+  }
+  .app { width: 100%; max-width: 520px; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 1.75rem; padding-top: 0.5rem; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+  .header h1 { font-size: 26px; font-weight: 600; }
+  .header p { font-size: 13px; color: var(--muted); margin-top: 5px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 2px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 4px; margin-bottom: 1.25rem; }
+  .tab-btn {
+    flex: 1; padding: 8px; border: none; border-radius: 9px; cursor: pointer;
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    background: transparent; color: var(--muted); transition: all 0.2s;
+  }
+  .tab-btn.active { background: var(--surface2); color: var(--text); }
+  .tab-btn i { margin-right: 5px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Tries bar */
+  .tries-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; margin-bottom: 1.25rem; gap: 10px;
+  }
+  .tries-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .tries-dots { display: flex; gap: 6px; align-items: center; flex: 1; justify-content: center; }
+  .try-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px rgba(0,229,160,0.45); transition: all 0.3s; }
+  .try-dot.used { background: var(--surface2); border: 0.5px solid var(--border2); box-shadow: none; }
+  .ad-btn {
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    color: var(--amber); background: var(--amber-dim); border: 0.5px solid rgba(255,184,77,0.3);
+    border-radius: 8px; padding: 6px 10px; cursor: pointer; white-space: nowrap; transition: opacity 0.2s;
+  }
+  .ad-btn:hover { opacity: 0.8; }
+  .ad-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* Question card */
+  .question-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem;
+  }
+  .question-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .question-text { font-size: 17px; font-weight: 500; line-height: 1.4; min-height: 26px; }
+  .skip-btn { margin-top: 10px; background: none; border: none; color: var(--muted); font-family: var(--sans); font-size: 12px; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+  .skip-btn:hover { color: var(--text); }
+
+  /* Visualizer */
+  .visualizer {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 14px; height: 96px; display: flex; align-items: center;
+    justify-content: center; position: relative; overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .waveform { display: flex; align-items: center; gap: 3px; height: 76px; }
+  .wave-bar { width: 4px; border-radius: 2px; background: var(--accent); min-height: 3px; transition: height 0.07s ease; opacity: 0.85; }
+  .idle-msg { position: absolute; font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+  /* Mic */
+  .mic-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+  .mic-btn {
+    width: 80px; height: 80px; border-radius: 50%; background: var(--accent);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: transform 0.1s, background 0.25s;
+  }
+  .mic-btn i { color: #0d0e12; font-size: 30px; }
+  .mic-btn:hover { transform: scale(1.06); }
+  .mic-btn.recording { background: var(--red); animation: pulse 1.2s infinite; }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,78,78,0.4); }
+    50%      { box-shadow: 0 0 0 16px rgba(255,78,78,0); }
+  }
+  .mic-hint { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-align: center; }
+
+  /* Result */
+  .result-card { border-radius: 14px; border: 0.5px solid var(--border); padding: 1.5rem; margin-bottom: 1.25rem; display: none; }
+  .result-card.truth  { background: rgba(0,229,160,0.07);  border-color: rgba(0,229,160,0.35); }
+  .result-card.lie    { background: var(--red-dim);          border-color: rgba(255,78,78,0.35); }
+  .result-card.mixed  { background: var(--amber-dim);        border-color: rgba(255,184,77,0.35); }
+  .score-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .result-card.truth .score-chip { background: rgba(0,229,160,0.15); color: var(--accent); }
+  .result-card.lie   .score-chip { background: rgba(255,78,78,0.15);  color: var(--red); }
+  .result-card.mixed .score-chip { background: rgba(255,184,77,0.15); color: var(--amber); }
+  .result-verdict { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .result-card.truth .result-verdict { color: var(--accent); }
+  .result-card.lie   .result-verdict { color: var(--red); }
+  .result-card.mixed .result-verdict { color: var(--amber); }
+  .result-detail { font-size: 13px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .meter-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+  .meter { flex: 1; }
+  .meter-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
+  .meter-track { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .meter-fill { height: 100%; border-radius: 3px; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+  .next-btn { width: 100%; padding: 11px; border-radius: 10px; background: var(--surface2); color: var(--text); border: 0.5px solid var(--border2); font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .next-btn:hover { background: rgba(255,255,255,0.06); }
+
+  /* ── Custom Questions Tab ── */
+  .custom-section { margin-bottom: 1.25rem; }
+  .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+
+  .add-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .add-row input {
+    flex: 1; padding: 10px 14px; border-radius: 10px;
+    background: var(--surface); border: 0.5px solid var(--border2);
+    color: var(--text); font-family: var(--sans); font-size: 14px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .add-row input::placeholder { color: var(--muted); }
+  .add-row input:focus { border-color: var(--accent); }
+  .add-q-btn {
+    padding: 10px 16px; border-radius: 10px; background: var(--accent);
+    color: #0d0e12; border: none; font-family: var(--sans); font-size: 14px;
+    font-weight: 600; cursor: pointer; white-space: nowrap; transition: opacity 0.2s;
+  }
+  .add-q-btn:hover { opacity: 0.85; }
+
+  .q-list { display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto; }
+  .q-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+    transition: border-color 0.2s;
+  }
+  .q-item.builtin { opacity: 0.6; }
+  .q-item-text { flex: 1; font-size: 13px; color: var(--text); line-height: 1.4; }
+  .q-badge {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 6px;
+    background: var(--accent-dim); color: var(--accent); white-space: nowrap;
+  }
+  .q-badge.builtin-badge { background: var(--surface2); color: var(--muted); }
+  .del-btn {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: 16px; padding: 2px 4px; border-radius: 6px; line-height: 1;
+    transition: color 0.2s, background 0.2s;
+  }
+  .del-btn:hover { color: var(--red); background: var(--red-dim); }
+
+  .empty-state { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 13px; }
+  .empty-state i { font-size: 28px; display: block; margin-bottom: 8px; opacity: 0.5; }
+
+  .q-list::-webkit-scrollbar { width: 4px; }
+  .q-list::-webkit-scrollbar-track { background: transparent; }
+  .q-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* Ad modal */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--surface); border: 0.5px solid var(--border2); border-radius: 18px; padding: 1.75rem; width: 100%; max-width: 340px; text-align: center; }
+  .modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .modal > p { font-size: 13px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
+  .ad-screen { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1rem; }
+  .ad-screen i { font-size: 36px; color: var(--muted); }
+  .ad-screen p { font-size: 12px; color: var(--muted); }
+  .ad-timer { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .ad-progress-track { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; margin-bottom: 1rem; }
+  .ad-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+  .claim-btn { width: 100%; padding: 11px; border-radius: 10px; background: var(--accent); color: #0d0e12; border: none; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+  .claim-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
+  .cancel-btn { width: 100%; padding: 9px; margin-top: 8px; background: none; border: none; color: var(--muted); font-family: var(--sans); font-size: 13px; cursor: pointer; }
+  .cancel-btn:hover { color: var(--text); }
+
+  @media (max-width: 480px) {
+    .header h1 { font-size: 22px; }
+    .mic-btn { width: 70px; height: 70px; }
+    .mic-btn i { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="eyebrow">Vocal stress analysis</div>
+    <h1>Voice lie detector</h1>
+    <p>Your nervous vocal patterns don't lie — even when you do</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('detector')" id="tab-detector">
+      <i class="ti ti-ripple" aria-hidden="true"></i> Detector
+    </button>
+    <button class="tab-btn" onclick="switchTab('questions')" id="tab-questions">
+      <i class="ti ti-list" aria-hidden="true"></i> Questions
+    </button>
+  </div>
+
+  <!-- DETECTOR TAB -->
+  <div class="tab-panel active" id="panel-detector">
+    <div class="tries-bar">
+      <span class="tries-label">Tries</span>
+      <div class="tries-dots" id="dots"></div>
+      <button class="ad-btn" id="adBtn" onclick="openAd()">
+        <i class="ti ti-player-play" aria-hidden="true"></i> Watch ad +1
+      </button>
+    </div>
+
+    <div class="question-card">
+      <div class="question-eyebrow">Answer out loud</div>
+      <div class="question-text" id="questionText">Loading…</div>
+      <button class="skip-btn" onclick="nextQuestion()">Different question</button>
+    </div>
+
+    <div class="visualizer">
+      <div class="waveform" id="waveform"></div>
+      <span class="idle-msg" id="idleMsg">tap mic to begin</span>
+    </div>
+
+    <div class="mic-wrap">
+      <button class="mic-btn" id="micBtn" aria-label="Start or stop recording">
+        <i class="ti ti-microphone" id="micIcon"></i>
+      </button>
+      <span class="mic-hint" id="micHint">tap to start — tap again to stop</span>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="score-chip" id="scoreChip"></div>
+      <div class="result-verdict" id="resultVerdict"></div>
+      <div class="result-detail" id="resultDetail"></div>
+      <div class="meter-row">
+        <div class="meter">
+          <div class="meter-label">Pitch variance</div>
+          <div class="meter-track"><div class="meter-fill" id="pitchFill" style="background:var(--red)"></div></div>
+        </div>
+        <div class="meter">
+          <div class="meter-label">Stress spikes</div>
+          <div class="meter-track"><div class="meter-fill" id="rateFill" style="background:var(--amber)"></div></div>
+        </div>
+        <div class="meter">
+          <div class="meter-label">Micro-pauses</div>
+          <div class="meter-track"><div class="meter-fill" id="pauseFill" style="background:#5b8cff"></div></div>
+        </div>
+      </div>
+      <button class="next-btn" onclick="resetForNext()">Try another question</button>
+    </div>
+  </div>
+
+  <!-- QUESTIONS TAB -->
+  <div class="tab-panel" id="panel-questions">
+    <div class="custom-section">
+      <div class="section-label">Add a custom question</div>
+      <div class="add-row">
+        <input type="text" id="newQInput" placeholder="e.g. Did you eat my leftovers?" maxlength="120"
+          onkeydown="if(event.key==='Enter') addQuestion()" />
+        <button class="add-q-btn" onclick="addQuestion()">Add</button>
+      </div>
+    </div>
+
+    <div class="custom-section">
+      <div class="section-label">All questions</div>
+      <div class="q-list" id="qList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ad Modal -->
+<div class="modal-bg" id="adModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Earn a free try</h2>
+    <p>Watch this short ad and we'll reload one try.</p>
+    <div class="ad-screen">
+      <i class="ti ti-badge-ad" aria-hidden="true"></i>
+      <p>Your ad plays here</p>
+      <span class="ad-timer" id="adTimer">Closes in 5s…</span>
+    </div>
+    <div class="ad-progress-track">
+      <div class="ad-progress-fill" id="adFill"></div>
+    </div>
+    <button class="claim-btn" id="claimBtn" onclick="claimAd()" disabled>Watching…</button>
+    <button class="cancel-btn" onclick="closeAd()">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ── Question bank ──────────────────────────────────────────────
+const BUILTIN = [
+  "Have you ever called in sick when you weren't?",
+  "Do you actually enjoy your job?",
+  "Have you ever lied to make someone feel better?",
+  "Do you always wash your hands after using the bathroom?",
+  "Have you ever taken credit for someone else's work?",
+  "Are you really fine when you say 'I'm fine'?",
+  "Have you ever snooped through someone else's phone?",
+  "Do you genuinely enjoy making small talk?",
+  "Have you ever pretended not to see a message?",
+  "Do you actually floss every day?",
+  "Have you ever regifted a present?",
+  "Do you always tell your friends the truth?",
+];
+
+let customQuestions = JSON.parse(localStorage.getItem('lieDetector_custom') || '[]');
+let currentQ = 0;
+
+function allQuestions() {
+  return [...customQuestions, ...BUILTIN];
+}
+
+function saveCustom() {
+  localStorage.setItem('lieDetector_custom', JSON.stringify(customQuestions));
+}
+
+function getShuffled() {
+  return [...allQuestions()].sort(() => Math.random() - 0.5);
+}
+
+let shuffled = getShuffled();
+document.getElementById('questionText').textContent = shuffled[0] || 'Add a question first!';
+
+function nextQuestion() {
+  shuffled = getShuffled();
+  currentQ = (currentQ + 1) % shuffled.length;
+  document.getElementById('questionText').textContent = shuffled[currentQ] || 'Add a question!';
+  document.getElementById('resultCard').style.display = 'none';
+}
+
+// ── Question list render ───────────────────────────────────────
+function renderQuestions() {
+  const list = document.getElementById('qList');
+  list.innerHTML = '';
+  const all = allQuestions();
+  if (all.length === 0) {
+    list.innerHTML = '<div class="empty-state"><i class="ti ti-help-circle"></i>No questions yet. Add one above!</div>';
+    return;
+  }
+  all.forEach((q, i) => {
+    const isCustom = i < customQuestions.length;
+    const item = document.createElement('div');
+    item.className = 'q-item' + (isCustom ? '' : ' builtin');
+    item.innerHTML = `
+      <span class="q-item-text">${escHtml(q)}</span>
+      <span class="q-badge ${isCustom ? '' : 'builtin-badge'}">${isCustom ? 'custom' : 'built-in'}</span>
+      ${isCustom ? `<button class="del-btn" onclick="deleteQuestion(${i})" aria-label="Delete question"><i class="ti ti-x"></i></button>` : ''}
+    `;
+    list.appendChild(item);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function addQuestion() {
+  const input = document.getElementById('newQInput');
+  const val = input.value.trim();
+  if (!val) return;
+  customQuestions.unshift(val);
+  saveCustom();
+  input.value = '';
+  renderQuestions();
+  shuffled = getShuffled();
+}
+
+function deleteQuestion(i) {
+  customQuestions.splice(i, 1);
+  saveCustom();
+  renderQuestions();
+  shuffled = getShuffled();
+}
+
+renderQuestions();
+
+// ── Tabs ──────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ── Tries ─────────────────────────────────────────────────────
+const MAX_TRIES = 3;
+let tries = MAX_TRIES;
+
+function renderDots() {
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  for (let i = 0; i < MAX_TRIES; i++) {
+    const d = document.createElement('div');
+    d.className = 'try-dot' + (i >= tries ? ' used' : '');
+    c.appendChild(d);
+  }
+  const adBtn = document.getElementById('adBtn');
+  adBtn.disabled = tries >= MAX_TRIES;
+  adBtn.style.opacity = tries >= MAX_TRIES ? '0.3' : '1';
+}
+renderDots();
+
+// ── Waveform ──────────────────────────────────────────────────
+const waveform = document.getElementById('waveform');
+const BAR_COUNT = 52;
+for (let i = 0; i < BAR_COUNT; i++) {
+  const b = document.createElement('div');
+  b.className = 'wave-bar';
+  b.style.height = '3px';
+  waveform.appendChild(b);
+}
+const bars = waveform.querySelectorAll('.wave-bar');
+
+// ── Recording state machine ───────────────────────────────────
+// States: idle | recording
+let state = 'idle';
+let simInterval = null;
+let recordTimer = null;
+let samples = [];
+let audioCtx = null;
+let analyser = null;
+let micSource = null;
+let micStream = null;
+let animFrame = null;
+let usingRealMic = false;
+
+document.getElementById('micBtn').addEventListener('click', handleMicClick);
+
+function handleMicClick() {
+  if (state === 'idle') startRecording();
+  else if (state === 'recording') finishRecording();
+}
+
+async function startRecording() {
+  if (tries <= 0) { alert('No tries left! Watch an ad to get more.'); return; }
+  tries--;
+  renderDots();
+  samples = [];
+  usingRealMic = false;
+  document.getElementById('resultCard').style.display = 'none';
+  setState('recording');
+
+  // Try real mic (only works on HTTPS)
+  if (window.isSecureContext && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    try {
+      if (!micStream || micStream.getTracks().some(t => t.readyState === 'ended')) {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      }
+      if (audioCtx && audioCtx.state !== 'closed') { try { audioCtx.close(); } catch(e){} }
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      micSource = audioCtx.createMediaStreamSource(micStream);
+      micSource.connect(analyser);
+      usingRealMic = true;
+
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      const step = Math.floor(dataArray.length / BAR_COUNT);
+      function draw() {
+        animFrame = requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+        bars.forEach((b, i) => {
+          const val = dataArray[i * step] || 0;
+          b.style.height = Math.max(3, Math.round((val / 255) * 70)) + 'px';
+        });
+        const avg = dataArray.reduce((a, v) => a + v, 0) / dataArray.length;
+        samples.push(avg);
+      }
+      draw();
+    } catch(e) {
+      usingRealMic = false;
+    }
+  }
+
+  // Fallback: simulation
+  if (!usingRealMic) {
+    simInterval = setInterval(() => {
+      bars.forEach(b => {
+        b.style.height = Math.max(3, Math.round(Math.random() * 62 + 5)) + 'px';
+      });
+      const base = 18 + Math.random() * 22;
+      const r = Math.random();
+      samples.push(r < 0.13 ? base * 0.2 : r < 0.28 ? base * 1.5 : base);
+    }, 80);
+  }
+
+  recordTimer = setTimeout(finishRecording, 9000);
+}
+
+function finishRecording() {
+  if (state !== 'recording') return;
+  clearTimeout(recordTimer);
+  cancelAnimationFrame(animFrame);
+  clearInterval(simInterval);
+  simInterval = null;
+  bars.forEach(b => b.style.height = '3px');
+  try { micSource && micSource.disconnect(); } catch(e) {}
+  try { if (audioCtx && audioCtx.state !== 'closed') audioCtx.close(); } catch(e) {}
+  setState('idle');
+  analyze(samples);
+}
+
+function setState(s) {
+  state = s;
+  const btn  = document.getElementById('micBtn');
+  const icon = document.getElementById('micIcon');
+  const hint = document.getElementById('micHint');
+  const idle = document.getElementById('idleMsg');
+  if (s === 'idle') {
+    btn.classList.remove('recording');
+    icon.className = 'ti ti-microphone';
+    hint.textContent = 'tap to start — tap again to stop';
+    idle.style.display = 'block';
+  } else if (s === 'recording') {
+    btn.classList.add('recording');
+    icon.className = 'ti ti-square';
+    hint.textContent = 'recording… tap to stop';
+    idle.style.display = 'none';
+  }
+}
+
+// ── Analysis ──────────────────────────────────────────────────
+function analyze(samp) {
+  if (!samp || samp.length < 4) { setState('idle'); return; }
+
+  const avg = samp.reduce((a, b) => a + b, 0) / samp.length;
+  let variance = 0;
+  samp.forEach(s => variance += (s - avg) ** 2);
+  variance = Math.sqrt(variance / samp.length);
+
+  const spikes   = samp.filter(s => s > avg * 1.3).length;
+  const silences = samp.filter(s => s < avg * 0.35).length;
+
+  const nervScore = Math.min(100, Math.round(
+    (variance / 8) * 40 +
+    (spikes   / samp.length) * 100 * 0.35 +
+    (silences / samp.length) * 100 * 0.25
+  ));
+
+  const pitchPct = Math.min(100, Math.round((variance / 8) * 100));
+  const spikePct = Math.min(100, Math.round((spikes   / samp.length) * 200));
+  const pausePct = Math.min(100, Math.round((silences / samp.length) * 200));
+
+  let cls, verdict, detail;
+  if (nervScore > 60) {
+    cls = 'lie'; verdict = '🔴 Deception detected';
+    detail = `Nervousness score ${nervScore}/100 — elevated pitch variance and micro-pauses suggest stress patterns consistent with deception.`;
+  } else if (nervScore > 33) {
+    cls = 'mixed'; verdict = '🟡 Inconclusive';
+    detail = `Nervousness score ${nervScore}/100 — some stress markers present, but not enough for a clear verdict. You might just be nervous.`;
+  } else {
+    cls = 'truth'; verdict = '🟢 Likely truthful';
+    detail = `Nervousness score ${nervScore}/100 — calm, steady vocal patterns. Sounds like the truth.`;
+  }
+
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card ' + cls;
+  card.style.display = 'block';
+  document.getElementById('scoreChip').textContent = `Nervousness: ${nervScore}/100`;
+  document.getElementById('resultVerdict').textContent = verdict;
+  document.getElementById('resultDetail').textContent = detail;
+
+  setTimeout(() => {
+    document.getElementById('pitchFill').style.width = pitchPct + '%';
+    document.getElementById('rateFill').style.width  = spikePct + '%';
+    document.getElementById('pauseFill').style.width = pausePct + '%';
+  }, 80);
+
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setState('idle');
+}
+
+function resetForNext() {
+  document.getElementById('resultCard').style.display = 'none';
+  nextQuestion();
+  if (tries <= 0) document.getElementById('micHint').textContent = 'no tries left — watch an ad!';
+}
+
+// ── Ad modal ──────────────────────────────────────────────────
+let adInterval = null;
+
+function openAd() {
+  if (tries >= MAX_TRIES) return;
+  document.getElementById('adModal').classList.add('open');
+  let t = 5;
+  const fill  = document.getElementById('adFill');
+  const btn   = document.getElementById('claimBtn');
+  const timer = document.getElementById('adTimer');
+  fill.style.width = '0%';
+  btn.disabled = true;
+  btn.textContent = `Watching… (${t}s)`;
+  timer.textContent = `Closes in ${t}s…`;
+
+  adInterval = setInterval(() => {
+    t--;
+    fill.style.width = ((5 - t) / 5 * 100) + '%';
+    if (t <= 0) {
+      clearInterval(adInterval);
+      timer.textContent = 'Done! Claim your try below.';
+      btn.disabled = false;
+      btn.textContent = 'Claim free try';
+    } else {
+      timer.textContent = `Closes in ${t}s…`;
+      btn.textContent = `Watching… (${t}s)`;
+    }
+  }, 1000);
+}
+
+function claimAd() {
+  closeAd();
+  tries = Math.min(MAX_TRIES, tries + 1);
+  renderDots();
+  if (tries > 0) document.getElementById('micHint').textContent = 'tap to start — tap again to stop';
+}
+
+function closeAd() {
+  clearInterval(adInterval);
+  document.getElementById('adModal').classList.remove('open');
+}
+</script>
+</body>
+</html>
