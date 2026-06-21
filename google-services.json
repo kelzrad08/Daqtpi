@@ -1,0 +1,184 @@
+{
+  "project_info": {
+    "project_number": "110191978686",
+    "project_id": "daqtpi-site",
+    "storage_bucket": "daqtpi-site.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:c7c0b1d71f7a3a36bf96ef",
+        "android_client_info": {
+          "package_name": "aplic3811840.nra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:479895e51037aa94bf96ef",
+        "android_client_info": {
+          "package_name": "app478.breathingtimer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:b42b7c13ffb82427bf96ef",
+        "android_client_info": {
+          "package_name": "com.daqtpi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:8c18308fba1d0a28bf96ef",
+        "android_client_info": {
+          "package_name": "com.daqtpi.liedetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:217fa39ad7eceb7dbf96ef",
+        "android_client_info": {
+          "package_name": "taser.aoav"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110191978686:android:29551ef6c9d08ca3bf96ef",
+        "android_client_info": {
+          "package_name": "www.daqtpi.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeu4_RjTjLNtIQ1o4VtzgB_HzIUwP0-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110191978686-7blvm2ondc3q37h58n5b8ah4jtmu78a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
