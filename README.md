@@ -1,74 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://daqtpi.com/</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/referee</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/keno</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/kenonumbergenerator</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/slotsformom</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/minesweeper</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/magicgenie</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/mindfulmeditation</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/taser</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://daqtpi.com/apkeditor</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-</urlset>
+https://ko-fi.com/daqtpi
+https://daqtpi.com
+https://daqtpi.com/
+https://youtube.com/channel/UCWeyePLy5Fzy3N0-cI9fnPA
+https://daqtpi.com/referee
+https://www.youtube.com/@Daqtpi
+https://daqtpi.com/@Daqtpi/videos
+https://www.youtube.com/channel/UCWeyePLy5Fzy3N0-cI9fnPA?sub_confirmation=1
+https://m.youtube.com/shorts/kkzhIE1ZtYg
+https://m.youtube.com/shorts/W_3Tv6XlJTk
+https://daqtpi.com/@Daqtpi/videos
+https://www.appcreator24.com/app4084569-7pmojs
+https://daqtpi.com/Ads.txt
+https://youtube.com/Ads.txt
+https://www.youtube.com/@daqtpi/ads.txt
+https://www.youtube.com/@Daqtpi/featured
+https://daqtpi.com/liedetector
+https://daqtpi.com/kenonumbergenerator
+https://daqtpi.com/success
+https://daqtpi.com/myyoutube
+https://www.e-droid.net/privacy.php?ida=4005955&idl=en
