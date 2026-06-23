@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-7-8 Breathing</title>
+<link href="" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --surface: #111827;
+    --rim: #1e2d40;
+    --ink: #e8dfc8;
+    --muted: #6b7fa0;
+    --glow-in: #7ab8d4;
+    --glow-hold: #c4a882;
+    --glow-out: #88c4a8;
+    --accent: #a0c4d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 20%, rgba(122,184,212,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(136,196,168,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  header {
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Circle */
+  .circle-wrap {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    flex-shrink: 0;
+  }
+
+  .ring-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: var(--rim);
+    stroke-width: 3;
+  }
+
+  .ring-prog {
+    fill: none;
+    stroke: var(--glow-in);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 720;
+    stroke-dashoffset: 720;
+    transition: stroke 0.6s ease, stroke-dashoffset 0.05s linear;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+
+  .circle-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .phase-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: lowercase;
+    transition: color 0.6s ease;
+    min-height: 1.4em;
+  }
+
+  .countdown {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    transition: color 0.6s ease;
+  }
+
+  .phase-hint {
+    font-size: 0.65rem;
+    font-weight: 200;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.7;
+    min-height: 1em;
+  }
+
+  /* Interval counter */
+  .interval-display {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rim);
+    border: 1px solid var(--muted);
+    transition: background 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+  }
+
+  .dot.done {
+    background: var(--glow-out);
+    border-color: var(--glow-out);
+    transform: scale(1.2);
+  }
+
+  .dot.active {
+    background: var(--glow-in);
+    border-color: var(--glow-in);
+    transform: scale(1.4);
+  }
+
+  /* Settings */
+  .settings-panel {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--rim);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .settings-label {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .step-btn {
+    background: none;
+    border: 1px solid var(--rim);
+    color: var(--ink);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .step-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .step-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .step-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    min-width: 2ch;
+    text-align: center;
+    color: var(--ink);
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--rim);
+    border-radius: 22px;
+    transition: background 0.3s;
+  }
+
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    top: 3px;
+    background: var(--muted);
+    border-radius: 50%;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .toggle input:checked + .toggle-slider { background: rgba(122,184,212,0.25); }
+  .toggle input:checked + .toggle-slider::before {
+    transform: translateX(18px);
+    background: var(--glow-in);
+  }
+
+  /* Buttons */
+  .controls {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary {
+    background: rgba(122,184,212,0.15);
+    border: 1px solid var(--glow-in);
+    color: var(--glow-in);
+  }
+
+  .btn-primary:hover {
+    background: rgba(122,184,212,0.25);
+    box-shadow: 0 0 20px rgba(122,184,212,0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--rim);
+    color: var(--muted);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--muted);
+    color: var(--ink);
+  }
+
+  /* Phase colors */
+  body.phase-inhale .ring-prog { stroke: var(--glow-in); }
+  body.phase-hold   .ring-prog { stroke: var(--glow-hold); }
+  body.phase-exhale .ring-prog { stroke: var(--glow-out); }
+
+  body.phase-inhale .countdown { color: var(--glow-in); }
+  body.phase-hold   .countdown { color: var(--glow-hold); }
+  body.phase-exhale .countdown { color: var(--glow-out); }
+
+  body.phase-inhale .phase-label { color: var(--glow-in); }
+  body.phase-hold   .phase-label { color: var(--glow-hold); }
+  body.phase-exhale .phase-label { color: var(--glow-out); }
+
+  /* Pulse animation when running */
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
+  body.running .ring-prog {
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+
+  /* Done message */
+  .done-msg {
+    display: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--glow-out);
+    text-align: center;
+    letter-spacing: 0.06em;
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+
+  body.done .done-msg { display: block; }
+  body.done .interval-display { display: none; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <h1><em>4 · 7 · 8</em> Breathing</h1>
+    <p class="subtitle">Inhale · Hold · Exhale</p>
+  </header>
+
+  <div class="circle-wrap">
+    <svg class="ring-svg" viewBox="0 0 260 260">
+      <circle class="ring-bg" cx="130" cy="130" r="115"/>
+      <circle class="ring-prog" id="ring" cx="130" cy="130" r="115"/>
+    </svg>
+    <div class="circle-inner">
+      <span class="phase-label" id="phaseLabel">–</span>
+      <span class="countdown" id="countdown">–</span>
+      <span class="phase-hint" id="phaseHint"></span>
+    </div>
+  </div>
+
+  <div class="interval-display" id="dots"></div>
+  <div class="done-msg" id="doneMsg">Breathe easy. You're done.</div>
+
+  <div class="settings-panel">
+    <div class="settings-row">
+      <span class="settings-label">Cycles</span>
+      <div class="stepper">
+        <button class="step-btn" id="decBtn" onclick="changeCycles(-1)">−</button>
+        <span class="step-val" id="cycleVal">4</span>
+        <button class="step-btn" id="incBtn" onclick="changeCycles(1)">+</button>
+      </div>
+    </div>
+    <div class="toggle-row">
+      <span class="settings-label">Sound cues</span>
+      <label class="toggle">
+        <input type="checkbox" id="soundToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="startBtn" onclick="startStop()">Begin</button>
+    <button class="btn btn-secondary" id="resetBtn" onclick="reset()">Reset</button>
+  </div>
+</div>
+
+<script>
+  const PHASES = [
+    { name: 'Inhale',  hint: 'through your nose',  dur: 4,  cls: 'phase-inhale' },
+    { name: 'Hold',    hint: 'hold your breath',    dur: 7,  cls: 'phase-hold'   },
+    { name: 'Exhale',  hint: 'through your mouth',  dur: 8,  cls: 'phase-exhale' },
+  ];
+
+  const circumference = 2 * Math.PI * 115; // ≈ 722.6
+  const ring = document.getElementById('ring');
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = circumference;
+
+  let totalCycles = 4;
+  let running = false;
+  let currentCycle = 0;
+  let currentPhase = 0;
+  let timeLeft = 0;
+  let ticker = null;
+  let audioCtx = null;
+
+  // ----- Audio -----
+  function getAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function beep(freq = 440, dur = 0.18, vol = 0.35, type = 'sine') {
+    if (!document.getElementById('soundToggle').checked) return;
+    try {
+      const ctx = getAudio();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = type;
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + dur);
+    } catch(e) {}
+  }
+
+  function phaseBeep(phase) {
+    if (phase === 0) beep(660, 0.2, 0.3, 'sine');       // inhale — clear high
+    else if (phase === 1) beep(520, 0.25, 0.3, 'sine');  // hold — mid
+    else beep(380, 0.4, 0.25, 'sine');                   // exhale — low, longer
+  }
+
+  // ----- Dots -----
+  function buildDots() {
+    const wrap = document.getElementById('dots');
+    wrap.innerHTML = '';
+    for (let i = 0; i < totalCycles; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot';
+      d.id = 'dot-' + i;
+      wrap.appendChild(d);
+    }
+  }
+
+  function updateDots() {
+    for (let i = 0; i < totalCycles; i++) {
+      const d = document.getElementById('dot-' + i);
+      if (!d) continue;
+      d.className = 'dot' + (i < currentCycle ? ' done' : i === currentCycle ? ' active' : '');
+    }
+  }
+
+  // ----- Ring -----
+  function setRing(fraction, phaseIdx) {
+    const offset = circumference * (1 - fraction);
+    ring.style.strokeDashoffset = offset;
+  }
+
+  // ----- Display -----
+  function updateDisplay() {
+    const ph = PHASES[currentPhase];
+    document.getElementById('phaseLabel').textContent = ph.name;
+    document.getElementById('countdown').textContent = timeLeft;
+    document.getElementById('phaseHint').textContent = ph.hint;
+    const fraction = timeLeft / ph.dur;
+    setRing(fraction, currentPhase);
+    document.body.className = (running ? 'running ' : '') + ph.cls;
+  }
+
+  // ----- Cycle / phase logic -----
+  function startPhase(cycle, phase) {
+    currentCycle = cycle;
+    currentPhase = phase;
+    timeLeft = PHASES[phase].dur;
+    phaseBeep(phase);
+    updateDots();
+    updateDisplay();
+    ticker = setInterval(tick, 1000);
+  }
+
+  function tick() {
+    timeLeft--;
+    if (timeLeft <= 0) {
+      clearInterval(ticker);
+      // Next
+      if (currentPhase < 2) {
+        startPhase(currentCycle, currentPhase + 1);
+      } else {
+        // Cycle done
+        if (currentCycle + 1 < totalCycles) {
+          // mark old dot done
+          const d = document.getElementById('dot-' + currentCycle);
+          if (d) d.className = 'dot done';
+          startPhase(currentCycle + 1, 0);
+        } else {
+          finish();
+        }
+      }
+    } else {
+      updateDisplay();
+    }
+  }
+
+  function finish() {
+    running = false;
+    clearInterval(ticker);
+    document.body.classList.remove('running');
+    document.body.classList.add('done');
+    // mark all done
+    for (let i = 0; i < totalCycles; i++) {
+      const d = document.getElementById('dot-' + i);
+      if (d) d.className = 'dot done';
+    }
+    ring.style.strokeDashoffset = 0;
+    document.getElementById('phaseLabel').textContent = '';
+    document.getElementById('countdown').textContent = '✓';
+    document.getElementById('phaseHint').textContent = '';
+    document.getElementById('startBtn').textContent = 'Begin';
+    beep(528, 0.6, 0.3, 'sine');
+    setTimeout(() => beep(660, 0.5, 0.25, 'sine'), 300);
+  }
+
+  // ----- Controls -----
+  function startStop() {
+    if (running) {
+      // Pause
+      running = false;
+      clearInterval(ticker);
+      document.body.classList.remove('running');
+      document.getElementById('startBtn').textContent = 'Resume';
+    } else {
+      // Resume or start fresh
+      if (document.body.classList.contains('done')) return;
+      running = true;
+      document.body.classList.add('running');
+      document.getElementById('startBtn').textContent = 'Pause';
+      if (ticker === null && currentCycle === 0 && currentPhase === 0 && timeLeft === 0) {
+        // Fresh start
+        buildDots();
+        startPhase(0, 0);
+      } else {
+        // Resume mid-phase
+        ticker = setInterval(tick, 1000);
+      }
+    }
+  }
+
+  function reset() {
+    running = false;
+    clearInterval(ticker);
+    ticker = null;
+    currentCycle = 0;
+    currentPhase = 0;
+    timeLeft = 0;
+    document.body.className = '';
+    ring.style.strokeDashoffset = circumference;
+    document.getElementById('phaseLabel').textContent = '–';
+    document.getElementById('countdown').textContent = '–';
+    document.getElementById('phaseHint').textContent = '';
+    document.getElementById('startBtn').textContent = 'Begin';
+    buildDots();
+    document.getElementById('dots').style.display = 'flex';
+    document.getElementById('doneMsg').style.display = 'none';
+  }
+
+  function changeCycles(delta) {
+    if (running) return;
+    totalCycles = Math.min(12, Math.max(1, totalCycles + delta));
+    document.getElementById('cycleVal').textContent = totalCycles;
+    document.getElementById('decBtn').disabled = totalCycles <= 1;
+    document.getElementById('incBtn').disabled = totalCycles >= 12;
+    buildDots();
+    // reset state
+    if (!running) {
+      currentCycle = 0; currentPhase = 0; timeLeft = 0;
+      ring.style.strokeDashoffset = circumference;
+      document.body.className = '';
+      document.getElementById('phaseLabel').textContent = '–';
+      document.getElementById('countdown').textContent = '–';
+      document.getElementById('phaseHint').textContent = '';
+      document.getElementById('startBtn').textContent = 'Begin';
+      ticker = null;
+    }
+  }
+
+  // Init
+  buildDots();
+  document.getElementById('decBtn').disabled = totalCycles <= 1;
+</script>
+</body>
+</html>
