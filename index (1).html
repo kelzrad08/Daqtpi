@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAQTPI — Apps, Games & More by Cartoon Queen</title>
+  <meta name="description" content="A universe of apps, games, tools and magic — all made with love by the Cartoon Queen. Try Relationship Referee, Magic Genie, Free Keno and more." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdfcf8;
+      --bg-card: #ffffff;
+      --text: #1a1814;
+      --text-muted: #7a7060;
+      --border: rgba(0,0,0,0.09);
+      --border-strong: rgba(0,0,0,0.15);
+      --accent: #c94f1e;
+      --accent-bg: #fff3ee;
+      --gold: #b07d2a;
+      --gold-bg: #fdf6e3;
+      --green: #2e7d4f;
+      --green-bg: #edf7f1;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141210;
+        --bg-card: #1e1c18;
+        --text: #f0ede6;
+        --text-muted: #9e9484;
+        --border: rgba(255,255,255,0.08);
+        --border-strong: rgba(255,255,255,0.14);
+        --accent: #e06840;
+        --accent-bg: #2a1408;
+        --gold: #d4a84b;
+        --gold-bg: #1e1608;
+        --green: #4caf78;
+        --green-bg: #0d1f14;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 13px;
+      color: var(--text-muted);
+      list-style: none;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--text);
+      color: var(--bg) !important;
+      padding: 7px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 1.5rem 2.5rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin: 0 auto 0.5rem;
+      line-height: 1.6;
+    }
+
+    /* ── REFEREE CARD ── */
+    .referee-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .referee-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .referee-top {
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .referee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 1.25rem;
+    }
+
+    .referee-emoji { font-size: 3.5rem; display: block; margin-bottom: 1rem; line-height: 1; }
+
+    .referee-card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .referee-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-now {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .price-was {
+      font-size: 15px;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .price-pill {
+      background: var(--green-bg);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .referee-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-main {
+      background: var(--accent);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      transition: opacity 0.15s;
+    }
+
+    .btn-main:hover { opacity: 0.88; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 0.5px solid var(--border-strong);
+      padding: 13px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      transition: background 0.15s;
+    }
+
+    .btn-ghost:hover { background: var(--border); }
+
+    .referee-footer {
+      border-top: 0.5px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 1.5rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .divider-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── APPS GRID ── */
+    .apps-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+
+    .app-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .app-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .app-card-emoji { font-size: 2rem; margin-bottom: 0.6rem; line-height: 1; }
+
+    .app-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .app-card-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .app-card-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: opacity 0.15s;
+    }
+
+    .app-card-link:hover { opacity: 0.7; }
+
+    /* ── YOUTUBE SECTION ── */
+    .yt-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .yt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .yt-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .yt-card iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border: none;
+    }
+
+    .yt-card-label {
+      padding: 0.75rem 1rem;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .yt-card-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 0 1rem 0.75rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .kofi-btn {
+      display: inline-block;
+      background: var(--gold-bg);
+      color: var(--gold);
+      border: 0.5px solid rgba(176,125,42,0.2);
+      padding: 8px 18px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+
+    .kofi-btn:hover { opacity: 0.8; }
+
+    .copyright {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+      .referee-top { padding: 1.5rem 1.25rem 1.25rem; }
+      .referee-footer { padding: 0.75rem 1rem; gap: 1rem; }
+      .apps-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .app-card { transition: none; }
+      .btn-main, .btn-ghost { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">DAQ<span>TPI</span></div>
+    <ul class="nav-links">
+      <li><a href="#apps">Apps</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="https://ko-fi.com/cartoonqueen" class="nav-cta">☕ Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="eyebrow">👑 by Cartoon Queen</span>
+    <h1>Settle every argument.<br><em>Instantly.</em></h1>
+    <p class="hero-sub">Apps, games & tools made with love — starting with the only fair judge you'll ever need.</p>
+  </section>
+
+  <!-- RELATIONSHIP REFEREE HERO CARD -->
+  <div class="referee-wrap">
+    <div class="referee-card">
+      <div class="referee-top">
+        <div class="referee-badge">⭐ Featured app</div>
+        <span class="referee-emoji">⚖️</span>
+        <h2>Relationship Referee</h2>
+        <p class="referee-desc">Submit your argument and get a full unbiased AI verdict — with scores, analysis, and real advice. Finally settle it, once and for all.</p>
+        <div class="price-row">
+          <span class="price-now">$1 per verdict</span>
+          <span class="price-was">$5</span>
+          <span class="price-pill">Limited time</span>
+        </div>
+        <p class="price-meta">Instant result · No signup needed</p>
+        <div class="referee-btns">
+          <a href="https://daqtpi.com/referee" class="btn-main">Get a verdict ⚖️</a>
+          <a href="https://www.appcreator24.com/app3983885-8x5tew" class="btn-ghost">Download app</a>
+        </div>
+      </div>
+      <div class="referee-footer">
+        <div class="trust-item"><span class="trust-dot"></span>Couples</div>
+        <div class="trust-item"><span class="trust-dot"></span>Friends</div>
+        <div class="trust-item"><span class="trust-dot"></span>Coworkers</div>
+        <div class="trust-item"><span class="trust-dot"></span>Anyone who needs a tiebreaker</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORE APPS -->
+  <div id="apps" class="section-divider">
+    <span class="divider-label">More fun from Cartoon Queen</span>
+  </div>
+
+  <section class="apps-section">
+    <div class="apps-grid">
+
+      <a href="https://daqtpi.com/magic-genie" class="app-card">
+        <span class="app-card-emoji">🧞</span>
+        <div class="app-card-name">Magic Genie</div>
+        <div class="app-card-tag">Wish & magic</div>
+        <span class="app-card-link">Try it free →</span>
+      </a>
+
+      <a href="https://daqtpi.com/keno" class="app-card">
+        <span class="app-card-emoji">🎰</span>
+        <div class="app-card-name">Free Keno</div>
+        <div class="app-card-tag">Games & luck</div>
+        <span class="app-card-link">Play free →</span>
+      </a>
+
+      <a href="https://daqtpi.com/keno-number-generator" class="app-card">
+        <span class="app-card-emoji">🔢</span>
+        <div class="app-card-name">Keno Numbers</div>
+        <div class="app-card-tag">Lucky picks</div>
+        <span class="app-card-link">Generate →</span>
+      </a>
+
+      <a href="https://daqtpi.com/minesweeper" class="app-card">
+        <span class="app-card-emoji">💣</span>
+        <div class="app-card-name">Minesweeper</div>
+        <div class="app-card-tag">Classic games</div>
+        <span class="app-card-link">Play free →</span>
+      </a>
+
+      <a href="https://daqtpi.com/slotsformom" class="app-card">
+        <span class="app-card-emoji">🎰</span>
+        <div class="app-card-name">Slots</div>
+        <div class="app-card-tag">Games & luck</div>
+        <span class="app-card-link">Spin free →</span>
+      </a>
+      
+      <a href="puzzle-book.html" class="app-card">
+        <span class="app-card-emoji">💣</span>
+        <div class="app-card-name">Puzzle-Book</div>
+        <div class="app-card-tag">Classic games</div>
+        <span class="app-card-link">Play free →</span>
+      </a>
+      
+      <a href="magic-lamp.html" class="app-card">
+        <span class="app-card-emoji">💣</span>
+        <div class="app-card-name">Magic-Lamp</div>
+        <div class="app-card-tag">Classic games</div>
+        <span class="app-card-link">Play free →</span>
+      </a>
+
+      <div class="app-card">
+        <span class="app-card-emoji">🧘</span>
+        <div class="app-card-name">Mindful Meditation</div>
+        <div class="app-card-tag">Wellness</div>
+        <a href="https://daqtpi.com/mindfulmeditation" class="app-card-link">Relax now →</a>
+        <a href="https://play.google.com/store/apps/details?id=aplic3811840.nra" class="app-card-link" style="margin-top:5px;">Download on Play Store →</a>
+      </div>
+
+      <div class="app-card">
+        <span class="app-card-emoji">⚡</span>
+        <div class="app-card-name">Taser Prank</div>
+        <div class="app-card-tag">Pranks</div>
+        <a href="https://daqtpi.com/taser" class="app-card-link">Try it →</a>
+        <a href="https://play.google.com/store/apps/details?id=taser.aoav" class="app-card-link" style="margin-top:5px;">Download on Play Store →</a>
+      </div>
+
+      <a href="https://www.appcreator24.com/app3950396-2xe1pt" class="app-card">
+        <span class="app-card-emoji">📯</span>
+        <div class="app-card-name">Foghorn Prank</div>
+        <div class="app-card-tag">Pranks</div>
+        <span class="app-card-link">Download →</span>
+      </a>
+
+      <a href="https://www.appcreator24.com/app3935367-7jnbqx" class="app-card">
+        <span class="app-card-emoji">🪔</span>
+        <div class="app-card-name">Magic Lamp</div>
+        <div class="app-card-tag">Wish & magic</div>
+        <span class="app-card-link">Download →</span>
+      </a>
+
+      <a href="https://www.appcreator24.com/app3952698-ur5d1g" class="app-card">
+        <span class="app-card-emoji">🪣</span>
+        <div class="app-card-name">Wishing Well</div>
+        <div class="app-card-tag">Wish & magic</div>
+        <span class="app-card-link">Download →</span>
+      </a>
+
+      <a href="https://daqtpi.com/apkeditor" class="app-card">
+        <span class="app-card-emoji">📦</span>
+        <div class="app-card-name">APK Editor</div>
+        <div class="app-card-tag">Tools</div>
+        <span class="app-card-link">Try it free →</span>
+      </a>
+
+      <a href="https://www.appcreator24.com/app3936942-9nhoja" class="app-card">
+        <span class="app-card-emoji">🍀</span>
+        <div class="app-card-name">Pocket Luck</div>
+        <div class="app-card-tag">Luck & magic</div>
+        <span class="app-card-link">Download →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- YOUTUBE SECTION -->
+  <div id="videos" class="section-divider">
+    <span class="divider-label">Cartoon Queen on YouTube</span>
+  </div>
+
+  <section class="yt-section">
+    <div class="yt-grid">
+
+      <div class="yt-card">
+        <iframe src="https://www.youtube.com/embed/GLjxIyL6wRI?controls=0" title="Relationship Referee demo" allowfullscreen loading="lazy"></iframe>
+        <div class="yt-card-label">Relationship Referee</div>
+        <div class="yt-card-sub">See how a verdict works</div>
+      </div>
+
+      <div class="yt-card">
+        <iframe src="https://www.youtube.com/embed/8TxSsPFbVxY" title="Queen best hits cartoon" allowfullscreen loading="lazy"></iframe>
+        <div class="yt-card-label">Queen — Best Hits</div>
+        <div class="yt-card-sub">Animated & brought to life</div>
+      </div>
+
+      <div class="yt-card">
+        <iframe src="https://www.youtube.com/embed/2k3Hy-s0gVI" title="Pet memorial video" allowfullscreen loading="lazy"></iframe>
+        <div class="yt-card-label">Pet Memorial Videos</div>
+        <div class="yt-card-sub">Honor your furry best friend</div>
+      </div>
+      
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DAQ<span>TPI</span></div>
+    <div class="footer-sub">Made with ❤️ by the Cartoon Queen</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="https://daqtpi.com/referee">Relationship Referee</a>
+    </div>
+    <a href="https://ko-fi.com/cartoonqueen" class="kofi-btn">☕ Buy me a coffee</a>
+    <div class="copyright">© 2026 DAQTPI · All rights reserved</div>
+  </footer>
+  
+
+
+</body>
+</html>
