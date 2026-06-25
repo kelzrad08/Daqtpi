@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
+  <script type="module">
+  // Import the SDKs (use your preferred CDN path)
+  import { initializeApp } from 'firebase/app';
+  import { getRemoteConfig, fetchAndActivate, getValue } from 'firebase/remote-config';
+
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "breathing-timer-96d20.firebaseapp.com",
+    projectId: "breathing-timer-96d20",
+    appId: "YOUR_WEB_APP_ID"
+  };
+
+  // Initialize Firebase and Remote Config
+  const app = initializeApp(firebaseConfig);
+  const remoteConfig = getRemoteConfig(app);
+
+  // Define local defaults
+  remoteConfig.defaultConfig = {
+    promo_banner_text: "Welcome to our site!"
+  };
+
+  // Fetch updates from the cloud
+  fetchAndActivate(remoteConfig)
+    .then(() => {
+      const bannerText = getValue(remoteConfig, 'promo_banner_text').asString();
+      document.getElementById('promo-banner').innerText = bannerText;
+    })
+    .catch((err) => {
+      console.error("Failed to fetch Remote Config", err);
+    });
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voice Lie Detector</title>
@@ -200,7 +231,7 @@
   .claim-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
   .cancel-btn { width: 100%; padding: 9px; margin-top: 8px; background: none; border: none; color: var(--muted); font-family: var(--sans); font-size: 13px; cursor: pointer; }
   .cancel-btn:hover { color: var(--text); }
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
      crossorigin="anonymous"></script>
 
   @media (max-width: 480px) {
@@ -209,6 +240,7 @@
     .mic-btn i { font-size: 26px; }
   }
 </style>
+
 </head>
 <body>
 <div class="app">
@@ -646,5 +678,6 @@ function closeAd() {
   document.getElementById('adModal').classList.remove('open');
 }
 </script>
+
 </body>
 </html>
