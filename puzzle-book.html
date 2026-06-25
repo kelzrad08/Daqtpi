@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Book</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --font-sans: system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, 'Courier New', monospace;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --bg: #ffffff;
+    --bg2: #f5f5f5;
+    --text: #1a1a1a;
+    --text2: #666;
+    --border: rgba(0,0,0,0.12);
+    --border2: rgba(0,0,0,0.22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a; --bg2: #242424; --text: #f0f0f0; --text2: #999;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+    }
+    .pc-purple { background:#26215C!important; color:#CECBF6!important; border-color:#534AB7!important; }
+    .pc-teal   { background:#04342C!important; color:#9FE1CB!important; border-color:#0F6E56!important; }
+    .pc-coral  { background:#4A1B0C!important; color:#F5C4B3!important; border-color:#993C1D!important; }
+    .pc-pink   { background:#4B1528!important; color:#F4C0D1!important; border-color:#993556!important; }
+    .pc-blue   { background:#042C53!important; color:#B5D4F4!important; border-color:#185FA5!important; }
+    .pc-green  { background:#173404!important; color:#C0DD97!important; border-color:#3B6D11!important; }
+    .pc-amber  { background:#412402!important; color:#FAC775!important; border-color:#854F0B!important; }
+    .pc-red    { background:#501313!important; color:#F7C1C1!important; border-color:#A32D2D!important; }
+    .ph-purple { background:#26215C!important; border-color:#534AB7!important; }
+    .ph-teal   { background:#04342C!important; border-color:#0F6E56!important; }
+    .ph-coral  { background:#4A1B0C!important; border-color:#993C1D!important; }
+    .ph-pink   { background:#4B1528!important; border-color:#993556!important; }
+    .ph-blue   { background:#042C53!important; border-color:#185FA5!important; }
+    .ph-green  { background:#173404!important; border-color:#3B6D11!important; }
+    .ph-amber  { background:#412402!important; border-color:#854F0B!important; }
+    .ph-red    { background:#501313!important; border-color:#A32D2D!important; }
+    .puzzle-header .htitle { color: var(--text)!important; }
+    .clues { background:#4B1528!important; border-color:#993556!important; color:#F4C0D1!important; }
+    .cq-hint { background:#4A1B0C!important; border-color:#993C1D!important; color:#F5C4B3!important; }
+    .logic-grid th { background:#4B1528!important; color:#F4C0D1!important; }
+    .logic-grid td { background:#3a1020!important; }
+    .logic-grid td:hover { background:#4B1528!important; }
+    .sudoku-grid input { background:#26215C!important; color:#CECBF6!important; }
+    .sudoku-grid input.given { color:#AFA9EC!important; background:#1a1540!important; }
+    .ws-cell { background:#04342C!important; color:#9FE1CB!important; border-color:#0F6E56!important; }
+    .ws-cell.selected { background:#0F6E56!important; }
+    .ws-word { background:#04342C!important; color:#9FE1CB!important; border-color:#0F6E56!important; }
+    .xw-inp { background:#042C53!important; color:#B5D4F4!important; border-color:#185FA5!important; }
+    .xw-inp:focus { background:#0C447C!important; }
+    .xw-black { background:#B5D4F4!important; }
+    .seq-box { background:#412402!important; color:#FAC775!important; border-color:#854F0B!important; }
+    .seq-box.unknown { background:#042C53!important; color:#B5D4F4!important; border-color:#185FA5!important; }
+    .trivia-opt { background:#26215C!important; color:#CECBF6!important; border-color:#534AB7!important; }
+    .trivia-opt:hover { background:#3C3489!important; }
+    .anagram-inp { background:#4A1B0C!important; color:#F5C4B3!important; border-color:#993C1D!important; }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  #app { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  .home-header { text-align: center; padding: 2rem 0 1.5rem; }
+  .home-header .title { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; color: var(--text); }
+  .home-header .sub { font-size: 14px; color: var(--text2); margin-top: 4px; }
+
+  .home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 1rem 0; }
+  .puzzle-card { border-radius: var(--radius-lg); padding: 1.1rem 1rem; cursor: pointer; transition: transform 0.12s; text-align: center; border: 0.5px solid transparent; }
+  .puzzle-card:hover { transform: translateY(-2px); }
+  .puzzle-card .icon { font-size: 28px; margin-bottom: 8px; line-height: 1; }
+  .puzzle-card .name { font-size: 13px; font-weight: 600; }
+  .puzzle-card .diff { font-size: 11px; margin-top: 3px; opacity: .7; }
+
+  .pc-purple { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+  .pc-teal   { background: #E1F5EE; color: #085041; border-color: #5DCAA5; }
+  .pc-coral  { background: #FAECE7; color: #712B13; border-color: #F0997B; }
+  .pc-pink   { background: #FBEAF0; color: #72243E; border-color: #ED93B1; }
+  .pc-blue   { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; }
+  .pc-green  { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+  .pc-amber  { background: #FAEEDA; color: #633806; border-color: #EF9F27; }
+  .pc-red    { background: #FCEBEB; color: #791F1F; border-color: #F09595; }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .puzzle-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding: 0.9rem 1rem; border-radius: var(--radius-lg); border: 0.5px solid transparent; }
+  .ph-purple { background: #EEEDFE; border-color: #AFA9EC; }
+  .ph-teal   { background: #E1F5EE; border-color: #5DCAA5; }
+  .ph-coral  { background: #FAECE7; border-color: #F0997B; }
+  .ph-pink   { background: #FBEAF0; border-color: #ED93B1; }
+  .ph-blue   { background: #E6F1FB; border-color: #85B7EB; }
+  .ph-green  { background: #EAF3DE; border-color: #97C459; }
+  .ph-amber  { background: #FAEEDA; border-color: #EF9F27; }
+  .puzzle-header .hicon { font-size: 26px; flex-shrink: 0; }
+  .puzzle-header .htitle { font-size: 16px; font-weight: 600; color: var(--text); }
+  .puzzle-header .hdesc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  .back-btn { background: none; border: 0.5px solid var(--border2); border-radius: var(--radius-md); padding: 5px 12px; font-size: 12px; cursor: pointer; color: var(--text2); margin-bottom: 10px; }
+  .back-btn:hover { background: var(--bg2); }
+
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .btn { padding: 7px 14px; border-radius: var(--radius-md); font-size: 13px; cursor: pointer; font-weight: 500; border: 0.5px solid; }
+  .btn:hover { filter: brightness(0.95); }
+  .btn-check  { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+  .btn-reveal { background: #FAEEDA; color: #633806; border-color: #EF9F27; }
+  .btn-new    { background: #E1F5EE; color: #085041; border-color: #5DCAA5; }
+  .btn-next   { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; }
+
+  .msg { font-size: 13px; padding: 8px 12px; border-radius: var(--radius-md); margin-top: 8px; }
+  .msg.ok   { background: #EAF3DE; color: #27500A; border: 0.5px solid #97C459; }
+  .msg.err  { background: #FCEBEB; color: #791F1F; border: 0.5px solid #F09595; }
+  .msg.info { background: #E6F1FB; color: #0C447C; border: 0.5px solid #85B7EB; }
+
+  /* SUDOKU */
+  .sudoku-wrap { text-align: center; }
+  .sudoku-grid { display: grid; grid-template-columns: repeat(9, 36px); gap: 1px; background: #AFA9EC; border: 2px solid #7F77DD; border-radius: 6px; overflow: hidden; margin: 0 auto; }
+  .sudoku-grid input { width: 36px; height: 36px; text-align: center; font-size: 15px; font-weight: 600; border: none; outline: none; background: #EEEDFE; color: #3C3489; caret-color: transparent; font-family: var(--font-mono); }
+  .sudoku-grid input.given { color: #7F77DD; background: #CECBF6; }
+  .sudoku-grid input.wrong { background: #FCEBEB; color: #A32D2D; }
+  .sudoku-grid input.right { background: #EAF3DE; color: #3B6D11; }
+  .box-border-r { border-right: 2px solid #7F77DD !important; }
+  .box-border-b { border-bottom: 2px solid #7F77DD !important; }
+
+  /* WORD SEARCH */
+  .ws-wrap { text-align: center; }
+  .ws-grid { display: inline-grid; gap: 3px; margin: 0 auto; }
+  .ws-cell { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; border-radius: 4px; cursor: pointer; background: #E1F5EE; color: #085041; border: 0.5px solid #5DCAA5; user-select: none; }
+  .ws-cell.selected { background: #5DCAA5; color: #04342C; }
+  .ws-cell.found { background: #1D9E75; color: #E1F5EE; }
+  .ws-words { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ws-word { font-size: 12px; padding: 3px 9px; border-radius: 20px; background: #E1F5EE; color: #085041; border: 0.5px solid #5DCAA5; }
+  .ws-word.found { text-decoration: line-through; background: #1D9E75; color: #E1F5EE; border-color: #0F6E56; }
+
+  /* CRYPTOQUIP */
+  .cq-hint { font-size: 12px; color: #712B13; font-style: italic; margin-bottom: 10px; background: #FAECE7; border: 0.5px solid #F0997B; padding: 6px 10px; border-radius: var(--radius-md); }
+  .cq-plain { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+  .cq-let { display: inline-flex; flex-direction: column; align-items: center; width: 20px; }
+  .cq-enc { font-family: var(--font-mono); font-size: 12px; color: #993C1D; border-bottom: 1.5px solid #F0997B; }
+  .cq-inp { width: 20px; font-family: var(--font-mono); font-size: 12px; text-align: center; border: none; outline: none; background: transparent; color: #185FA5; text-transform: uppercase; }
+  .cq-space { width: 10px; }
+
+  /* CROSSWORD */
+  .xw-wrap { text-align: center; }
+  .xw-grid { display: inline-grid; gap: 2px; margin: 0 auto; }
+  .xw-cell-wrap { position: relative; width: 36px; height: 36px; }
+  .xw-num { position: absolute; top: 1px; left: 2px; font-size: 8px; color: #185FA5; line-height: 1; pointer-events: none; z-index: 1; }
+  .xw-inp { width: 100%; height: 100%; text-align: center; font-size: 14px; font-weight: 600; border: 0.5px solid #85B7EB; background: #E6F1FB; color: #0C447C; outline: none; text-transform: uppercase; cursor: pointer; border-radius: 2px; font-family: var(--font-sans); }
+  .xw-inp:focus { border-color: #378ADD; background: #B5D4F4; }
+  .xw-inp.correct { background: #EAF3DE; color: #3B6D11; border-color: #97C459; }
+  .xw-inp.wrong { background: #FCEBEB; color: #A32D2D; border-color: #F09595; }
+  .xw-black { width: 36px; height: 36px; background: #0C447C; border-radius: 2px; }
+  .xw-clues { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem; font-size: 12px; }
+  .xw-clue-list h4 { font-size: 12px; font-weight: 600; margin-bottom: 5px; color: #0C447C; }
+  .xw-clue-list li { list-style: none; padding: 2px 0; color: var(--text2); cursor: pointer; }
+  .xw-clue-list li:hover { color: #0C447C; }
+
+  /* LOGIC */
+  .clues { font-size: 13px; color: #72243E; line-height: 1.8; background: #FBEAF0; border-radius: var(--radius-md); padding: 12px; margin-bottom: 1rem; border: 0.5px solid #ED93B1; }
+  .clues ul { margin-left: 1rem; }
+  .logic-grid { border-collapse: collapse; font-size: 12px; margin: 0 auto; }
+  .logic-grid th, .logic-grid td { border: 0.5px solid #ED93B1; padding: 5px 7px; text-align: center; min-width: 38px; }
+  .logic-grid th { background: #FBEAF0; font-weight: 600; font-size: 11px; color: #72243E; }
+  .logic-grid td { cursor: pointer; background: #fff0f6; color: var(--text); font-size: 14px; }
+  .logic-grid td:hover { background: #F4C0D1; }
+  .logic-grid td.yes { background: #EAF3DE; color: #3B6D11; }
+  .logic-grid td.no { background: #FCEBEB; color: #A32D2D; }
+
+  /* SEQUENCES */
+  .seq-boxes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .seq-box { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; border-radius: var(--radius-md); background: #FAEEDA; color: #633806; border: 0.5px solid #EF9F27; font-family: var(--font-mono); }
+  .seq-box.unknown { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; }
+  .seq-box input { width: 100%; height: 100%; text-align: center; font-size: 15px; font-weight: 600; border: none; outline: none; background: transparent; color: #185FA5; font-family: var(--font-mono); }
+
+  /* ANAGRAM */
+  .anagram-letters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .anagram-tile { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; border-radius: var(--radius-md); }
+  .anagram-hint { font-size: 13px; color: #993C1D; font-style: italic; margin-bottom: 10px; }
+  .anagram-inp { font-size: 17px; letter-spacing: 3px; text-transform: uppercase; width: 220px; padding: 8px; border: 0.5px solid #F0997B; border-radius: var(--radius-md); background: #FAECE7; color: #712B13; font-family: var(--font-mono); text-align: center; outline: none; }
+  .anagram-inp:focus { border-color: #D85A30; }
+
+  /* TRIVIA */
+  .trivia-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
+  .trivia-opts { display: flex; flex-direction: column; gap: 8px; }
+  .trivia-opt { padding: 10px 14px; border: 0.5px solid #AFA9EC; border-radius: var(--radius-md); cursor: pointer; font-size: 13px; color: #3C3489; background: #EEEDFE; text-align: left; font-family: var(--font-sans); }
+  .trivia-opt:hover { background: #CECBF6; }
+  .trivia-opt:disabled { cursor: default; }
+  .trivia-opt.correct { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+  .trivia-opt.wrong { background: #FCEBEB; color: #791F1F; border-color: #F09595; }
+  .trivia-score { font-size: 13px; color: var(--text2); margin-top: 8px; }
+  .progress { height: 5px; background: #CECBF6; border-radius: 3px; margin-bottom: 1rem; }
+  .progress-bar { height: 5px; background: #7F77DD; border-radius: 3px; transition: width 0.3s; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="home-header">
+    <div class="title">Puzzle Book</div>
+    <div class="sub">Pick a puzzle and play</div>
+  </div>
+  <div class="home-grid">
+    <div class="puzzle-card pc-purple" onclick="show('sudoku')"><div class="icon">🔢</div><div class="name">Sudoku</div><div class="diff">Medium</div></div>
+    <div class="puzzle-card pc-teal"   onclick="show('wordsearch')"><div class="icon">🔍</div><div class="name">Word Search</div><div class="diff">Easy</div></div>
+    <div class="puzzle-card pc-coral"  onclick="show('cryptoquip')"><div class="icon">🔐</div><div class="name">Cryptoquip</div><div class="diff">Medium</div></div>
+    <div class="puzzle-card pc-blue"   onclick="show('crossword')"><div class="icon">📰</div><div class="name">Crossword</div><div class="diff">Medium</div></div>
+    <div class="puzzle-card pc-pink"   onclick="show('logic')"><div class="icon">🧠</div><div class="name">Logic Puzzle</div><div class="diff">Hard</div></div>
+    <div class="puzzle-card pc-amber"  onclick="show('sequence')"><div class="icon">📐</div><div class="name">Sequences</div><div class="diff">Easy</div></div>
+    <div class="puzzle-card pc-coral"  onclick="show('anagram')"><div class="icon">🔤</div><div class="name">Anagrams</div><div class="diff">Medium</div></div>
+    <div class="puzzle-card pc-green"  onclick="show('trivia')"><div class="icon">❓</div><div class="name">Trivia</div><div class="diff">Mixed</div></div>
+  </div>
+</div>
+
+<!-- SUDOKU -->
+<div id="sudoku" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-purple"><div class="hicon">🔢</div><div><div class="htitle">Sudoku</div><div class="hdesc">Fill every row, column &amp; 3×3 box with 1–9</div></div></div>
+  <div class="sudoku-wrap" id="sudoku-board"></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkSudoku()">Check</button><button class="btn btn-reveal" onclick="revealSudoku()">Reveal</button><button class="btn btn-new" onclick="initSudoku()">New puzzle</button></div>
+  <div id="sudoku-msg"></div>
+</div>
+
+<!-- WORD SEARCH -->
+<div id="wordsearch" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-teal"><div class="hicon">🔍</div><div><div class="htitle">Word Search</div><div class="hdesc">Click first &amp; last letter of each hidden word</div></div></div>
+  <div class="ws-wrap" id="ws-board"></div>
+  <div class="ws-words" id="ws-words"></div>
+  <div class="btn-row"><button class="btn btn-new" onclick="initWS()">New puzzle</button></div>
+  <div id="ws-msg"></div>
+</div>
+
+<!-- CRYPTOQUIP -->
+<div id="cryptoquip" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-coral"><div class="hicon">🔐</div><div><div class="htitle">Cryptoquip</div><div class="hdesc">Each letter stands for another — crack the code!</div></div></div>
+  <div id="cq-board"></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkCQ()">Check</button><button class="btn btn-reveal" onclick="revealCQ()">Reveal</button><button class="btn btn-new" onclick="initCQ()">New puzzle</button></div>
+  <div id="cq-msg"></div>
+</div>
+
+<!-- CROSSWORD -->
+<div id="crossword" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-blue"><div class="hicon">📰</div><div><div class="htitle">Mini Crossword</div><div class="hdesc">5×5 grid — use the clues to fill it in</div></div></div>
+  <div class="xw-wrap" id="xw-board"></div>
+  <div class="xw-clues" id="xw-clues"></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkXW()">Check</button><button class="btn btn-reveal" onclick="revealXW()">Reveal</button><button class="btn btn-new" onclick="initXW()">New puzzle</button></div>
+  <div id="xw-msg"></div>
+</div>
+
+<!-- LOGIC -->
+<div id="logic" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-pink"><div class="hicon">🧠</div><div><div class="htitle">Logic Puzzle</div><div class="hdesc">Click cells to cycle: blank → ✓ → ✗</div></div></div>
+  <div id="logic-clues" class="clues"></div>
+  <div style="overflow-x:auto;margin-bottom:12px"><table class="logic-grid" id="logic-grid"></table></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkLogic()">Check</button><button class="btn btn-reveal" onclick="revealLogic()">Reveal</button><button class="btn btn-new" onclick="initLogic()">New puzzle</button></div>
+  <div id="logic-msg"></div>
+</div>
+
+<!-- SEQUENCE -->
+<div id="sequence" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-amber"><div class="hicon">📐</div><div><div class="htitle">Number Sequences</div><div class="hdesc">Find the next number in each pattern</div></div></div>
+  <div id="seq-puzzles"></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkSeq()">Check all</button><button class="btn btn-reveal" onclick="revealSeq()">Reveal</button><button class="btn btn-new" onclick="initSeq()">New set</button></div>
+  <div id="seq-msg"></div>
+</div>
+
+<!-- ANAGRAM -->
+<div id="anagram" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-coral"><div class="hicon">🔤</div><div><div class="htitle">Anagrams</div><div class="hdesc">Unscramble the tiles to spell a word</div></div></div>
+  <div id="anagram-board"></div>
+  <div class="btn-row"><button class="btn btn-check" onclick="checkAnagram()">Check</button><button class="btn btn-reveal" onclick="revealAnagram()">Reveal</button><button class="btn btn-next" onclick="nextAnagram()">Next word</button></div>
+  <div id="anagram-msg"></div>
+</div>
+
+<!-- TRIVIA -->
+<div id="trivia" class="screen">
+  <button class="back-btn" onclick="show('home')">← Back</button>
+  <div class="puzzle-header ph-green" style="background:#EAF3DE;border-color:#97C459"><div class="hicon">❓</div><div><div class="htitle" style="color:#27500A">Trivia Quiz</div><div class="hdesc">10 questions across science, history &amp; more</div></div></div>
+  <div class="progress"><div class="progress-bar" id="trivia-prog"></div></div>
+  <div id="trivia-board"></div>
+  <div id="trivia-score" class="trivia-score"></div>
+  <div class="btn-row"><button class="btn btn-next" id="trivia-next" onclick="nextTrivia()" style="display:none">Next question</button><button class="btn btn-new" onclick="initTrivia()">Restart</button></div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function msg(id,txt,type){document.getElementById(id).innerHTML=`<div class="msg ${type}">${txt}</div>`}
+
+const tileColPairs=[[['#EEEDFE','#3C3489','#AFA9EC'],['#FAECE7','#712B13','#F0997B'],['#E1F5EE','#085041','#5DCAA5'],['#FBEAF0','#72243E','#ED93B1'],['#E6F1FB','#0C447C','#85B7EB'],['#FAEEDA','#633806','#EF9F27']]];
+
+// ===== SUDOKU =====
+const sudokuPuzzles=[
+  {puzzle:"530070000600195000098000060800060003400803001700020006060000280000419005000080079",sol:"534678912672195348198342567859761423426853791713924856961537284287419635345286179"},
+  {puzzle:"003020600900305001001806400008102900700000008006708200002609500800203009005010300",sol:"483921657967345821251876493548132976729564138136798245372689514814253769695417382"}
+];
+let curSudoku=0;
+function initSudoku(){curSudoku=(curSudoku+1)%sudokuPuzzles.length;document.getElementById('sudoku-msg').innerHTML='';renderSudoku()}
+function renderSudoku(){
+  const {puzzle}=sudokuPuzzles[curSudoku];const wrap=document.getElementById('sudoku-board');wrap.innerHTML='';
+  const grid=document.createElement('div');grid.className='sudoku-grid';
+  for(let i=0;i<81;i++){
+    const inp=document.createElement('input');inp.type='text';inp.maxLength=1;
+    const row=Math.floor(i/9),col=i%9;let cls='';
+    if(col===2||col===5)cls+=' box-border-r';if(row===2||row===5)cls+=' box-border-b';
+    inp.className=cls.trim();const c=puzzle[i];
+    if(c!=='0'){inp.value=c;inp.readOnly=true;inp.classList.add('given')}
+    inp.dataset.idx=i;inp.addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^1-9]/g,'').slice(-1)});
+    grid.appendChild(inp);
+  }
+  wrap.appendChild(grid);
+}
+function checkSudoku(){
+  const {sol}=sudokuPuzzles[curSudoku];const inputs=document.querySelectorAll('#sudoku-board input');
+  let correct=0,total=0,empty=false;
+  inputs.forEach((inp,i)=>{if(inp.readOnly)return;total++;if(!inp.value){empty=true;return}
+    if(inp.value===sol[i]){inp.classList.add('right');inp.classList.remove('wrong');correct++}
+    else{inp.classList.add('wrong');inp.classList.remove('right')}});
+  if(empty)msg('sudoku-msg','Some cells are still empty!','info');
+  else if(correct===total)msg('sudoku-msg','Perfect! Puzzle solved!','ok');
+  else msg('sudoku-msg',`${correct}/${total} correct — keep going!`,'err');
+}
+function revealSudoku(){const {sol}=sudokuPuzzles[curSudoku];document.querySelectorAll('#sudoku-board input').forEach((inp,i)=>{if(!inp.readOnly){inp.value=sol[i];inp.classList.remove('wrong');inp.classList.add('right')}});msg('sudoku-msg','Revealed!','info')}
+
+// ===== WORD SEARCH =====
+const wsWordSets=[['CLOUD','RAIN','SNOW','FROST','WIND','STORM'],['TIGER','EAGLE','SHARK','BEAR','WOLF','CRANE'],['PIANO','FLUTE','VIOLA','CELLO','OBOE','DRUM']];
+let wsGrid=[],wsWords=[],wsFound=[],wsSelecting=false,wsStart=null,wsEnd=null,wsCells=[],wsSize=10;
+function initWS(){wsFound=[];wsSelecting=false;wsStart=null;wsEnd=null;document.getElementById('ws-msg').innerHTML='';
+  wsWords=wsWordSets[Math.floor(Math.random()*wsWordSets.length)].slice(0,6);
+  wsGrid=Array.from({length:wsSize},()=>Array(wsSize).fill(''));
+  wsWords.forEach(w=>placeWord(w));
+  for(let r=0;r<wsSize;r++)for(let c=0;c<wsSize;c++)if(!wsGrid[r][c])wsGrid[r][c]=String.fromCharCode(65+Math.floor(Math.random()*26));
+  renderWS();
+}
+function placeWord(word){const dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  for(let t=0;t<200;t++){const dir=dirs[Math.floor(Math.random()*dirs.length)];const r=Math.floor(Math.random()*wsSize),c=Math.floor(Math.random()*wsSize);
+    const cells=[];let ok=true;
+    for(let i=0;i<word.length;i++){const nr=r+dir[0]*i,nc=c+dir[1]*i;if(nr<0||nr>=wsSize||nc<0||nc>=wsSize){ok=false;break}if(wsGrid[nr][nc]&&wsGrid[nr][nc]!==word[i]){ok=false;break}cells.push([nr,nc])}
+    if(ok){cells.forEach(([nr,nc],i)=>wsGrid[nr][nc]=word[i]);return}}}
+function renderWS(){
+  const board=document.getElementById('ws-board');board.innerHTML='';
+  const g=document.createElement('div');g.className='ws-grid';g.style.gridTemplateColumns=`repeat(${wsSize},28px)`;
+  wsCells=[];
+  for(let r=0;r<wsSize;r++)for(let c=0;c<wsSize;c++){
+    const cell=document.createElement('div');cell.className='ws-cell';cell.textContent=wsGrid[r][c];cell.dataset.r=r;cell.dataset.c=c;
+    cell.addEventListener('mousedown',wsMouseDown);cell.addEventListener('mouseenter',wsMouseEnter);cell.addEventListener('mouseup',wsMouseUp);
+    wsCells.push(cell);g.appendChild(cell);
+  }
+  board.appendChild(g);document.addEventListener('mouseup',wsMouseUp);renderWSWords();
+}
+function getCell(r,c){return wsCells[r*wsSize+c]}
+function wsMouseDown(e){wsSelecting=true;wsStart={r:+e.target.dataset.r,c:+e.target.dataset.c};wsEnd=wsStart;highlightSel()}
+function wsMouseEnter(e){if(!wsSelecting)return;wsEnd={r:+e.target.dataset.r,c:+e.target.dataset.c};highlightSel()}
+function wsMouseUp(){if(!wsSelecting)return;wsSelecting=false;checkWSSelection()}
+function highlightSel(){const sel=getSelectedCells();wsCells.forEach(c=>{if(!c.classList.contains('found'))c.classList.remove('selected')});sel.forEach(([r,c])=>{if(!getCell(r,c).classList.contains('found'))getCell(r,c).classList.add('selected')})}
+function getSelectedCells(){if(!wsStart||!wsEnd)return[];const dr=Math.sign(wsEnd.r-wsStart.r),dc=Math.sign(wsEnd.c-wsStart.c);const len=Math.max(Math.abs(wsEnd.r-wsStart.r),Math.abs(wsEnd.c-wsStart.c));const cells=[];for(let i=0;i<=len;i++)cells.push([wsStart.r+dr*i,wsStart.c+dc*i]);return cells}
+function checkWSSelection(){const cells=getSelectedCells();const word=cells.map(([r,c])=>wsGrid[r][c]).join('');const rev=word.split('').reverse().join('');const found=wsWords.find(w=>w===word||w===rev);
+  if(found&&!wsFound.includes(found)){wsFound.push(found);cells.forEach(([r,c])=>{getCell(r,c).classList.add('found');getCell(r,c).classList.remove('selected')});renderWSWords();if(wsFound.length===wsWords.length)msg('ws-msg','All words found! 🎉','ok')}
+  else{wsCells.forEach(c=>{if(!c.classList.contains('found'))c.classList.remove('selected')});}
+  wsStart=null;wsEnd=null;
+}
+function renderWSWords(){const c=document.getElementById('ws-words');c.innerHTML='';wsWords.forEach(w=>{const el=document.createElement('div');el.className='ws-word'+(wsFound.includes(w)?' found':'');el.textContent=w;c.appendChild(el)})}
+
+// ===== CRYPTOQUIP =====
+const cqPuzzles=[
+  {plain:"LIFE IS WHAT HAPPENS WHEN YOU ARE BUSY MAKING OTHER PLANS",author:"John Lennon"},
+  {plain:"THE ONLY WAY TO DO GREAT WORK IS TO LOVE WHAT YOU DO",author:"Steve Jobs"},
+  {plain:"IN THE MIDDLE OF DIFFICULTY LIES OPPORTUNITY",author:"Albert Einstein"},
+  {plain:"IT ALWAYS SEEMS IMPOSSIBLE UNTIL IT IS DONE",author:"Nelson Mandela"},
+];
+let cqCurrent=0,cqMap={};
+function initCQ(){cqCurrent=Math.floor(Math.random()*cqPuzzles.length);document.getElementById('cq-msg').innerHTML='';
+  const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');const shuffled=[...alpha].sort(()=>Math.random()-0.5);
+  cqMap={};alpha.forEach((l,i)=>cqMap[l]=shuffled[i]);renderCQ()}
+function encode(t){return t.split('').map(c=>/[A-Z]/.test(c)?cqMap[c]:c).join('')}
+function renderCQ(){
+  const {plain,author}=cqPuzzles[cqCurrent];const board=document.getElementById('cq-board');
+  board.innerHTML=`<div class="cq-hint">Hint: <strong>${cqMap['E']}</strong> = E &nbsp;·&nbsp; — ${author}</div>`;
+  const container=document.createElement('div');container.className='cq-plain';
+  encode(plain).split(' ').forEach((ew,wi,arr)=>{
+    const wdiv=document.createElement('div');wdiv.style.cssText='display:flex;gap:1px';
+    ew.split('').forEach(ec=>{const ld=document.createElement('div');ld.className='cq-let';const top=document.createElement('div');top.className='cq-enc';top.textContent=ec;const inp=document.createElement('input');inp.className='cq-inp';inp.maxLength=1;inp.dataset.enc=ec;ld.appendChild(top);ld.appendChild(inp);wdiv.appendChild(ld)});
+    container.appendChild(wdiv);
+    if(wi<arr.length-1){const sp=document.createElement('div');sp.className='cq-space';container.appendChild(sp);}
+  });
+  board.appendChild(container);
+}
+function checkCQ(){const {plain}=cqPuzzles[cqCurrent];const rev={};Object.entries(cqMap).forEach(([k,v])=>rev[v]=k);const inputs=document.querySelectorAll('#cq-board .cq-inp');let all=true,correct=0,total=0;
+  inputs.forEach(inp=>{const exp=rev[inp.dataset.enc];if(!inp.value){all=false;return}total++;if(inp.value.toUpperCase()===exp){correct++;inp.style.color='#3B6D11'}else{inp.style.color='#A32D2D'}});
+  if(!all)msg('cq-msg','Fill in all letters first!','info');else if(correct===total)msg('cq-msg','Brilliant! Code cracked! 🔓','ok');else msg('cq-msg',`${correct}/${total} correct.`,'err');}
+function revealCQ(){const rev={};Object.entries(cqMap).forEach(([k,v])=>rev[v]=k);document.querySelectorAll('#cq-board .cq-inp').forEach(inp=>{inp.value=rev[inp.dataset.enc]||'';inp.style.color='#185FA5'});msg('cq-msg','Revealed!','info')}
+
+// ===== CROSSWORD =====
+const xwPuzzles=[
+  {grid:[['S','T','A','R','S'],['H','#','R','#','U'],['I','G','L','O','O'],['P','#','E','#','N'],['S','C','E','N','E']],
+   across:[{n:1,r:0,c:0,ans:'STARS',clue:'Celestial bodies at night'},{n:5,r:2,c:0,ans:'IGLOO',clue:'Arctic ice home'},{n:7,r:4,c:0,ans:'SCENE',clue:'Setting for a play'}],
+   down:[{n:1,r:0,c:0,ans:'SHIPS',clue:'Vessels that sail'},{n:2,r:0,c:2,ans:'ARLEE',clue:''},{n:3,r:0,c:4,ans:'SUNOS',clue:''}]},
+  {grid:[['B','R','A','V','E'],['U','#','L','#','A'],['L','I','M','E','S'],['B','#','S','#','T'],['S','P','A','R','E']],
+   across:[{n:1,r:0,c:0,ans:'BRAVE',clue:'Courageous and bold'},{n:5,r:2,c:0,ans:'LIMES',clue:'Green citrus fruits'},{n:7,r:4,c:0,ans:'SPARE',clue:'Extra or backup'}],
+   down:[{n:1,r:0,c:0,ans:'BULBS',clue:'Light sources in sockets'},{n:2,r:0,c:2,ans:'ALMSA',clue:''},{n:3,r:0,c:4,ans:'EASTS',clue:''}]}
+];
+let xwCurrent=0;
+function initXW(){xwCurrent=(xwCurrent+1)%xwPuzzles.length;document.getElementById('xw-msg').innerHTML='';renderXW()}
+function renderXW(){
+  const puz=xwPuzzles[xwCurrent];const board=document.getElementById('xw-board');board.innerHTML='';
+  const g=document.createElement('div');g.className='xw-grid';g.style.gridTemplateColumns='repeat(5,36px)';
+  const nums={};[...puz.across,...puz.down].forEach(({n,r,c})=>nums[`${r},${c}`]=n);
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++){const val=puz.grid[r][c];
+    if(val==='#'){const b=document.createElement('div');b.className='xw-black';g.appendChild(b)}
+    else{const wrap=document.createElement('div');wrap.className='xw-cell-wrap';
+      if(nums[`${r},${c}`]){const n=document.createElement('div');n.className='xw-num';n.textContent=nums[`${r},${c}`];wrap.appendChild(n)}
+      const inp=document.createElement('input');inp.className='xw-inp';inp.maxLength=1;inp.dataset.r=r;inp.dataset.c=c;inp.dataset.ans=val;
+      inp.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().slice(-1));
+      wrap.appendChild(inp);g.appendChild(wrap);}}
+  board.appendChild(g);
+  const ca=document.getElementById('xw-clues');ca.innerHTML='';
+  const across=document.createElement('div');across.className='xw-clue-list';across.innerHTML='<h4>Across</h4><ul id="xw-a"></ul>';
+  const down=document.createElement('div');down.className='xw-clue-list';down.innerHTML='<h4>Down</h4><ul id="xw-d"></ul>';
+  ca.appendChild(across);ca.appendChild(down);
+  puz.across.filter(x=>x.clue).forEach(cl=>{const li=document.createElement('li');li.textContent=`${cl.n}. ${cl.clue}`;document.getElementById('xw-a').appendChild(li)});
+  puz.down.filter(x=>x.clue).forEach(cl=>{const li=document.createElement('li');li.textContent=`${cl.n}. ${cl.clue}`;document.getElementById('xw-d').appendChild(li)});
+}
+function checkXW(){const inputs=document.querySelectorAll('#xw-board .xw-inp');let c=0,t=0;inputs.forEach(inp=>{t++;if(inp.value===inp.dataset.ans){c++;inp.classList.add('correct');inp.classList.remove('wrong')}else if(inp.value){inp.classList.add('wrong');inp.classList.remove('correct')}});if(c===t)msg('xw-msg','Solved! Well done! ✏️','ok');else msg('xw-msg',`${c}/${t} correct.`,'err')}
+function revealXW(){document.querySelectorAll('#xw-board .xw-inp').forEach(inp=>{inp.value=inp.dataset.ans;inp.classList.add('correct');inp.classList.remove('wrong')});msg('xw-msg','Revealed!','info')}
+
+// ===== LOGIC =====
+const logicPuzzle={title:"Four friends each have a different pet and drink.",clues:["Alice does not have the cat or dog.","Bob drinks coffee.","Carol has the bird.","Dan does not drink tea or juice.","The person with the dog drinks tea.","Alice drinks juice."],people:['Alice','Bob','Carol','Dan'],attrs:['cat','dog','fish','bird','coffee','tea','juice','water'],correctGrid:{Alice:{cat:false,dog:false,fish:true,bird:false,coffee:false,tea:false,juice:true,water:false},Bob:{cat:false,dog:true,fish:false,bird:false,coffee:true,tea:false,juice:false,water:false},Carol:{cat:false,dog:false,fish:false,bird:true,coffee:false,tea:false,juice:false,water:true},Dan:{cat:true,dog:false,fish:false,bird:false,coffee:false,tea:true,juice:false,water:false}}};
+let logicGrid={};
+function initLogic(){document.getElementById('logic-msg').innerHTML='';const puz=logicPuzzle;document.getElementById('logic-clues').innerHTML=`<strong style="font-size:13px">${puz.title}</strong><ul style="margin-top:6px">${puz.clues.map(c=>`<li>${c}</li>`).join('')}</ul>`;logicGrid={};puz.people.forEach(p=>{logicGrid[p]={};puz.attrs.forEach(a=>logicGrid[p][a]=null)});renderLogic()}
+function renderLogic(){const puz=logicPuzzle;const table=document.getElementById('logic-grid');table.innerHTML=`<tr><th></th>${puz.attrs.map(a=>`<th>${a}</th>`).join('')}</tr>`;puz.people.forEach(person=>{const tr=document.createElement('tr');tr.innerHTML=`<th>${person}</th>`;puz.attrs.forEach(attr=>{const td=document.createElement('td');const v=logicGrid[person][attr];td.textContent=v===true?'✓':v===false?'✗':'';if(v===true)td.className='yes';else if(v===false)td.className='no';td.addEventListener('click',()=>{logicGrid[person][attr]=logicGrid[person][attr]===null?true:logicGrid[person][attr]===true?false:null;renderLogic()});tr.appendChild(td)});table.appendChild(tr)})}
+function checkLogic(){const puz=logicPuzzle;let c=0,t=0;puz.people.forEach(p=>puz.attrs.forEach(a=>{t++;if(logicGrid[p][a]===puz.correctGrid[p][a])c++}));if(c===t)msg('logic-msg','Perfect logic! Solved! 🧠','ok');else msg('logic-msg',`${c}/${t} correct.`,'err')}
+function revealLogic(){const puz=logicPuzzle;puz.people.forEach(p=>puz.attrs.forEach(a=>logicGrid[p][a]=puz.correctGrid[p][a]));renderLogic();msg('logic-msg','Revealed!','info')}
+
+// ===== SEQUENCES =====
+const seqSets=[[{seq:[2,4,8,16,32],next:64},{seq:[1,4,9,16,25],next:36},{seq:[3,6,9,12,15],next:18},{seq:[1,1,2,3,5],next:8},{seq:[100,90,81,73,66],next:60}],[{seq:[1,3,7,15,31],next:63},{seq:[2,3,5,7,11],next:13},{seq:[5,10,20,40,80],next:160},{seq:[1,8,27,64,125],next:216},{seq:[10,9,7,4,0],next:-5}]];
+let seqCurrent=0;
+function initSeq(){seqCurrent=(seqCurrent+1)%seqSets.length;document.getElementById('seq-msg').innerHTML='';renderSeq()}
+function renderSeq(){const container=document.getElementById('seq-puzzles');container.innerHTML='';
+  seqSets[seqCurrent].forEach(s=>{const div=document.createElement('div');div.style.marginBottom='14px';
+    const boxes=document.createElement('div');boxes.className='seq-boxes';
+    s.seq.forEach(n=>{const b=document.createElement('div');b.className='seq-box';b.textContent=n;boxes.appendChild(b)});
+    const arrow=document.createElement('div');arrow.style.cssText='font-size:18px;color:#BA7517';arrow.textContent='→';boxes.appendChild(arrow);
+    const unk=document.createElement('div');unk.className='seq-box unknown';const inp=document.createElement('input');inp.type='text';inp.dataset.ans=s.next;inp.style.cssText='width:44px;height:44px;text-align:center;font-size:15px;font-weight:600;border:none;outline:none;background:transparent;color:#185FA5;font-family:monospace';unk.appendChild(inp);boxes.appendChild(unk);div.appendChild(boxes);container.appendChild(div)})}
+function checkSeq(){const inputs=document.querySelectorAll('#seq-puzzles input');let c=0;inputs.forEach(inp=>{const w=inp.parentElement;if(+inp.value===+inp.dataset.ans){c++;w.style.background='#EAF3DE';w.style.borderColor='#97C459'}else if(inp.value){w.style.background='#FCEBEB';w.style.borderColor='#F09595'}});const t=inputs.length;if(c===t)msg('seq-msg','All correct! Pattern master! 🎯','ok');else msg('seq-msg',`${c}/${t} correct.`,'err')}
+function revealSeq(){document.querySelectorAll('#seq-puzzles input').forEach(inp=>{inp.value=inp.dataset.ans;const w=inp.parentElement;w.style.background='#E6F1FB';w.style.borderColor='#85B7EB'});msg('seq-msg','Revealed!','info')}
+
+// ===== ANAGRAM =====
+const anagramWords=[{word:'PLANET',hint:'Orbits a star'},{word:'LISTEN',hint:'Use your ears'},{word:'GARDEN',hint:'Grow flowers here'},{word:'BRIDGE',hint:'Crosses over water'},{word:'CASTLE',hint:'Medieval fortress'},{word:'MIRROR',hint:'Reflects your face'},{word:'TRAVEL',hint:'Explore the world'},{word:'FROZEN',hint:'Very cold; Disney film'}];
+let anagramIdx=0;
+function shuffle(str){return str.split('').sort(()=>Math.random()-0.5).join('')}
+function initAnagram(){anagramIdx=0;renderAnagram()}
+function nextAnagram(){anagramIdx=(anagramIdx+1)%anagramWords.length;document.getElementById('anagram-msg').innerHTML='';renderAnagram()}
+function renderAnagram(){
+  const {word,hint}=anagramWords[anagramIdx];let sc=shuffle(word);while(sc===word)sc=shuffle(word);
+  const board=document.getElementById('anagram-board');board.innerHTML='';
+  const tiles=document.createElement('div');tiles.className='anagram-letters';
+  sc.split('').forEach((l,i)=>{const t=document.createElement('div');t.className='anagram-tile';const ci=i%6;const[bg,clr,br]=tileColPairs[0][ci];t.style.cssText=`background:${bg};color:${clr};border:0.5px solid ${br}`;t.textContent=l;tiles.appendChild(t)});
+  board.appendChild(tiles);
+  const h=document.createElement('p');h.className='anagram-hint';h.textContent=`Hint: ${hint}`;board.appendChild(h);
+  const inp=document.createElement('input');inp.className='anagram-inp';inp.placeholder='type your answer';inp.dataset.ans=word;
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnagram()});
+  board.appendChild(inp);document.getElementById('anagram-msg').innerHTML='';
+}
+function checkAnagram(){const inp=document.querySelector('#anagram-board input');if(!inp)return;if(inp.value.toUpperCase()===inp.dataset.ans)msg('anagram-msg','Correct! Well unscrambled! 🎉','ok');else msg('anagram-msg','Not quite — try again!','err')}
+function revealAnagram(){const inp=document.querySelector('#anagram-board input');if(inp){inp.value=inp.dataset.ans;msg('anagram-msg','Revealed!','info')}}
+
+// ===== TRIVIA =====
+const triviaQs=[{q:"What is the largest planet in our solar system?",opts:["Saturn","Jupiter","Neptune","Uranus"],ans:1},{q:"How many bones are in an adult human body?",opts:["196","206","216","226"],ans:1},{q:"Which element has the chemical symbol Au?",opts:["Silver","Aluminum","Gold","Argon"],ans:2},{q:"In what year did the Berlin Wall fall?",opts:["1987","1988","1989","1990"],ans:2},{q:"What is the smallest country in the world by area?",opts:["Monaco","San Marino","Vatican City","Liechtenstein"],ans:2},{q:"Who painted the Mona Lisa?",opts:["Michelangelo","Raphael","Leonardo da Vinci","Botticelli"],ans:2},{q:"What is the capital of Australia?",opts:["Sydney","Melbourne","Brisbane","Canberra"],ans:3},{q:"How many sides does a heptagon have?",opts:["5","6","7","8"],ans:2},{q:"Which ocean is the largest?",opts:["Atlantic","Arctic","Indian","Pacific"],ans:3},{q:"What language has the most native speakers?",opts:["English","Spanish","Hindi","Mandarin Chinese"],ans:3}];
+let triviaIdx=0,triviaScore=0,triviaAnswered=false;
+function initTrivia(){triviaIdx=0;triviaScore=0;triviaAnswered=false;document.getElementById('trivia-score').textContent='';document.getElementById('trivia-next').style.display='none';renderTrivia()}
+function renderTrivia(){
+  if(triviaIdx>=triviaQs.length){document.getElementById('trivia-board').innerHTML=`<div style="text-align:center;padding:1.5rem;background:#EAF3DE;border-radius:12px;border:0.5px solid #97C459"><div style="font-size:36px;margin-bottom:8px">🎉</div><p style="font-size:16px;font-weight:600;color:#27500A">Quiz complete!</p><p style="font-size:14px;color:#3B6D11;margin-top:4px">You scored <strong>${triviaScore}/${triviaQs.length}</strong></p></div>`;document.getElementById('trivia-prog').style.width='100%';document.getElementById('trivia-next').style.display='none';return}
+  triviaAnswered=false;document.getElementById('trivia-next').style.display='none';
+  const {q,opts}=triviaQs[triviaIdx];document.getElementById('trivia-prog').style.width=`${Math.round(triviaIdx/triviaQs.length*100)}%`;
+  document.getElementById('trivia-board').innerHTML=`<p class="trivia-q">${triviaIdx+1}/${triviaQs.length}. ${q}</p><div class="trivia-opts">${opts.map((o,i)=>`<button class="trivia-opt" onclick="answerTrivia(${i})">${o}</button>`).join('')}</div>`;
+  document.getElementById('trivia-score').textContent=`Score: ${triviaScore}/${triviaIdx}`;
+}
+function answerTrivia(i){if(triviaAnswered)return;triviaAnswered=true;const {ans}=triviaQs[triviaIdx];document.querySelectorAll('.trivia-opt').forEach((b,j)=>{b.disabled=true;if(j===ans)b.classList.add('correct');else if(j===i&&i!==ans)b.classList.add('wrong')});if(i===ans)triviaScore++;document.getElementById('trivia-score').textContent=`Score: ${triviaScore}/${triviaIdx+1}`;document.getElementById('trivia-next').style.display='inline-block'}
+function nextTrivia(){triviaIdx++;renderTrivia()}
+
+// INIT
+initSudoku();renderSudoku();
+initWS();
+initCQ();
+initXW();
+initLogic();
+initSeq();
+initAnagram();
+initTrivia();
+</script>
+</body>
+</html>
