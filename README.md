@@ -19,3 +19,7 @@ https://daqtpi.com/kenonumbergenerator
 https://daqtpi.com/success
 https://daqtpi.com/myyoutube
 https://www.e-droid.net/privacy.php?ida=4005955&idl=en
+https://daqtpi.com/puzzle-book
+https://daqtpi.com/magicgenie
+https://daqtpi.com/magiclamp
+https://daqtpi.com/*
