@@ -23,14 +23,14 @@
   </url>
 
   <url>
-    <loc>https://daqtpi.com/keno-number-generator</loc>
+    <loc>https://daqtpi.com/kenonumbergenerator</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://daqtpi.com/slotsformom</loc>
+    <loc>https://daqtpi.com/Channel content - YouTube Studio</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -44,7 +44,7 @@
   </url>
 
   <url>
-    <loc>https://daqtpi.com/magic-genie</loc>
+    <loc>https://daqtpi.com/magicgenie</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -83,6 +83,13 @@
     <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+
+    <url>
+    <loc>https://daqtpi.com/Ads.txt</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
+  
 
 </urlset>
