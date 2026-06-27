@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="https://daqtpi.com/sitemap.xml">
 
   <url>
     <loc>https://daqtpi.com/</loc>
@@ -30,7 +30,7 @@
   </url>
 
   <url>
-    <loc>https://daqtpi.com/Channel content - YouTube Studio</loc>
+    <loc>https://youtube.com/@Daqtpi</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
