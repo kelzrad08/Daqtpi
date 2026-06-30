@@ -137,7 +137,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr id="gt-jun"><td>June</td><td id="gd-0">—</td><td id="gh-0">—</td><td id="gp-0">—</td></tr>
+         
+        </tbody> 
           <tr id="gt-jul"><td>July</td><td id="gd-1">—</td><td id="gh-1">—</td><td id="gp-1">—</td></tr>
           <tr id="gt-aug"><td>August</td><td id="gd-2">—</td><td id="gh-2">—</td><td id="gp-2">—</td></tr>
           <tr class="gtotal-row">
@@ -169,13 +170,12 @@
 
 <script>
 const MONTHS = [
-  { name: 'June',   cls: 'jun', idx: 0 },
   { name: 'July',   cls: 'jul', idx: 1 },
   { name: 'August', cls: 'aug', idx: 2 },
 ];
 
 function getDays() {
-  const result = { June: [], July: [], August: [] };
+  const result = { July: [], August: [] };
   const end = new Date(2026, 8, 1);
   for (let d = new Date(2026, 5, 1); d < end; d.setDate(d.getDate() + 1)) {
     const dow = d.getDay();
