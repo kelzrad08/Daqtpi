@@ -186,7 +186,7 @@ const MONTHS = [
 function getDays() {
   const result = { July: [], August: [] };
   const end = new Date(2026, 8, 1);
-  for (let d = new Date(2026, 5, 1); d < end; d.setDate(d.getDate() + 1)) {
+  for (let d = new Date(2026, 6, 1); d < end; d.setDate(d.getDate() + 1)) {
     const dow = d.getDay();
     if (dow === 4 || dow === 5) {
       const mn = d.toLocaleString('en-US', { month: 'long' });
