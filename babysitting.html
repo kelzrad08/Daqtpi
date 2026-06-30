@@ -127,7 +127,7 @@
       <label>Hourly rate:</label>
       <div class="rate-wrap">
         <span>$</span>
-        <input type="number" id="rate" value="15" min="0" step="0.5" oninput="recalcAll()">
+        <input type="number" id="rate" value="10" min="0" step="0.5" oninput="recalcAll()">
         <span>/hr</span>
       </div>
     </div>
@@ -213,8 +213,8 @@ function buildTables() {
       rows += `<tr class="${rowCls}">
         <td>${d.label}</td>
         <td><span class="day-badge ${badgeCls}">${d.day}</span></td>
-        <td><input class="cell-input time-input" type="text" placeholder="9:00 AM" data-m="${idx}" data-r="${i}"></td>
-        <td><input class="cell-input time-input" type="text" placeholder="5:00 PM" data-m="${idx}" data-r="${i}" data-end="1"></td>
+        <td><input class="cell-input time-input" type="text" placeholder="0:00 AM" data-m="${idx}" data-r="${i}"></td>
+        <td><input class="cell-input time-input" type="text" placeholder="0:00 PM" data-m="${idx}" data-r="${i}" data-end="1"></td>
         <td><input class="cell-input hrs-input" type="number" min="0" max="24" step="0.5" placeholder="—" data-m="${idx}" data-r="${i}" oninput="recalcAll()"></td>
         <td><input class="cell-input notes-input" type="text" placeholder="notes…"></td>
         <td class="pay-cell" id="pay-${idx}-${i}">—</td>
