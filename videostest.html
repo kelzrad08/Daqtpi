@@ -1,0 +1,41 @@
+</iframe>
+<video width="640" height="360" controls poster="thumbnail.jpg">
+  <source src="All i had was you.mp4" type="video/mp4">
+  <source src="All i had was you -short.mp4" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+<div id="player"></div>
+</iframe>
+<video width="640" height="360" controls poster="thumbnail.jpg">
+  <source src="All i had was you -short.mp4" type="video/mp4">
+  <source src="All i had was you -short.mp4" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+<div id="player"></div>
+
+<script>
+  // Load the IFrame Player API code asynchronously
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // This function creates the <iframe> after the API code downloads
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '315',
+      width: '560',
+      videoId: 'YOUR_VIDEO_ID', // Replace with your YouTube Video ID
+      events: {
+        'onReady': onPlayerReady
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    // Player is ready, you can control it here
+    event.target.playVideo();
+  }
+</script>
+
