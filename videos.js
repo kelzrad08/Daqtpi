@@ -1,7 +1,7 @@
 const videos = [
 
     {
-        id: "21URRLsh3AE",
+        id: "AOMiqOTmsl4",
         title: "Meditation · Vol. 01"
     },
 
@@ -88,6 +88,13 @@ const videos = [
     {
         id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 18"
+    },
+    
+    }
+        id: "21URRLsh3AE",
+        title: "Meditation · Vol. 19"
+    },
+        
     }
 
 ];
