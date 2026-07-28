@@ -98,9 +98,9 @@ const videos = [
     {
         id: "21URRLsh3AE",
         title: "Meditation · Vol. 20"
-},
+    },
 
-{
+    {
         id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 21"
 ];
