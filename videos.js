@@ -1,17 +1,17 @@
 const videos = [
 
     {
-        id: "AOMiqOTmsl4",
+        id: "21URRLsh3AE",
         title: "Meditation · Vol. 01"
     },
 
     {
-        id: "OCQ6UekQBCU",
+        id: "5xaP_6xkwiw",
         title: "Meditation · Vol. 02"
     },
 
     {
-        id: "yBqX6HzzTwg",
+        id: "bYmz1xw6YgI",
         title: "Meditation · Vol. 03"
     },
 
@@ -86,21 +86,13 @@ const videos = [
     },
 
     {
-        id: "bYmz1xw6YgI",
+        id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 18"
-    },
-   
+    }
+    
     {
-        id: "5xaP_6xkwiw",
+        id: "OCQ6UekQBCU",
         title: "Meditation · Vol. 19"
     },
 
-    {
-        id: "21URRLsh3AE",
-        title: "Meditation · Vol. 20"
-    },
-
-    {
-        id: "KhaMKQtp8gI",
-        title: "Meditation · Vol. 21"
 ];
