@@ -103,4 +103,5 @@ const videos = [
     {
         id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 21"
+    },
 ];
