@@ -88,7 +88,7 @@ const videos = [
     {
         id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 18"
-    }
+    },
     
     {
         id: "OCQ6UekQBCU",
