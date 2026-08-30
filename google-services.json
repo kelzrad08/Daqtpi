@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "110191978686",
-    "project_id": "daqtpi-site",
-    "storage_bucket": "daqtpi-site.firebasestorage.app"
+    "project_number": "338499428606",
+    "project_id": "mindful-meditation-8d33c",
+    "storage_bucket": "mindful-meditation-8d33c.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:c7c0b1d71f7a3a36bf96ef",
+        "mobilesdk_app_id": "1:338499428606:android:e0b8b98a261acae8ec45af",
         "android_client_info": {
           "package_name": "aplic3811840.nra"
         }
@@ -15,102 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:479895e51037aa94bf96ef",
-        "android_client_info": {
-          "package_name": "app478.breathingtimer"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:b42b7c13ffb82427bf96ef",
-        "android_client_info": {
-          "package_name": "com.daqtpi"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:8c18308fba1d0a28bf96ef",
-        "android_client_info": {
-          "package_name": "com.daqtpi.liedetector"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:217fa39ad7eceb7dbf96ef",
-        "android_client_info": {
-          "package_name": "taser.aoav"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:110191978686:android:29551ef6c9d08ca3bf96ef",
-        "android_client_info": {
-          "package_name": "www.daqtpi.com"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAZCyPacwi02zPUVwPLK0IwGTSLt8MjvLw"
+          "current_key": "AIzaSyAQ9ia2dhMJxX4dDNMKDNbEkEK5mNhC1n4"
         }
       ],
       "services": {
