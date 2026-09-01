@@ -1,39 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>YouTube API Embed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My YouTube Channel Feed</title>
+    <style>
+        /* Simple styling for a mobile-friendly video grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .video-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .video-card img {
+            width: 100%;
+            height: auto;
+        }
+        .video-card h3 {
+            font-size: 16px;
+            margin: 10px;
+            color: #333;
+        }
+        .video-card a {
+            text-decoration: none;
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- 1. The API will replace this <div> tag with the actual <iframe> video player -->
-  <div id="player"></div>
+    <h2>My Latest YouTube Videos</h2>
+    
+    <!-- The grid where your videos will appear -->
+    <div id="youtube-feed" class="video-grid">Loading videos...</div>
 
-  <script>
-    // 2. This code loads the IFrame Player API code asynchronously.
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    <script>
+        // 1. REPLACE THESE WITH YOUR OWN DETAILS
+        const API_KEY = 'AIzaSyAqfP1_wXWMAeIvCvzBRzQLssCp0BOdH2Y';
+        const CHANNEL_ID = 'UCWeyePLy5Fzy3N0-cI9fnPA';
+        const MAX_RESULTS = 200; // Number of videos to show
 
-    // 3. This function creates an <iframe> (and YouTube player) after the API code downloads.
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: 'A2GhAUkBRxA', // Replace with your video ID
-        playerVars: {
-          'playsinline': 1,
-          'controls': 1,      // Show player controls
-          'rel': 0            // Don't show unrelated videos at the end
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
+        // 2. Fetch the channel's "Uploads" playlist ID automatically
+        const channelUrl = `https://googleapis.com{CHANNEL_ID}&key=${API_KEY}`;
 
+        fetch(channelUrl)
+            .then(response => response.json())
+            .then(data => {
+                const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+                return fetch(`https://googleapis.com{MAX_RESULTS}&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                const feedContainer = document.getElementById('youtube-feed');
+                feedContainer.innerHTML = ''; // Clear the loading text
+
+                // 3. Loop through the videos and build the grid
+                data.items.forEach(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const title = item.snippet.title;
+                    const thumbnail = item.snippet.thumbnails.medium.url;
+                    const videoLink = `https://youtube.com{videoId}`;
+
+                    const videoCard = `
+                        <div class="video-card">
+                            <img src="${thumbnail}" alt="${title}">
+                            <h3>${title}</h3>
+                            <a href="${videoLink}" target="_blank">Watch Video</a>
+                        </div>
+                    `;
+                    feedContainer.innerHTML += videoCard;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching YouTube feed:', error);
+                document.getElementById('youtube-feed').innerHTML = 'Failed to load videos.';
+            });
+    </script>
+
+</body>
+</html>
     // 4. The API will call this function when the video player is ready.
     function onPlayerReady(event) {
       // Example: event.target.playVideo(); // Autoplay if desired
