@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamscapes Background</title>
+    <style>
+        /* Reset margins and ensure full height */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents unwanted scrolling */
+            background-color: #000; /* Fallback background color */
+        }
+
+        /* Container that holds the background video */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Pushes the video behind your content */
+            pointer-events: none; /* Prevents users from clicking/pausing the video */
+            overflow: hidden;
+        }
+
+        /* Makes the iframe fill the screen completely (cinematic style) */
+        .video-background iframe {
+            width: 100vw;
+            height: 56.25vw; /* Given a standard 16:9 ratio, this handles sizing */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 100 * 16 / 9 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the cropped video perfectly */
+        }
+
+        /* Optional: Subtle dark overlay to make your overlay text easier to read */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Adjust 0.4 to make it darker or lighter */
+            z-index: 0;
+        }
+
+        /* Foreground Content styling */
+        .content-layer {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content-layer h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .content-layer p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Video Container Section -->
+    <div class="video-background">
+        <!-- REPLACE THE URL BELOW WITH YOUR ACTUAL EMBED URL -->
+        <!-- Note the URL parameters used to force autoplay, loop, and mute -->
+        <iframe src="https://youtube.com" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- 2. Dark Overlay Section -->
+    <div class="video-overlay"></div>
+
+    <!-- 3. Your Website's Content Section -->
+    <div class="content-layer">
+        <h1>DAQTPI Dreamscapes</h1>
+        <p>Experience mindful meditation videos designed for peaceful and relaxing journeys. Welcome to a sanctuary of digital art and ambient tranquility.</p>
+    </div>
+
+</body>
+</html>
