@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3209473338250523"
+     crossorigin="anonymous"></script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dreamscapes - Mindful Meditation</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>Dreamscapes</h1>
+
+<p>
+A peaceful collection of relaxing journeys
+</p>
+
+</header>
+
+
+
+
+<section id="videos">
+
+<p class="section-label">
+The Collection
+</p>
+
+
+<h2 class="section-title">
+Mindful Meditation
+</h2>
+
+
+<p class="section-desc">
+Each video is a gentle invitation — breathe, settle, and let yourself arrive.
+</p>
+
+
+
+
+<div class="video-grid" id="videoGrid"></div>
+
+
+</section>
+
+
+
+<footer>
+
+<p>
+© Dreamscapes
