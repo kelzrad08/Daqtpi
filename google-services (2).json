@@ -45,6 +45,44 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:696813704741:android:ca1d5c17984d231c2191cc",
+        "android_client_info": {
+          "package_name": "com.google.android.youtube"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOQmBny0Wrxy_8Y_NPOvfkjPg2HNAr5u0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696813704741:android:1d7eab71d524074d2191cc",
+        "android_client_info": {
+          "package_name": "taser.aoav"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOQmBny0Wrxy_8Y_NPOvfkjPg2HNAr5u0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:696813704741:android:98223d7bf201575d2191cc",
         "android_client_info": {
           "package_name": "www.daqtpi.com"
