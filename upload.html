@@ -1,0 +1,622 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Video - Dreamscapes</title><style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f9f9f9;
+    color: #0f0f0f;
+}
+
+/* HEADER */
+.header {
+    height: 64px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    background: #ff0000;
+    color: white;
+    width: 34px;
+    height: 24px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.header-title {
+    margin-left: 25px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* MAIN */
+.container {
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* UPLOAD AREA */
+.upload-area {
+    padding: 45px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.upload-icon {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    border-radius: 50%;
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+}
+
+.upload-area h1 {
+    margin: 20px 0 8px;
+    font-size: 24px;
+}
+
+.upload-area p {
+    color: #606060;
+    margin-bottom: 25px;
+}
+
+.upload-button {
+    background: #065fd4;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.upload-button:hover {
+    background: #0b57bd;
+}
+
+#videoInput {
+    display: none;
+}
+
+/* PREVIEW */
+.preview-container {
+    display: none;
+    padding: 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.preview-container video {
+    width: 100%;
+    max-height: 420px;
+    background: #000;
+    border-radius: 8px;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+/* FORM */
+.form {
+    padding: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: 13px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border: 2px solid #065fd4;
+}
+
+/* THUMBNAIL */
+.thumbnail-box {
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+}
+
+.thumbnail-box input {
+    margin-top: 15px;
+}
+
+#thumbnailPreview {
+    max-width: 300px;
+    max-height: 170px;
+    display: none;
+    margin: 15px auto;
+    border-radius: 6px;
+}
+
+/* RADIO */
+.radio-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.radio-option:hover {
+    background: #f5f5f5;
+}
+
+/* FOOTER */
+.footer {
+    border-top: 1px solid #ddd;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+.cancel {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.publish {
+    background: #065fd4;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.publish:hover {
+    background: #0b57bd;
+}
+
+/* PROGRESS */
+.progress {
+    display: none;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #065fd4;
+    transition: width 0.2s;
+}
+
+.progress-text {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #606060;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+    .header {
+        padding: 0 15px;
+    }
+
+    .header-title {
+        margin-left: 15px;
+        font-size: 16px;
+    }
+
+    .container {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    .upload-area {
+        padding: 30px 15px;
+    }
+
+    .form {
+        padding: 20px;
+    }
+
+    .footer {
+        padding: 15px;
+    }
+}
+</style></head><body><header class="header"><div class="logo">
+    <div class="logo-icon">▶</div>
+    YouTube
+</div>
+
+<div class="header-title">
+    Upload video
+</div>
+
+</header><main class="container"><div class="card"><!-- UPLOAD -->
+<section class="upload-area">
+
+    <div class="upload-icon">⬆️</div>
+
+    <h1>Upload videos</h1>
+
+    <p>
+        Upload a video to start sharing it with your audience.
+    </p>
+
+    <button class="upload-button"
+            onclick="document.getElementById('videoInput').click()">
+        Select files
+    </button>
+
+    <input
+        type="file"
+        id="videoInput"
+        accept="video/*"
+        onchange="handleVideo(this)"
+    >
+
+</section>
+
+<!-- VIDEO PREVIEW -->
+<section class="preview-container" id="previewContainer">
+
+    <video id="videoPreview" controls></video>
+
+    <div class="file-name" id="fileName"></div>
+
+</section>
+
+<!-- DETAILS -->
+<section class="form">
+
+    <h2 class="section-title">Details</h2>
+
+    <div class="form-group">
+
+        <label for="title">
+            Title
+        </label>
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Add a title that describes your video"
+        >
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="description">
+            Description
+        </label>
+
+        <textarea
+            id="description"
+            placeholder="Tell viewers about your video"
+        ></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>
+            Thumbnail
+        </label>
+
+        <div class="thumbnail-box">
+
+            <p>
+                Choose a thumbnail for your video
+            </p>
+
+            <input
+                type="file"
+                id="thumbnailInput"
+                accept="image/*"
+                onchange="handleThumbnail(this)"
+            >
+
+            <img
+                id="thumbnailPreview"
+                alt="Thumbnail preview"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="tags">
+            Tags
+        </label>
+
+        <input
+            type="text"
+            id="tags"
+            placeholder="Add tags separated by commas"
+        >
+
+    </div>
+
+    <div class="form-group">
+
+        <label>
+            Audience
+        </label>
+
+        <div class="radio-group">
+
+            <label class="radio-option">
+                <input
+                    type="radio"
+                    name="audience"
+                    value="kids"
+                >
+                Yes, it's made for kids
+            </label>
+
+            <label class="radio-option">
+                <input
+                    type="radio"
+                    name="audience"
+                    value="not-kids"
+                    checked
+                >
+                No, it's not made for kids
+            </label>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="visibility">
+            Visibility
+        </label>
+
+        <select id="visibility">
+
+            <option value="private">
+                Private
+            </option>
+
+            <option value="unlisted">
+                Unlisted
+            </option>
+
+            <option value="public">
+                Public
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress" id="progress">
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="progressFill">
+            </div>
+
+        </div>
+
+        <div
+            class="progress-text"
+            id="progressText">
+            Preparing...
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <button
+        class="cancel"
+        onclick="location.reload()">
+        Cancel
+    </button>
+
+    <button
+        class="publish"
+        onclick="publishVideo()">
+        Save
+    </button>
+
+</footer>
+
+</div></main><script>
+
+/* VIDEO SELECTION */
+
+function handleVideo(input) {
+
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const video = document.getElementById("videoPreview");
+    const container = document.getElementById("previewContainer");
+    const fileName = document.getElementById("fileName");
+
+    video.src = URL.createObjectURL(file);
+
+    fileName.textContent =
+        "Selected: " + file.name;
+
+    container.style.display = "block";
+
+}
+
+
+/* THUMBNAIL */
+
+function handleThumbnail(input) {
+
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const preview =
+        document.getElementById("thumbnailPreview");
+
+    preview.src = URL.createObjectURL(file);
+
+    preview.style.display = "block";
+
+}
+
+
+/* SAVE / DEMO */
+
+function publishVideo() {
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const video =
+        document.getElementById("videoInput").files[0];
+
+    if (!video) {
+
+        alert("Please select a video first.");
+
+        return;
+    }
+
+    if (!title) {
+
+        alert("Please enter a title.");
+
+        return;
+    }
+
+    const progress =
+        document.getElementById("progress");
+
+    const fill =
+        document.getElementById("progressFill");
+
+    const text =
+        document.getElementById("progressText");
+
+    progress.style.display = "block";
+
+    let amount = 0;
+
+    const timer = setInterval(function() {
+
+        amount += 5;
+
+        fill.style.width = amount + "%";
+
+        text.textContent =
+            "Preparing video... " + amount + "%";
+
+        if (amount >= 100) {
+
+            clearInterval(timer);
+
+            text.textContent =
+                "Ready! Connect the YouTube API to publish this video.";
+
+            alert(
+                "Your video details are ready! 🎉\n\n" +
+                "The next step is connecting this page to your YouTube channel."
+            );
+
+        }
+
+    }, 100);
+
+}
+
+</script></body>
+</html>
