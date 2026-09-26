@@ -1,17 +1,12 @@
-google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
-google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
-
-
-#AC24#
-
-
 #Google 13-05-2026#
 ownerdomain=wortise.com
-
+#AC24#
 google.com, pub-1912561085588771, DIRECT, f08c47fec0942fa0
 google.com, pub-4537341636281998, DIRECT, f08c47fec0942fa0
 google.com, pub-1912561085588771, RESELLER, f08c47fec0942fa0
 facebook.com, 693822236624995, DIRECT, c3e20eee3f780d68
+google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
+google.com, pub-3209473338250523, DIRECT, f08c47fec0942fa0
 
 #Media net#
 media.net, 8CUID6N13, DIRECT
