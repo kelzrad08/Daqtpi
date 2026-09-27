@@ -88,10 +88,43 @@
     color: var(--steel);
     font-size: clamp(0.7rem, 2vw, 1rem);
     letter-spacing: 0.5em;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     text-align: center;
     position: relative;
     z-index: 10;
+  }
+
+  /* Sound picker dropdown */
+  .sound-picker-wrap {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .sound-picker-label {
+    display: block;
+    color: var(--steel);
+    font-size: clamp(0.6rem, 1.6vw, 0.8rem);
+    letter-spacing: 0.35em;
+    margin-bottom: 8px;
+  }
+
+  #soundPicker {
+    background: var(--navy);
+    color: var(--fog);
+    border: 2px solid var(--steel);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    outline: none;
+  }
+
+  #soundPicker:focus {
+    border-color: var(--brass);
   }
 
   /* Horn container */
@@ -244,6 +277,20 @@
 <p class="title">FOGHORN</p>
 <p class="subtitle">MARITIME EMERGENCY ALERT SYSTEM</p>
 
+<!-- SOUND PICKER: put your audio files in the same folder as this HTML file,
+     then edit the value="..." below to match each filename. -->
+<div class="sound-picker-wrap">
+  <label class="sound-picker-label" for="soundPicker">CHOOSE YOUR WEAPON</label>
+  <select id="soundPicker">
+    <option value="foghorn.mp3">Classic Foghorn</option>
+    <option value="airhorn.mp3">Air Horn</option>
+    <option value="siren.mp3">Siren</option>
+  </select>
+</div>
+
+<!-- The actual audio player. src gets swapped by JS based on the dropdown. -->
+<audio id="hornSound" preload="auto"></audio>
+
 <div class="horn-wrapper">
   <!-- SVG Foghorn illustration -->
   <svg class="foghorn-svg" id="hornSvg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
@@ -320,63 +367,26 @@
 </div>
 
 <script>
-  let audioCtx = null;
-
-  function getAudioCtx() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    return audioCtx;
-  }
-
   function blastHorn() {
-    const ctx = getAudioCtx();
+    // Grab whichever sound file is currently selected in the dropdown
+    const picker = document.getElementById('soundPicker');
+    const audio = document.getElementById('hornSound');
+    const chosenFile = picker.value;
 
-    // Foghorn: deep oscillating tone
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const osc3 = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-    const distortion = ctx.createWaveShaper();
-
-    // Distortion curve for brassy quality
-    const curve = new Float32Array(256);
-    for (let i = 0; i < 256; i++) {
-      const x = (i * 2) / 256 - 1;
-      curve[i] = (Math.PI + 300) * x / (Math.PI + 300 * Math.abs(x));
+    // Only swap the src if it's actually changed, so replaying the same
+    // sound doesn't reload the file every click
+    if (!audio.src.endsWith(chosenFile)) {
+      audio.src = chosenFile;
     }
-    distortion.curve = curve;
 
-    osc1.type = 'sawtooth';
-    osc1.frequency.setValueAtTime(55, ctx.currentTime);
-    osc1.frequency.linearRampToValueAtTime(48, ctx.currentTime + 0.3);
-    osc1.frequency.linearRampToValueAtTime(52, ctx.currentTime + 1.5);
-    osc1.frequency.linearRampToValueAtTime(45, ctx.currentTime + 2.8);
+    // Restart from the beginning in case they clicked twice fast
+    audio.currentTime = 0;
+    audio.play().catch(err => {
+      // Most common cause: the file named in the dropdown doesn't
+      // exist yet in this folder. Check the browser console for this.
+      console.error('Could not play sound — did you add the audio file?', err);
+    });
 
-    osc2.type = 'square';
-    osc2.frequency.setValueAtTime(110, ctx.currentTime);
-    osc2.frequency.linearRampToValueAtTime(96, ctx.currentTime + 0.3);
-
-    osc3.type = 'sine';
-    osc3.frequency.setValueAtTime(27, ctx.currentTime);
-
-    gainNode.gain.setValueAtTime(0, ctx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.9, ctx.currentTime + 0.15);
-    gainNode.gain.setValueAtTime(0.85, ctx.currentTime + 2.2);
-    gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 3.2);
-
-    osc1.connect(distortion);
-    osc2.connect(distortion);
-    osc3.connect(gainNode);
-    distortion.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    osc1.start(ctx.currentTime);
-    osc2.start(ctx.currentTime);
-    osc3.start(ctx.currentTime);
-    osc1.stop(ctx.currentTime + 3.2);
-    osc2.stop(ctx.currentTime + 3.2);
-    osc3.stop(ctx.currentTime + 3.2);
-
-    // Visuals
     triggerVisuals();
   }
 
