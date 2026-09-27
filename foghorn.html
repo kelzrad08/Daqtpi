@@ -282,9 +282,10 @@
 <div class="sound-picker-wrap">
   <label class="sound-picker-label" for="soundPicker">CHOOSE YOUR WEAPON</label>
   <select id="soundPicker">
-    <option value="foghorn.mp3">Classic Foghorn</option>
-    <option value="airhorn.mp3">Air Horn</option>
-    <option value="siren.mp3">Siren</option>
+    <option value="synth">Classic Foghorn (built-in, no file needed)</option>
+    <option value="foghorn.mp3">Foghorn (audio file)</option>
+    <option value="airhorn.mp3">Air Horn (audio file)</option>
+    <option value="siren.mp3">Siren (audio file)</option>
   </select>
 </div>
 
@@ -367,25 +368,84 @@
 </div>
 
 <script>
+  let audioCtx = null;
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  // The original built-in horn sound — generated live, no file needed.
+  function playSynthFoghorn() {
+    const ctx = getAudioCtx();
+
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const osc3 = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    const distortion = ctx.createWaveShaper();
+
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) {
+      const x = (i * 2) / 256 - 1;
+      curve[i] = (Math.PI + 300) * x / (Math.PI + 300 * Math.abs(x));
+    }
+    distortion.curve = curve;
+
+    osc1.type = 'sawtooth';
+    osc1.frequency.setValueAtTime(55, ctx.currentTime);
+    osc1.frequency.linearRampToValueAtTime(48, ctx.currentTime + 0.3);
+    osc1.frequency.linearRampToValueAtTime(52, ctx.currentTime + 1.5);
+    osc1.frequency.linearRampToValueAtTime(45, ctx.currentTime + 2.8);
+
+    osc2.type = 'square';
+    osc2.frequency.setValueAtTime(110, ctx.currentTime);
+    osc2.frequency.linearRampToValueAtTime(96, ctx.currentTime + 0.3);
+
+    osc3.type = 'sine';
+    osc3.frequency.setValueAtTime(27, ctx.currentTime);
+
+    gainNode.gain.setValueAtTime(0, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.9, ctx.currentTime + 0.15);
+    gainNode.gain.setValueAtTime(0.85, ctx.currentTime + 2.2);
+    gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 3.2);
+
+    osc1.connect(distortion);
+    osc2.connect(distortion);
+    osc3.connect(gainNode);
+    distortion.connect(gainNode);
+    gainNode.connect(ctx.destination);
+
+    osc1.start(ctx.currentTime);
+    osc2.start(ctx.currentTime);
+    osc3.start(ctx.currentTime);
+    osc1.stop(ctx.currentTime + 3.2);
+    osc2.stop(ctx.currentTime + 3.2);
+    osc3.stop(ctx.currentTime + 3.2);
+  }
+
   function blastHorn() {
-    // Grab whichever sound file is currently selected in the dropdown
     const picker = document.getElementById('soundPicker');
-    const audio = document.getElementById('hornSound');
     const chosenFile = picker.value;
 
-    // Only swap the src if it's actually changed, so replaying the same
-    // sound doesn't reload the file every click
-    if (!audio.src.endsWith(chosenFile)) {
-      audio.src = chosenFile;
-    }
+    if (chosenFile === 'synth') {
+      // Use the original generated horn sound — no audio file required
+      playSynthFoghorn();
+    } else {
+      // Play whichever real audio file is selected
+      const audio = document.getElementById('hornSound');
 
-    // Restart from the beginning in case they clicked twice fast
-    audio.currentTime = 0;
-    audio.play().catch(err => {
-      // Most common cause: the file named in the dropdown doesn't
-      // exist yet in this folder. Check the browser console for this.
-      console.error('Could not play sound — did you add the audio file?', err);
-    });
+      if (!audio.src.endsWith(chosenFile)) {
+        audio.src = chosenFile;
+      }
+
+      audio.currentTime = 0;
+      audio.play().catch(err => {
+        // Most common cause: the file named in the dropdown doesn't
+        // exist yet in this folder. Check the browser console for this.
+        console.error('Could not play sound — did you add the audio file?', err);
+      });
+    }
 
     triggerVisuals();
   }
