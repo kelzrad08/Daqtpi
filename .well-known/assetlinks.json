@@ -1,13 +1,14 @@
 [
   {
     "relation": [
-      "delegate_permission/common.handle_all_urls"
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.daqtpi",
+      "package_name": "www.daqtpi.com",
       "sha256_cert_fingerprints": [
-        "6C:6C:0E:AD:10:4D:A9:D6:E3:D5:46:EA:9D:74:78:80:C7:DA:61:76:7E:7F:58:69:34:37:85:A2:F2:1C:63:E5"
+        "94:A2:B0:C6:00:73:FB:D7:38:B1:45:A8:23:85:F9:D1:F3:FB:A0:69:24:05:2A:CF:F1:07:E1:5D:D0:F8:74:30"
       ]
     }
   }
