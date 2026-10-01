@@ -137,7 +137,7 @@
 </nav>
 
 <section class="hero">
-  <span class="gavel-icon">⚖</span>
+  <span class="gavel-icon">⚖️</span>
   <p class="eyebrow">AI-Powered Argument Analysis</p>
   <h1>Who's <span class="red">Really</span><br>Right?</h1>
   <p class="hero-sub">Submit your argument and get a full unbiased AI verdict — with scores, analysis, and advice. No more going in circles.</p>
@@ -179,7 +179,7 @@
   <p class="section-label">Sample verdict</p>
   <h2>See It In Action</h2>
   <div class="verdict-preview">
-    <div class="verdict-header"><span>⚖ VERDICT: BOTH AT FAULT</span></div>
+    <div class="verdict-header"><span>⚖️ VERDICT: BOTH AT FAULT</span></div>
     <div class="verdict-body">
       <p class="verdict-summary">"Neither person is entirely wrong here, but both contributed to the breakdown in communication."</p>
       <div class="score-row">
@@ -226,8 +226,11 @@
       </div>
 
       <div class="form-field">
-        <label>The argument</label>
-        <textarea name="argument" placeholder="Paste your conversation or describe what happened. Include both sides for the most accurate verdict. Names will be kept private." required></textarea>
+        <label>The argument <span id="word-count" style="color:var(--gray-light); font-weight:400; text-transform:none; letter-spacing:0;">(0 words — minimum 50 required)</span></label>
+        <textarea name="argument" id="argument-text" placeholder="Paste your conversation or describe what happened. Include both sides for the most accurate verdict. Names will be kept private." required oninput="updateWordCount(this)"></textarea>
+        <div style="background:rgba(232,51,26,0.06); border:1px solid rgba(232,51,26,0.15); border-radius:3px; padding:10px 14px; font-size:12px; color:rgba(245,240,232,0.45); line-height:1.6;">
+          ⚠️ <strong style="color:rgba(245,240,232,0.6);">Please note:</strong> Vague or ridiculous submissions (e.g. one word answers) will not be analyzed. Give us the full story — both sides — for a fair verdict!
+        </div>
       </div>
 
       <div class="form-field">
@@ -236,7 +239,7 @@
       </div>
 
       <div class="consent-box">
-        <h4>⚖ Quick confirmation:</h4>
+        <h4>⚖️ Quick confirmation:</h4>
         <div class="consent-item">
           <input type="checkbox" name="consent1" id="c1" required />
           <label for="c1">I consent to this argument being analyzed and potentially featured anonymously on the Relationship Referee YouTube channel. All names and identifying details will be changed or removed.</label>
@@ -247,12 +250,12 @@
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Submit My Argument ⚖</button>
+      <button type="submit" class="submit-btn">Submit My Argument ⚖️</button>
       <p class="form-disclaimer">Your email is only used to send your verdict. We never share or sell your information.</p>
     </form>
 
     <div class="submit-success" id="submit-success">
-      <h3>Verdict Incoming! ⚖</h3>
+      <h3>Verdict Incoming! ⚖️</h3>
       <p>Your argument has been received! We'll send your full honest verdict to your email within 24 hours. Get ready to finally find out who was right.</p>
     </div>
   </div>
@@ -286,15 +289,43 @@
   </div>
 </section>
 
+<!-- KO-FI -->
+<section style="text-align:center; padding: 3rem 1.5rem; position:relative; z-index:1;">
+  <p style="font-size:13px; color:rgba(245,240,232,0.35); margin-bottom:1rem; letter-spacing:1px; text-transform:uppercase; font-weight:500;">Enjoying Relationship Referee?</p>
+  <a href="https://ko-fi.com/daqtpi" target="_blank" style="display:inline-flex; align-items:center; gap:10px; background:#FF5E5B; color:white; font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; padding:14px 28px; border-radius:3px; text-decoration:none; transition:opacity 0.2s;">
+    ☕ Support Us on Ko-fi
+  </a>
+  <p style="font-size:12px; color:rgba(245,240,232,0.25); margin-top:0.75rem;">Every coffee keeps the referee going! ⚖️</p>
+</section>
+
 <footer>
-  © 2025 Relationship Referee · Built with ❤ and a lot of arguments<br>
+  © 2025 Relationship Referee · Built with ❤️ and a lot of arguments<br>
   <a href="#">Privacy Policy</a> · <a href="#">Content Use Policy</a> · <a href="#">Contact</a><br>
   <span style="font-size:11px; color: rgba(245,240,232,0.15);">Relationship Referee is an entertainment platform and does not provide professional relationship or legal advice. All submitted arguments are handled confidentially. Public use requires explicit consent as confirmed during submission.</span>
 </footer>
 
 <script>
+  function updateWordCount(textarea) {
+    const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const label = document.getElementById('word-count');
+    if (words < 50) {
+      label.style.color = 'var(--red)';
+      label.textContent = `(${words} words — minimum 50 required)`;
+    } else {
+      label.style.color = 'var(--green)';
+      label.textContent = `(${words} words ✓)`;
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
+    const textarea = document.getElementById('argument-text');
+    const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+    if (words < 50) {
+      alert('Please describe your argument in at least 50 words so we can give you a fair verdict! The more detail the better ⚖️');
+      textarea.focus();
+      return;
+    }
     const form = document.getElementById('arg-form');
     const data = new FormData(form);
     fetch('https://formspree.io/f/mnjlbvjr', {
@@ -312,4 +343,4 @@
   }
 </script>
 </body>
-           </html>
+ </html>
