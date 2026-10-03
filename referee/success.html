@@ -130,6 +130,13 @@
 </div>
 
 <script>
+ const button = paymentsClient.createButton({
+  onClick: onGooglePaymentButtonClicked,
+  buttonSizeMode: 'fill',
+  buttonColor: 'black' // Or 'white'
+});
+document.getElementById('container').appendChild(button);
+
   function handleSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('arg-form');
