@@ -286,6 +286,23 @@
 </footer>
 
 <script>
+
+ import android.webkit.WebSettings;
+import android.webkit.WebView;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
+
+WebView webView = findViewById(R.id.webview);
+WebSettings webSettings = webView.getSettings();
+
+// Update WebView settings to allow JavaScript and payment request
+webSettings.setJavaScriptEnabled(true);
+if (WebViewFeature.isFeatureSupported(
+          WebViewFeature.PAYMENT_REQUEST)) {
+    WebSettingsCompat.setPaymentRequestEnabled(webSettings, true);
+}
+      
+ 
   function enablePaidBtn() {
     setTimeout(() => {
       const btn = document.getElementById('paid-btn');
