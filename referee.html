@@ -305,6 +305,13 @@
 </footer>
 
 <script>
+ const button = paymentsClient.createButton({
+  onClick: onGooglePaymentButtonClicked,
+  buttonSizeMode: 'fill',
+  buttonColor: 'black' // Or 'white'
+});
+document.getElementById('container').appendChild(button);
+
   function updateWordCount(textarea) {
     const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
     const label = document.getElementById('word-count');
