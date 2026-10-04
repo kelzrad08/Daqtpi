@@ -272,7 +272,7 @@ button {
 <div class="container">
 
   <div class="card">
-    <h1>Upload a Dreamscape</h1>
+    <h1>Upload a Video</h1>
 
     <button class="connect" id="connectButton" onclick="connectYouTube()">
       Connect YouTube
@@ -305,14 +305,14 @@ button {
     <input
       type="text"
       id="title"
-      placeholder="Enter your Dreamscapes video title"
+      placeholder="Enter your video title"
     >
 
     <label>Description</label>
 
     <textarea
       id="description"
-      placeholder="Enter your YouTube description..."
+      placeholder="Enter your video description..."
     ></textarea>
 
     <label>Thumbnail</label>
@@ -334,7 +334,7 @@ button {
     <input
       type="text"
       id="tags"
-      placeholder="dreamscapes, relaxing, fantasy, beautiful places"
+      placeholder="Tags"
     >
 
     <label>Audience</label>
@@ -346,9 +346,9 @@ button {
           <input
             type="radio"
             name="kids"
-            value="true"
+            value="false"
           >
-          Yes, it's made for kids
+          yes, it's made for kids
         </label>
       </div>
 
@@ -407,7 +407,7 @@ button {
 <script>
 
 /* =========================================================
-   DREAMSCAPES YOUTUBE UPLOADER
+    YOUTUBE VIDEO UPLOADER
    ========================================================= */
 
 const CLIENT_ID =
@@ -453,7 +453,7 @@ window.onload = function () {
         "YouTube Connected";
 
       showStatus(
-        "You're connected to YouTube. 🎉 You can upload your Dreamscape!",
+        "You're connected to YouTube. 🎉 You can upload your Video!",
         "success"
       );
 
