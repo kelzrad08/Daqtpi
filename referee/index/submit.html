@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-3209473338250523">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Your Argument — Relationship Referee</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --red: #e8331a;
+    --red-dark: #b82a14;
+    --gold: #f0c040;
+    --green: #27ae60;
+    --gray: #1e1e1e;
+    --gray-mid: #2e2e2e;
+    --gray-light: #666;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(10,10,10,0.9); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-links a { font-size: 13px; color: rgba(245,240,232,0.5); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--red); color: var(--white); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 2px; letter-spacing: 1px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--red-dark); }
+
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--red); text-align: center; margin-bottom: 1rem; }
+
+  /* SUBMIT SECTION */
+  .submit-section { padding: 8rem 1.5rem 5rem; position: relative; z-index: 1; }
+  .submit-inner { max-width: 680px; margin: 0 auto; }
+  .submit-inner h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 6vw, 64px); text-align: center; letter-spacing: 2px; margin-bottom: 0.75rem; }
+  .submit-inner .sub { text-align: center; font-size: 15px; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; line-height: 1.6; }
+
+  .paid-banner { display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.35); border-radius: 3px; padding: 12px 20px; font-size: 15px; color: var(--green); margin-bottom: 2.5rem; text-align: center; }
+
+  /* STEP INDICATOR */
+  .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 2.5rem; }
+  .step-dot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .step-dot .dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 16px; }
+  .step-dot .dot.active { background: var(--red); color: white; }
+  .step-dot .dot.inactive { background: var(--gray-mid); color: var(--gray-light); }
+  .step-dot .dot.done { background: var(--green); color: white; }
+  .step-dot span { font-size: 11px; color: var(--gray-light); letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+  .step-line { width: 60px; height: 1px; background: var(--gray-mid); margin: 0 8px; margin-bottom: 20px; }
+
+  /* ARGUMENT FORM */
+  .arg-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .form-field input, .form-field textarea, .form-field select { background: var(--black); border: 1px solid var(--gray-mid); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 12px 14px; border-radius: 3px; outline: none; transition: border-color 0.2s; width: 100%; }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--red); }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: var(--gray-light); }
+  .form-field textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+  .form-field select { appearance: none; cursor: pointer; }
+  .form-field select option { background: var(--black); }
+  .word-count { font-size: 12px; color: var(--gray-light); }
+  .word-count.ok { color: var(--green); }
+  .field-note { font-size: 12px; color: rgba(245,240,232,0.35); line-height: 1.5; }
+
+  .consent-box { background: rgba(232,51,26,0.06); border: 1px solid rgba(232,51,26,0.2); border-radius: 3px; padding: 1.25rem; }
+  .consent-box h4 { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+  .consent-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .consent-item:last-child { margin-bottom: 0; }
+  .consent-item input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
+  .consent-item label { font-size: 13px; color: rgba(245,240,232,0.6); line-height: 1.6; cursor: pointer; }
+
+  .submit-btn { padding: 16px; background: var(--red); color: var(--white); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; cursor: pointer; border-radius: 3px; transition: background 0.2s; width: 100%; }
+  .submit-btn:hover { background: var(--red-dark); }
+  .form-disclaimer { font-size: 12px; color: rgba(245,240,232,0.25); text-align: center; line-height: 1.6; margin-top: 0.5rem; }
+  .form-error { display: none; background: rgba(232,51,26,0.08); border: 1px solid rgba(232,51,26,0.35); border-radius: 3px; padding: 12px 16px; font-size: 14px; color: var(--red); text-align: center; }
+
+  .submit-success { display: none; text-align: center; padding: 2.5rem 2rem; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.2); border-radius: 3px; }
+  .submit-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--green); letter-spacing: 2px; margin-bottom: 0.75rem; }
+  .submit-success p { font-size: 14px; color: rgba(245,240,232,0.5); line-height: 1.7; }
+  .submit-success a { color: var(--gold); }
+
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: rgba(245,240,232,0.2); border-top: 1px solid var(--gray-mid); position: relative; z-index: 1; line-height: 2; }
+  footer a { color: rgba(245,240,232,0.3); text-decoration: none; }
+  footer a:hover { color: rgba(245,240,232,0.6); }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .step-line { width: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Relationship <span>Referee</span></div>
+  <div class="nav-links">
+    <a href="https://daqtpi.com/referee#how-it-works">How It Works</a>
+    <a href="https://daqtpi.com/referee#youtube">Watch on YouTube</a>
+  </div>
+  <a href="https://daqtpi.com/referee" class="nav-cta">Back to Referee</a>
+</nav>
+
+<!-- ARGUMENT FORM (shown after payment) -->
+<div class="submit-section">
+  <div class="submit-inner">
+    <p class="section-label">Payment received</p>
+    <h1>Now Tell Us<br>The Argument</h1>
+    <p class="sub">Your $1 is in — thank you! Fill this in and the Referee gets to work. Your full verdict will be sent to your email within 24 hours.</p>
+
+    <div class="paid-banner">✓ Paid — one verdict unlocked</div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator">
+      <div class="step-dot">
+        <div class="dot done" id="dot1">✓</div>
+        <span>Payment</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-dot">
+        <div class="dot active" id="dot2">2</div>
+        <span>Argument</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-dot">
+        <div class="dot inactive" id="dot3">3</div>
+        <span>Verdict</span>
+      </div>
+    </div>
+
+    <form id="arg-form" class="arg-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="nickname">Your nickname (optional)</label>
+          <input type="text" id="nickname" name="nickname" placeholder="e.g. Alex" />
+        </div>
+        <div class="form-field">
+          <label for="arg-type">Type of argument</label>
+          <select id="arg-type" name="argument_type" required>
+            <option value="">Choose one…</option>
+            <option value="partner">Partner / relationship</option>
+            <option value="family">Family</option>
+            <option value="friend">Friend</option>
+            <option value="roommate">Roommate</option>
+            <option value="work">Work</option>
+            <option value="money">Money</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="argument">The argument <span class="word-count" id="word-count">(0 words — minimum 50 required)</span></label>
+        <textarea id="argument" name="argument" placeholder="Tell the full story — what happened, what each person said and did. Both sides get heard equally." required></textarea>
+        <p class="field-note">⚠️ Please note: vague or ridiculous submissions (e.g. one-word answers) will not be analyzed. Give us the full story — both sides — for a fair verdict!</p>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Your email (so we can send you the verdict)</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        <p class="field-note">Tip: use the same email you paid with, so we can match your payment to your case. Your email is only used to send your verdict — we never share or sell your information.</p>
+      </div>
+
+      <div class="consent-box">
+        <h4>Before you submit</h4>
+        <div class="consent-item">
+          <input type="checkbox" id="consent-own" name="consent_own" required />
+          <label for="consent-own">This is my own argument (or I have permission to share it), and I understand the verdict is for entertainment and is not professional relationship or legal advice.</label>
+        </div>
+        <div class="consent-item">
+          <input type="checkbox" id="consent-public" name="consent_public" />
+          <label for="consent-public">(Optional) You may feature my argument anonymously on the Relationship Referee YouTube channel and social media.</label>
+        </div>
+      </div>
+
+      <div class="form-error" id="form-error">Your argument needs at least 50 words so the Referee can judge it fairly — tell us a bit more of the story.</div>
+
+      <button type="submit" class="submit-btn">Send It To The Referee ⚖️</button>
+      <p class="form-disclaimer">One submission per payment. Your full verdict — scores, analysis, and advice — arrives by email within 24 hours.</p>
+    </form>
+
+    <div class="submit-success" id="submit-success">
+      <h3>Verdict Incoming! ⚖️</h3>
+      <p>Your argument has been received! We'll send your full honest verdict to your email within 24 hours. Get ready to finally find out who was right.<br><br>
+      Nothing after 24 hours? Check your spam or junk folder — verdicts occasionally hide in there. While you wait, <a href="https://daqtpi.com/referee#youtube">watch other verdicts on YouTube</a>.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2025 Relationship Referee · Built with ❤️ and a lot of arguments<br>
+  <a href="#">Privacy Policy</a> · <a href="#">Content Use Policy</a> · <a href="#">Contact</a><br>
+  <span style="font-size:11px; color: rgba(245,240,232,0.15);">Relationship Referee is an entertainment platform and does not provide professional relationship or legal advice. All submitted arguments are handled confidentially. Public use requires explicit consent as confirmed during submission.</span>
+</footer>
+
+<script>
+  const argBox = document.getElementById('argument');
+  const countEl = document.getElementById('word-count');
+
+  function countWords(text) {
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    return text.trim() === '' ? 0 : words.length;
+  }
+
+  argBox.addEventListener('input', () => {
+    const n = countWords(argBox.value);
+    countEl.textContent = '(' + n + (n === 1 ? ' word' : ' words') + ' — minimum 50 required)';
+    countEl.classList.toggle('ok', n >= 50);
+  });
+
+  function handleArgSubmit(e) {
+    e.preventDefault();
+    if (countWords(argBox.value) < 50) {
+      document.getElementById('form-error').style.display = 'block';
+      argBox.focus();
+      return;
+    }
+    document.getElementById('form-error').style.display = 'none';
+    const form = document.getElementById('arg-form');
+    const data = new FormData(form);
+    fetch('https://formspree.io/f/mnjlbvjr', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+      .then(res => {
+        form.style.display = 'none';
+        document.getElementById('submit-success').style.display = 'block';
+        document.getElementById('dot2').className = 'dot done';
+        document.getElementById('dot2').textContent = '✓';
+        document.getElementById('dot3').className = 'dot done';
+        document.getElementById('dot3').textContent = '✓';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(() => {
+        form.style.display = 'none';
+        document.getElementById('submit-success').style.display = 'block';
+      });
+  }
+
+  document.getElementById('arg-form').addEventListener('submit', handleArgSubmit);
+</script>
+</body>
+</html>
