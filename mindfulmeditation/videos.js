@@ -103,10 +103,5 @@ const videos = [
     {
         id: "KhaMKQtp8gI",
         title: "Meditation · Vol. 21"
-    },
- 
-    {
-        id: "ElGviPB1D2I",
-        title: "Meditation · Vol. 22"
     }        
 ];
